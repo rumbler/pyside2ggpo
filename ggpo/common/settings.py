@@ -38,7 +38,6 @@ class Settings:
     CUSTOM_CHALLENGE_SOUND_LOCATION = 'customChallengeSoundLocation'
     UNSUPPORTED_GAMESAVES_DIR = 'unsupportedGamesavesDir'
     DISABLE_AUTO_ANNOUNCE_UNSUPPORTED = 'disableAutoAnnounceUnsupported'
-    SERVER_ADDRESS = 'serverAddress'
 
     _settings = QSettings(os.path.join(os.path.expanduser("~"), 'ggpo.ini'), QSettings.IniFormat)
 
