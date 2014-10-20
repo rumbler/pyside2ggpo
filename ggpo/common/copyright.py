@@ -24,7 +24,7 @@ def versionString():
 
 
 def about():
-    extra = ''
+    extra = '\n\nThis is a forked version of pyqtggpo modified for GGPO-NG by Pau Oliva (@pof).\nThe source code of this fork is available at https://gitub.com/poliva/pyqtggpo\n\n\n'
     for author, url in __credits__:
         extra += author + '\n' + url + "\n"
     return __copyright__ + ' ' + __author__ + "\n" + __url__ + "\n" + \

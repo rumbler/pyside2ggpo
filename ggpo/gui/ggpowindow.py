@@ -16,7 +16,7 @@ from ggpo.common import copyright
 from ggpo.common.cliclient import CLI
 from ggpo.common.playerstate import PlayerStates
 from ggpo.common.settings import Settings
-from ggpo.common.util import logdebug, openURL, findURLs, replaceURLs, findWine, findUnsupportedGamesavesDir, \
+from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, findWine, findUnsupportedGamesavesDir, \
     defaultdictinit
 from ggpo.common.unsupportedsavestates import UnsupportedSavestates
 from ggpo.common.allgames import *
@@ -262,7 +262,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiChannelsList.itemSelectionChanged.connect(self.joinChannel)
 
     def onMOTDReceived(self, channel, topic, msg):
-        self.uiChatHistoryTxtB.setHtml(replaceURLs(msg) + '<br/><br/>Type /help to see a list of commands<br/><br/>')
+        self.uiChatHistoryTxtB.setHtml(nl2br(replaceURLs(msg)) + '<br/><br/>Type /help to see a list of commands<br/><br/>')
 
     def onPlayerNewlyJoined(self, name):
         if self.controller.channel == 'unsupported' and self.controller.unsupportedRom and \
@@ -424,7 +424,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         controller.sigIgnoreRemoved.connect(self.ignoreRemoved)
         controller.sigStatusMessage.connect(self.onStatusMessage)
         controller.sigServerDisconnected.connect(
-            lambda: self.onStatusMessage("Disconnected from ggpo.net. Please restart application"))
+            lambda: self.onStatusMessage("Disconnected from server. Please restart application"))
 
     def setCustomEmoticons(self):
         dlg = CustomEmoticonsDialog(self)

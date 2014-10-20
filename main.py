@@ -24,8 +24,8 @@ def main(argv=None):
     if not QtGui.QApplication.instance():
         app = QtGui.QApplication(argv)
         app.setQuitOnLastWindowClosed(True)
-        app.setOrganizationName("GGPO")
-        QtCore.QCoreApplication.setApplicationName("GGPO")
+        app.setOrganizationName("GGPO-NG")
+        QtCore.QCoreApplication.setApplicationName("GGPO-NG")
     ColorTheme.saveDefaultStyle()
     controller = Controller()
     thread = QtCore.QThread()

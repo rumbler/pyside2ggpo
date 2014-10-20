@@ -240,7 +240,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "GGPO", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "GGPO-NG", None))
         self.uiEmoticonTbtn.setText(_translate("MainWindow", ":)", None))
         self.uiAfkChk.setText(_translate("MainWindow", "away", None))
         self.menuAction.setTitle(_translate("MainWindow", "&Action", None))

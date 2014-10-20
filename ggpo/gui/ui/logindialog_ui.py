@@ -18,7 +18,7 @@ class Ui_DialogLogin(object):
     def setupUi(self, DialogLogin):
         DialogLogin.setObjectName(_fromUtf8("DialogLogin"))
         DialogLogin.resize(430, 286)
-        DialogLogin.setWindowTitle(QtGui.QApplication.translate("DialogLogin", "GGPO", None, QtGui.QApplication.UnicodeUTF8))
+        DialogLogin.setWindowTitle(QtGui.QApplication.translate("DialogLogin", "GGPO-NG", None, QtGui.QApplication.UnicodeUTF8))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/assets/icon-128.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         DialogLogin.setWindowIcon(icon)

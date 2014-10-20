@@ -14,7 +14,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
         # ggpo.gui.loadUi(__file__, self)
         self.setupUi(self)
         self.uiNewVersionLink.clicked.connect(
-            lambda: openURL('https://github.com/doctorguile/pyqtggpo/releases'))
+            lambda: openURL('http://www.ggpo-ng.com/#download'))
         self.uiNewVersionLink.setVisible(False)
         versionLabel = 'v' + copyright.versionString()
         self.uiVersionLbl.setText(versionLabel)
@@ -34,7 +34,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
         self.uiPasswordLine.returnPressed.connect(self.login)
         self.uiLoginBtn.clicked.connect(self.login)
         self.uiRegisterLink.clicked.connect(
-            lambda: openURL('http://ggpo.net/forums/ucp.php?mode=register'))
+            lambda: openURL('http://www.ggpo-ng.com/#register'))
 
     def displayErrorMessage(self, errmsg):
         self.uiErrorLbl.setText(errmsg)
@@ -67,7 +67,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
 
         if not self.controller.connectTcp():
             # noinspection PyCallByClass,PyTypeChecker,PyArgumentList
-            QtGui.QMessageBox.warning(self, 'Error', "Cannot connect to ggpo.net")
+            QtGui.QMessageBox.warning(self, 'Error', "Cannot connect to ggpo-ng.com")
             self.uiLoginBtn.setEnabled(True)
             return -1
 
@@ -80,7 +80,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
 
     def onServerDisconnected(self):
         self.uiLoginBtn.setEnabled(True)
-        self.displayErrorMessage("Disconnected from ggpo.net.\nPlease restart application")
+        self.displayErrorMessage("Disconnected from ggpo-ng.com.\nPlease restart application")
 
     def onStatusMessage(self, msg):
         self.uiLoginBtn.setEnabled(True)

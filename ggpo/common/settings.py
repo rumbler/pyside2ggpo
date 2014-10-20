@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pickle
 import os.path
+import sys
 from PyQt4.QtCore import QSettings
 
 
@@ -39,7 +40,7 @@ class Settings:
     UNSUPPORTED_GAMESAVES_DIR = 'unsupportedGamesavesDir'
     DISABLE_AUTO_ANNOUNCE_UNSUPPORTED = 'disableAutoAnnounceUnsupported'
 
-    _settings = QSettings(os.path.join(os.path.expanduser("~"), 'ggpo.ini'), QSettings.IniFormat)
+    _settings = QSettings(os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'ggpo-ng.ini'), QSettings.IniFormat)
 
     @staticmethod
     def setBoolean(key, val):

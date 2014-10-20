@@ -15,7 +15,7 @@ from os.path import expanduser
 
 
 def checkUpdate():
-    versionurl = 'https://raw.github.com/doctorguile/pyqtggpo/master/VERSION'
+    versionurl = 'https://raw.github.com/poliva/pyqtggpo/master/VERSION'
     #noinspection PyBroadException
     try:
         response = urllib2.urlopen(versionurl, timeout=2)
@@ -137,6 +137,8 @@ def replaceURLs(text):
     return re.sub(r'(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)',
                   r'<a href="\1"><font color=green>\1</font></a>', text)
 
+def nl2br(s):
+    return '<br/>\n'.join(s.split('\n'))
 
 def sha256digest(fname):
     return hashlib.sha256(open(fname, 'rb').read()).hexdigest()
