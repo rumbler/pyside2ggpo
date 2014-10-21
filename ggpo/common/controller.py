@@ -131,7 +131,11 @@ class Controller(QtCore.QObject):
             if os.path.isfile(rom):
                 return True
             else:
-                self.sigStatusMessage.emit('{} not found. Required to play or spectate'.format(rom))
+                if IS_OSX:
+                    rom=os.path.join(os.path.expanduser("~"),"ROMs","{}.zip".format(self.rom))
+                    self.sigStatusMessage.emit('{} not found. Required to play or spectate'.format(rom))
+                else:
+                    self.sigStatusMessage.emit('{} not found. Required to play or spectate'.format(rom))
         return False
 
     def checkUnsupportedRom(self):
