@@ -8,6 +8,9 @@
 # For best results run 'winecfg' and check the option to "Emulate a virtual desktop"
 # under the Graphics tab. I've it set to 1152x672 for best full screen aspect ratio.
 
+# keep OSX happy:
+cd "${0%/*}"
+
 FBA="./ggpofba"
 if [ ! -x ${FBA} ] ; then
 	THIS_SCRIPT_PATH=`readlink -f $0`
