@@ -605,17 +605,10 @@ class Controller(QtCore.QObject):
             return
         wine = ''
         args = []
-        if IS_WINDOWS:
-            args = [self.fba, quark, '-w']
-        else:
-            wine = findWine()
-            if not wine:
-                self.sigStatusMessage.emit("Please configure Setting > Locate wine")
-                return
-            if IS_LINUX:
-                args = [packagePathJoin('ggpo', 'scripts', 'ggpofba.sh'), wine, self.fba, quark]
-            else:
-                args = [wine, self.fba, quark]
+        fba=self.fba
+        if IS_LINUX or IS_OSX:
+            fba = fba.replace('.exe', '.sh')
+        args = [fba, quark]
 
         logdebug().info(" ".join(args))
         try:
