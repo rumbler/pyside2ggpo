@@ -34,7 +34,6 @@ class Settings:
     USER_LOG_PLAYHISTORY = 'userlogplayhistory'
     SAVE_USERNAME_PASSWORD = 'saveUsernameAndPassword'
     GGPOFBA_LOCATION = 'ggpofbaLocation'
-    WINE_LOCATION = 'wineLocation'
     GEOIP2DB_LOCATION = 'geoip2dbLocation'
     CUSTOM_CHALLENGE_SOUND_LOCATION = 'customChallengeSoundLocation'
     UNSUPPORTED_GAMESAVES_DIR = 'unsupportedGamesavesDir'

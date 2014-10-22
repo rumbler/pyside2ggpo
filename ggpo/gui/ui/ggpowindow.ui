@@ -92,7 +92,7 @@
      <x>0</x>
      <y>0</y>
      <width>810</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAction">
@@ -146,7 +146,6 @@
     <addaction name="uiCustomEmoticonsAct"/>
     <addaction name="separator"/>
     <addaction name="uiLocateGgpofbaAct"/>
-    <addaction name="uiLocateWineAct"/>
     <addaction name="uiLocateCustomChallengeSoundAct"/>
     <addaction name="uiLocateUnsupportedSavestatesDirAct"/>
     <addaction name="uiLocateGeommdbAct"/>
@@ -286,12 +285,7 @@
   </action>
   <action name="uiLocateGgpofbaAct">
    <property name="text">
-    <string>&amp;Locate ggpofba.exe</string>
-   </property>
-  </action>
-  <action name="uiLocateWineAct">
-   <property name="text">
-    <string>Locate &amp;Wine</string>
+    <string>&amp;Locate ggpofba-ng</string>
    </property>
   </action>
   <action name="uiLocateGeommdbAct">

@@ -17,7 +17,7 @@ from ggpo.common.playerstate import PlayerStates
 from ggpo.common.protocol import Protocol
 from ggpo.common.settings import Settings
 from ggpo.common.unsupportedsavestates import readLocalJsonDigest
-from ggpo.common.util import findWine, logdebug, loguser, packagePathJoin, findUnsupportedGamesavesDir, sha256digest
+from ggpo.common.util import logdebug, loguser, packagePathJoin, findUnsupportedGamesavesDir, sha256digest
 from ggpo.gui.colortheme import ColorTheme
 
 
@@ -112,15 +112,12 @@ class Controller(QtCore.QObject):
         fba = Settings.value(Settings.GGPOFBA_LOCATION)
         if fba and os.path.isfile(fba):
             self.fba = os.path.abspath(fba)
-        wine = findWine()
-        if self.fba and wine:
+        if self.fba:
             return True
         else:
             msg = ''
             if not self.fba:
                 msg += "ggpo installation not found\n"
-            if not wine:
-                msg += "wine installation not found\n"
             self.sigStatusMessage.emit(msg)
             return False
 
@@ -636,7 +633,6 @@ class Controller(QtCore.QObject):
         if not self.fba:
             self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba.exe")
             return
-        wine = ''
         args = []
         fba=self.fba
         if IS_LINUX or IS_OSX:

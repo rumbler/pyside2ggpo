@@ -56,21 +56,6 @@ def findURLs(url):
     return re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', url)
 
 
-def findWine():
-    if IS_WINDOWS:
-        return True
-    saved = Settings.value(Settings.WINE_LOCATION)
-    if saved and os.path.isfile(saved):
-        return saved
-    w = None
-    if IS_LINUX:
-        w = '/usr/bin/wine'
-    elif IS_OSX:
-        w = '/Applications/Wine.app/Contents/Resources/bin/wine'
-    if w and os.path.isfile(w):
-        return w
-
-
 _loggerInitialzed = False
 
 

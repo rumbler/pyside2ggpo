@@ -16,7 +16,7 @@ from ggpo.common import copyright
 from ggpo.common.cliclient import CLI
 from ggpo.common.playerstate import PlayerStates
 from ggpo.common.settings import Settings
-from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, findWine, findUnsupportedGamesavesDir, \
+from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, findUnsupportedGamesavesDir, \
     defaultdictinit
 from ggpo.common.unsupportedsavestates import UnsupportedSavestates
 from ggpo.common.allgames import *
@@ -171,16 +171,6 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                                                    | QtGui.QFileDialog.DontResolveSymlinks)
         if d and os.path.isdir(d):
             Settings.setValue(Settings.UNSUPPORTED_GAMESAVES_DIR, d)
-
-    def locateWine(self):
-        if IS_WINDOWS:
-            return
-        defaultLocation = findWine()
-        if not defaultLocation:
-            defaultLocation = os.path.expanduser("~")
-        fname = QtGui.QFileDialog.getOpenFileName(self, 'Locate wine', defaultLocation, "wine (wine)")
-        if fname:
-            Settings.setValue(Settings.WINE_LOCATION, fname)
 
     def notifyStateChange(self, name, msg):
         msg = name + msg
@@ -508,10 +498,6 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiCustomEmoticonsAct.triggered.connect(self.setCustomEmoticons)
 
         self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
-        if IS_WINDOWS:
-            self.uiLocateWineAct.setVisible(False)
-        else:
-            self.uiLocateWineAct.triggered.connect(self.locateWine)
         self.uiLocateUnsupportedSavestatesDirAct.triggered.connect(self.locateUnsupportedSavestatesDirAct)
         self.uiLocateCustomChallengeSoundAct.triggered.connect(self.locateCustomChallengeSound)
         if GeoIP2Reader:
