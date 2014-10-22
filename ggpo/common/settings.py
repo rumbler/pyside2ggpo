@@ -39,7 +39,7 @@ class Settings:
     UNSUPPORTED_GAMESAVES_DIR = 'unsupportedGamesavesDir'
     DISABLE_AUTO_ANNOUNCE_UNSUPPORTED = 'disableAutoAnnounceUnsupported'
 
-    _settings = QSettings(os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'ggpo-ng.ini'), QSettings.IniFormat)
+    _settings = QSettings(os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpo-ng.ini'), QSettings.IniFormat)
 
     @staticmethod
     def setBoolean(key, val):

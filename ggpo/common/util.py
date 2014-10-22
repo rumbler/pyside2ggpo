@@ -79,7 +79,7 @@ def loggerInit():
     debuglog = logging.getLogger('GGPODebug')
     debuglog.setLevel(logging.INFO)
     fh = logging.handlers.RotatingFileHandler(
-        os.path.join(expanduser("~"), 'ggpodebug.log'), mode='a', maxBytes=500000, backupCount=10)
+        os.path.join(expanduser("~"), 'ggpo-ng-debug.log'), mode='a', maxBytes=500000, backupCount=10)
     if Settings.value(Settings.DEBUG_LOG):
         fh.setLevel(logging.INFO)
     else:
@@ -102,7 +102,7 @@ def loggerInit():
     userlog = logging.getLogger('GGPOUser')
     userlog.setLevel(logging.INFO)
     fh = logging.handlers.RotatingFileHandler(
-        os.path.join(expanduser("~"), 'ggpo.log'), mode='a', maxBytes=500000, backupCount=10)
+        os.path.join(expanduser("~"), 'ggpo-ng.log'), mode='a', maxBytes=500000, backupCount=10)
     fh.setLevel(logging.INFO)
     formatter = logging.Formatter('%(asctime)s - %(message)s', "%Y-%m-%d %H:%M")
     fh.setFormatter(formatter)
