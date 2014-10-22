@@ -129,12 +129,12 @@ class Controller(QtCore.QObject):
             if os.path.isfile(rom):
                 return True
             else:
-                if IS_OSX:
-                    rom=os.path.join(os.path.expanduser("~"),"ROMs","{}.zip".format(self.rom))
-                    self.sigStatusMessage.emit('{} not found. Required to play or spectate'.format(rom))
+                if IS_WINDOWS:
+                    self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate.'.format(rom))
                 else:
-                    self.sigStatusMessage.emit('{} not found. Required to play or spectate'.format(rom))
-        return False
+                    rom=os.path.join(os.path.expanduser("~"),"ROMs","{}.zip".format(self.rom))
+                    self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate'.format(rom))
+        return True
 
     def checkUnsupportedRom(self):
         if self.fba:
@@ -628,10 +628,9 @@ class Controller(QtCore.QObject):
         self.awayfromkb = {}
 
     def runFBA(self, quark):
-        if not self.checkRom():
-            return
+        self.checkRom()
         if not self.fba:
-            self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba.exe")
+            self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba-ng")
             return
         args = []
         fba=self.fba
