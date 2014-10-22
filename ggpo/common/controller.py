@@ -586,15 +586,21 @@ class Controller(QtCore.QObject):
 
     def killEmulator(self):
         if IS_WINDOWS:
-            args = ['taskkill', '/f', '/im', 'ggpofba-ng.exe']
-            Popen(args)
-            args = ['tskill', 'ggpofba-ng', '/a']
-            Popen(args)
+            try:
+                args = ['taskkill', '/f', '/im', 'ggpofba-ng.exe']
+                Popen(args)
+                args = ['tskill', 'ggpofba-ng', '/a']
+                Popen(args)
+            except:
+                pass
         else:
-            args = ['pkill', '-f', 'ggpofba-ng.exe']
-            devnull = open(os.devnull, 'w')
-            Popen(args, stdout=devnull, stderr=devnull)
-            devnull.close()
+            try:
+                args = ['pkill', '-f', 'ggpofba-ng.exe']
+                devnull = open(os.devnull, 'w')
+                Popen(args, stdout=devnull, stderr=devnull)
+                devnull.close()
+            except:
+                pass
 
     # platform independent way of playing an external wave file
     def playChallengeSound(self):
