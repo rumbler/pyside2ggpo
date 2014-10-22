@@ -647,10 +647,9 @@ class Controller(QtCore.QObject):
         fba=self.fba
         if IS_WINDOWS:
             fba=fba.replace('ggpofba-ng.exe', 'ggpofba.exe')
-            args = [fba, quark, '-w']
         else:
             fba = fba.replace('ggpofba.exe', 'ggpofba.sh')
-            args = [fba, quark]
+        args = [fba, quark, '-w']
 
         logdebug().info(" ".join(args))
         try:
