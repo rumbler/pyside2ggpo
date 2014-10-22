@@ -285,7 +285,7 @@
   </action>
   <action name="uiLocateGgpofbaAct">
    <property name="text">
-    <string>&amp;Locate ggpofba-ng</string>
+    <string>&amp;Locate ggpofba</string>
    </property>
   </action>
   <action name="uiLocateGeommdbAct">

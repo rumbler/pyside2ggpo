@@ -146,8 +146,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             dirname = os.path.dirname(oldval)
         else:
             dirname = os.path.expanduser("~")
-        fname = QtGui.QFileDialog.getOpenFileName(self, 'Locate ggpofba.exe', dirname,
-                                                  "ggpofba.exe (ggpofba.exe)")
+        if IS_WINDOWS:
+            fname = QtGui.QFileDialog.getOpenFileName(self, 'Locate ggpofba.exe', dirname,
+                                                      "ggpofba.exe (ggpofba.exe)")
+        else:
+            fname = QtGui.QFileDialog.getOpenFileName(self, 'Locate ggpofba', dirname,
+                                                      "ggpofba (ggpofba)")
         if fname:
             Settings.setValue(Settings.GGPOFBA_LOCATION, fname)
             self.controller.checkInstallation()
@@ -373,7 +377,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def selectUnsupportedSavestate(self):
         if not self.controller.fba:
-            self.onStatusMessage('ggpofba.exe is not set, cannot locate unsupported_ggpo.fs')
+            self.onStatusMessage('ggpofba is not set, cannot locate unsupported_ggpo.fs')
             return
         d = findUnsupportedGamesavesDir()
         if not d or not os.path.isdir(d):

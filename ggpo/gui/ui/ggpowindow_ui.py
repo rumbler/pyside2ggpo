@@ -267,7 +267,7 @@ class Ui_MainWindow(object):
         self.uiDebugLogAct.setText(_translate("MainWindow", "Debug &Log", None))
         self.uiEmoticonAct.setText(_translate("MainWindow", "&Insert Emoticon", None))
         self.uiEmoticonAct.setShortcut(_translate("MainWindow", "Ctrl+I", None))
-        self.uiLocateGgpofbaAct.setText(_translate("MainWindow", "&Locate ggpofba.exe", None))
+        self.uiLocateGgpofbaAct.setText(_translate("MainWindow", "&Locate ggpofba", None))
         self.uiLocateGeommdbAct.setText(_translate("MainWindow", "Locate &GeoIP mmdb", None))
         self.uiNotifyPlayerStateChangeAct.setText(_translate("MainWindow", "&Notify Player State Change", None))
         self.uiFocusOnChatAct.setText(_translate("MainWindow", "Foc&us on chat", None))
