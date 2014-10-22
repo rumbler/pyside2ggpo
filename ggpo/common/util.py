@@ -56,6 +56,26 @@ def findURLs(url):
     return re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', url)
 
 
+def findFba():
+    saved = Settings.value(Settings.GGPOFBA_LOCATION)
+    if saved and os.path.isfile(saved):
+        return saved
+
+    FBA="ggpofba-ng.exe"
+
+    # try to guess install directory:
+    dirtest = os.path.abspath(os.path.dirname(sys.argv[0]))
+    if not os.path.isfile(os.path.join(dirtest,FBA)):
+        dirtest = os.path.dirname(os.path.abspath(__file__))
+    if not os.path.isfile(os.path.join(dirtest,FBA)):
+        dirtest = os.getcwd()
+    if not os.path.isfile(os.path.join(dirtest,FBA)):
+        return None
+
+    FBA=os.path.join(dirtest,FBA)
+    return FBA
+
+
 _loggerInitialzed = False
 
 

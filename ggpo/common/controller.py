@@ -17,7 +17,7 @@ from ggpo.common.playerstate import PlayerStates
 from ggpo.common.protocol import Protocol
 from ggpo.common.settings import Settings
 from ggpo.common.unsupportedsavestates import readLocalJsonDigest
-from ggpo.common.util import logdebug, loguser, packagePathJoin, findUnsupportedGamesavesDir, sha256digest
+from ggpo.common.util import findFba, logdebug, loguser, packagePathJoin, findUnsupportedGamesavesDir, sha256digest
 from ggpo.gui.colortheme import ColorTheme
 
 
@@ -629,13 +629,16 @@ class Controller(QtCore.QObject):
 
     def runFBA(self, quark):
         self.checkRom()
+        self.fba = findFba()
         if not self.fba:
-            self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba")
+            self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba-ng.exe")
             return
         args = []
         fba=self.fba
-        if IS_LINUX or IS_OSX:
-            fba = fba.replace('.exe', '.sh')
+        if IS_WINDOWS:
+            fba=fba.replace('ggpofba-ng.exe', 'ggpofba.exe')
+        else:
+            fba = fba.replace('ggpofba.exe', 'ggpofba.sh')
         args = [fba, quark]
 
         logdebug().info(" ".join(args))
