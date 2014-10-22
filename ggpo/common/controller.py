@@ -630,7 +630,7 @@ class Controller(QtCore.QObject):
     def runFBA(self, quark):
         self.checkRom()
         if not self.fba:
-            self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba-ng")
+            self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba")
             return
         args = []
         fba=self.fba
