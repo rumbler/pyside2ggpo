@@ -72,6 +72,7 @@ class Controller(QtCore.QObject):
         self.checkInstallation()
         self.unsupportedRom = ''
         self.checkUnsupportedRom()
+        self.playingagainst = ''
 
         self.challengers = set()
         self.challenged = None
@@ -553,12 +554,22 @@ class Controller(QtCore.QObject):
             state, p1, p2, playerinfo, data = self.__class__.extractStateChangesResponse(data)
             if state == PlayerStates.PLAYING:
                 self.parsePlayerStartGameResponse(p1, p2, playerinfo)
+		if self.username == p1:
+			self.playingagainst = p2
+		if self.username == p2:
+			self.playingagainst = p1
                 if Settings.USER_LOG_PLAYHISTORY and self.username in [p1, p2]:
                     loguser().info(u"[IN A GAME] {} vs {}".format(p1, p2))
             elif state == PlayerStates.AVAILABLE:
                 self.parsePlayerAvailableResponse(p1, playerinfo)
+                if self.playingagainst == p1:
+                    self.playingagainst = ''
+                    self.killEmulator()
             elif state == PlayerStates.AFK:
                 self.parsePlayerAFKResponse(p1, playerinfo)
+                if self.playingagainst == p1:
+                    self.playingagainst = ''
+                    self.killEmulator()
             elif state == PlayerStates.QUIT:
                 self.parsePlayerLeftResponse(p1)
             else:
@@ -572,6 +583,18 @@ class Controller(QtCore.QObject):
             count -= 1
         if len(data) > 0:
             logdebug().error("stateChangesResponse, remaining data {}".format(repr(data)))
+
+    def killEmulator(self):
+        if IS_WINDOWS:
+            args = ['taskkill', '/f', '/im', 'ggpofba-ng.exe']
+            Popen(args)
+            args = ['tskill', 'ggpofba-ng', '/a']
+            Popen(args)
+        else:
+            args = ['pkill', '-f', 'ggpofba-ng.exe']
+            devnull = open(os.devnull, 'w')
+            Popen(args, stdout=devnull, stderr=devnull)
+            devnull.close()
 
     # platform independent way of playing an external wave file
     def playChallengeSound(self):
