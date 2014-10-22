@@ -173,6 +173,14 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if d and os.path.isdir(d):
             Settings.setValue(Settings.UNSUPPORTED_GAMESAVES_DIR, d)
 
+    def locateROMsDir(self):
+        d = QtGui.QFileDialog.getExistingDirectory(self, "Open Directory",
+                                                   os.path.expanduser("~"),
+                                                   QtGui.QFileDialog.ShowDirsOnly
+                                                   | QtGui.QFileDialog.DontResolveSymlinks)
+        if d and os.path.isdir(d):
+            Settings.setValue(Settings.ROMS_DIR, d)
+
     def notifyStateChange(self, name, msg):
         msg = name + msg
         if self.lastStateChangeMsg != msg:
@@ -499,6 +507,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiCustomEmoticonsAct.triggered.connect(self.setCustomEmoticons)
 
         self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
+        self.uiLocateROMsAct.triggered.connect(self.locateROMsDir)
         self.uiLocateUnsupportedSavestatesDirAct.triggered.connect(self.locateUnsupportedSavestatesDirAct)
         self.uiLocateCustomChallengeSoundAct.triggered.connect(self.locateCustomChallengeSound)
         if GeoIP2Reader:

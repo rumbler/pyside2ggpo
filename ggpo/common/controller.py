@@ -125,16 +125,26 @@ class Controller(QtCore.QObject):
         if self.channel == 'unsupported':
             return True
         if self.channel and self.channel != "lobby":
+            romdir=Settings.value(Settings.ROMS_DIR)
+            if romdir:
+                rom = os.path.join(romdir, "{}.zip".format(self.rom))
+                if os.path.isfile(rom):
+                    return True
             rom = self.ggpoPathJoin("ROMs", "{}.zip".format(self.rom))
+            if os.path.isfile(rom):
+                return True
+            rom=os.path.join(os.path.expanduser("~"),"ROMs","{}.zip".format(self.rom))
             if os.path.isfile(rom):
                 return True
             else:
                 if IS_WINDOWS:
+                    rom = self.ggpoPathJoin("ROMs", "{}.zip".format(self.rom))
                     self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate.'.format(rom))
                 else:
                     rom=os.path.join(os.path.expanduser("~"),"ROMs","{}.zip".format(self.rom))
                     self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate'.format(rom))
-        return True
+                self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
+        return False
 
     def checkUnsupportedRom(self):
         if self.fba:
@@ -637,9 +647,10 @@ class Controller(QtCore.QObject):
         fba=self.fba
         if IS_WINDOWS:
             fba=fba.replace('ggpofba-ng.exe', 'ggpofba.exe')
+            args = [fba, quark, '-w']
         else:
             fba = fba.replace('ggpofba.exe', 'ggpofba.sh')
-        args = [fba, quark]
+            args = [fba, quark]
 
         logdebug().info(" ".join(args))
         try:
