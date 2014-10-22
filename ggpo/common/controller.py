@@ -648,7 +648,7 @@ class Controller(QtCore.QObject):
         if IS_WINDOWS:
             fba=fba.replace('ggpofba-ng.exe', 'ggpofba.exe')
         else:
-            fba = fba.replace('ggpofba.exe', 'ggpofba.sh')
+            fba = fba.replace('ggpofba-ng.exe', 'ggpofba.sh')
         args = [fba, quark, '-w']
 
         logdebug().info(" ".join(args))
