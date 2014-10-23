@@ -3,6 +3,7 @@ import cgi
 import logging
 import logging.handlers
 import os
+import sys
 import re
 import shutil
 import time
@@ -180,6 +181,17 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                                                    | QtGui.QFileDialog.DontResolveSymlinks)
         if d and os.path.isdir(d):
             Settings.setValue(Settings.ROMS_DIR, d)
+
+        #on linux & MAC, symlink it to the ROMs folder to avoid configuring FBA
+        if not IS_WINDOWS:
+            fbaRomPath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ROMs")
+            # remove it if it's a link or an empty dir
+            if os.path.islink(fbaRomPath):
+                os.remove(fbaRomPath)
+            if not os.listdir(fbaRomPath):
+                os.rmdir(fbaRomPath)
+            if not os.path.exists(fbaRomPath)):
+                os.symlink(d, fbaRomPath)
 
     def notifyStateChange(self, name, msg):
         msg = name + msg
