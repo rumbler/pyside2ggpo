@@ -188,9 +188,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             # remove it if it's a link or an empty dir
             if os.path.islink(fbaRomPath):
                 os.remove(fbaRomPath)
-            if not os.listdir(fbaRomPath):
+            if os.path.exists(fbaRomPath) and not os.listdir(fbaRomPath):
                 os.rmdir(fbaRomPath)
-            if not os.path.exists(fbaRomPath)):
+            if not os.path.exists(fbaRomPath):
                 os.symlink(d, fbaRomPath)
 
     def notifyStateChange(self, name, msg):
