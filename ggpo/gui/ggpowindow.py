@@ -7,6 +7,7 @@ import sys
 import re
 import shutil
 import time
+import fileinput
 from colortheme import ColorTheme
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
@@ -192,6 +193,14 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 os.rmdir(fbaRomPath)
             if not os.path.exists(fbaRomPath):
                 os.symlink(d, fbaRomPath)
+
+        # on windows, update fba's ini file with the new location
+        if IS_WINDOWS:
+            fbaIniFile = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "config", "ggpofba-ng.ini")
+            if fbaIniFile and os.path.isfile(fbaIniFile):
+                for line in fileinput.input(fbaIniFile, inplace=True, backup='.bak'):
+                    new="szAppRomPaths[7] "+str(os.path.join(d,'')+"\\")
+                    sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
 
     def notifyStateChange(self, name, msg):
         msg = name + msg
