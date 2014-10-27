@@ -29,7 +29,7 @@ if [ ! -x /usr/bin/pulseaudio ] || [ ! -x /usr/bin/pacmd ] || [ ! -x /usr/bin/pa
 fi
 
 # check if there are multiple instances running
-tot=$(ps ax |grep ggpofba |grep quark |wc -l)
+tot=$(ps ax |grep "ggpofba-ng.exe" |grep "quark:" |wc -l)
 
 # first instance resets pulseaudio, others don't
 if [ ${tot} -eq 0 ]; then
