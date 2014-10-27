@@ -133,17 +133,9 @@ class Controller(QtCore.QObject):
             rom = self.ggpoPathJoin("ROMs", "{}.zip".format(self.rom))
             if os.path.isfile(rom):
                 return True
-            rom=os.path.join(os.path.expanduser("~"),"ROMs","{}.zip".format(self.rom))
-            if os.path.isfile(rom):
-                return True
             else:
-                if IS_WINDOWS:
-                    rom = self.ggpoPathJoin("ROMs", "{}.zip".format(self.rom))
-                    self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate.'.format(rom))
-                else:
-                    rom=os.path.join(os.path.expanduser("~"),"ROMs","{}.zip".format(self.rom))
-                    self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate'.format(rom))
-                self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
+                self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate.'.format(rom))
+                self.sigStatusMessage.emit("Please close emulator and configure Setting > Locate ROMs folder")
         return False
 
     def checkUnsupportedRom(self):
