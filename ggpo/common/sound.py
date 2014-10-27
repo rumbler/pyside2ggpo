@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import abc
 import os
+import sys
 from subprocess import Popen
 
 from ggpo.common.runtime import *
@@ -23,6 +24,9 @@ class Backend(object):
             filename = os.path.join(os.path.dirname(fba), "assets", "challenger-comes.wav")
             if os.path.isfile(filename):
                 return filename
+        filename = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "assets", "challenger-comes.wav")
+        if filename and os.path.isfile(filename):
+            return filename
 
     @abc.abstractmethod
     def play(self):
