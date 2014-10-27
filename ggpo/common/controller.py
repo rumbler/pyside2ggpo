@@ -602,7 +602,7 @@ class Controller(QtCore.QObject):
                 pass
         else:
             try:
-                args = ['pkill', '-f', 'ggpofba-ng.exe']
+                args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
                 devnull = open(os.devnull, 'w')
                 Popen(args, stdout=devnull, stderr=devnull)
                 devnull.close()
