@@ -74,11 +74,6 @@ class PlayerModel(QtCore.QAbstractTableModel):
         elif role == Qt.TextAlignmentRole:
             if col == PlayerModel.PING:
                 return Qt.AlignRight | Qt.AlignVCenter
-        elif role == Qt.TextColorRole:
-            if col in [PlayerModel.PLAYER, PlayerModel.OPPONENT]:
-                name = self.players[row][col]
-                if name == 'ponder':
-                    return QtGui.QBrush(QtGui.QColor(Qt.red))
 
     def dataIcon(self, row, col):
         icon_path = None

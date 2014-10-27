@@ -287,7 +287,7 @@ class Controller(QtCore.QObject):
         return line
 
     def getPlayerColor(self, name):
-        if name == self.username or name == 'ponder':
+        if name == self.username:
             return '#ff0000'
         elif name in self.players:
             if hasattr(self.players[name], 'id'):
