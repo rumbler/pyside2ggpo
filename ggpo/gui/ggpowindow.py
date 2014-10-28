@@ -252,8 +252,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         urls = findURLs(txt)
         chat = prefix + txt
         if urls:
-            for url in urls:
-                chat += " <a href='" + url + "'><font color=green>link</font></a>"
+            #for url in urls:
+            #    chat += " <a href='" + url + "'><font color=green>link</font></a>"
+            chat = prefix + replaceURLs(txt)
         self.appendChat(chat)
 
     def onChannelJoined(self):
