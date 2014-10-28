@@ -105,7 +105,7 @@ class Controller(QtCore.QObject):
                 p = Player(**kwargs)
                 self.players[name] = p
                 self.sendPingQuery(p)
-                if isUnknownCountryCode(p.cc) or not p.city:
+                if isUnknownCountryCode(p.cc):
                     p.cc, p.country, p.city = geolookup(p.ip)
 
     def checkInstallation(self):
