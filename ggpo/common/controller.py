@@ -305,6 +305,8 @@ class Controller(QtCore.QObject):
         icon = ''
         if useFlag:
             icon = self.getPlayerFlag(name)
+            if icon==None:
+                icon=''
         if useFlag:
             return '{}<b><font color="{}">{}</font></b> '.format(icon, c, cgi.escape(name))
         else:
