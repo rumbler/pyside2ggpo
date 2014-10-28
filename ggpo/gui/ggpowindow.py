@@ -283,7 +283,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiChannelsList.itemSelectionChanged.connect(self.joinChannel)
 
     def onMOTDReceived(self, channel, topic, msg):
-        self.uiChatHistoryTxtB.setHtml(nl2br(replaceURLs(msg)) + '<br/><br/>Type /help to see a list of commands<br/><br/>')
+        self.uiChatHistoryTxtB.setHtml('<strong>'+channel+'</strong> || <strong>'+ topic +'</strong><br/><br/>' + nl2br(replaceURLs(msg)) + '<br/><br/>Type /help to see a list of commands<br/><br/>')
 
     def onPlayerNewlyJoined(self, name):
         if self.controller.channel == 'unsupported' and self.controller.unsupportedRom and \
