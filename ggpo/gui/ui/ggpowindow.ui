@@ -170,6 +170,7 @@
     <addaction name="uiSafejumpGuideAct"/>
     <addaction name="uiMatchVideosAct"/>
     <addaction name="separator"/>
+    <addaction name="uiGNGWebAct"/>
     <addaction name="uiAboutAct"/>
    </widget>
    <addaction name="menuAction"/>
@@ -450,6 +451,11 @@
    </property>
    <property name="text">
     <string>Play history</string>
+   </property>
+  </action>
+  <action name="uiGNGWebAct">
+   <property name="text">
+    <string>GGPO-NG website</string>
    </property>
   </action>
  </widget>

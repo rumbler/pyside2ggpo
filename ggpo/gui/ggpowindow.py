@@ -519,6 +519,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiHitboxViewerAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/'))
         self.uiSafejumpGuideAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/st-safejump/'))
         self.uiMatchVideosAct.triggered.connect(lambda: openURL('http://www.strevival.com/yt/'))
+        self.uiGNGWebAct.triggered.connect(lambda: openURL('http://www.ggpo-ng.com'))
         self.uiAboutAct.triggered.connect(self.aboutDialog)
 
     def setupMenuSettings(self):
