@@ -27,6 +27,8 @@ def main(argv=None):
         app.setOrganizationName("GGPO-NG")
         QtCore.QCoreApplication.setApplicationName("GGPO-NG")
     ColorTheme.saveDefaultStyle()
+    if not Settings.value(Settings.COLORTHEME) or Settings.value(Settings.COLORTHEME)=='ggpong':
+        ColorTheme.setGNGTheme(True)
     controller = Controller()
     thread = QtCore.QThread()
     controller.moveToThread(thread)
