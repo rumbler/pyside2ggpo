@@ -85,18 +85,18 @@ class PlayerModel(QtCore.QAbstractTableModel):
             val = self.players[row][col]
             if self.controller.challenged:
                 if self.players[row][PlayerModel.PLAYER] == self.controller.challenged:
-                    icon_path = ':/images/sword-no.png'
+                    icon_path = ':/images/cancel-challenge.png'
                 elif val == PlayerModelState.PLAYING:
-                    icon_path = ':/images/eye.png'
+                    icon_path = ':/images/playing-watch.png'
                 elif val == PlayerModelState.AFK:
-                    icon_path = ':/assets/face-sleeping.png'
+                    icon_path = ':/images/away.png'
             else:
                 if val == PlayerModelState.AVAILABLE:
-                    icon_path = ':/images/sword.png'
+                    icon_path = ':/images/available.png'
                 elif val == PlayerModelState.PLAYING:
-                    icon_path = ':/images/eye.png'
+                    icon_path = ':/images/playing-watch.png'
                 elif val == PlayerModelState.AFK:
-                    icon_path = ':/assets/face-sleeping.png'
+                    icon_path = ':/images/away.png'
         if icon_path:
             return QtGui.QIcon(icon_path)
 
@@ -120,7 +120,7 @@ class PlayerModel(QtCore.QAbstractTableModel):
             return PlayerModel.displayColumns[section]
         if role == Qt.DecorationRole and Qt_Orientation == Qt.Horizontal:
             if section == PlayerModel.IGNORE:
-                return QtGui.QIcon(':/assets/face-ignore.png')
+                return QtGui.QIcon(':/images/ignored.png')
 
     def onCellClicked(self, index):
         col = index.column()

@@ -30,7 +30,7 @@ QWidget:item:hover
 
 QWidget:item:selected
 {
-    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #034456, stop: 1 #2c3e50);
+    background-color: #034456;
 }
 
 QMenuBar::item
@@ -96,14 +96,15 @@ QTableView:item {
 
 QTableView::indicator
 {
-        border: 2px solid #b1b1b1;
-	border-radius: 4px;
-	margin-right: 3px;
+        border: 1px solid #034456;
+	border-radius: 2px;
+	margin-right: 2px;
 }
  
 QTableView::indicator:checked
 {
-    image:url(:/images/checkbox.png);
+    image:url(:/images/ignored.png);
+    border: 0px solid transparent;
 }
 
 QHeaderView
@@ -165,7 +166,7 @@ QComboBox
 
 QComboBox:hover,QPushButton:hover
 {
-    border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #034456, stop: 1 #2c3e50);
+    border: 2px solid #034456;
 }
 
 
@@ -203,7 +204,7 @@ QComboBox::down-arrow
 
 QGroupBox:focus
 {
-border: 2px solid QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #034456, stop: 1 #2c3e50);
+border: 2px solid #034456;
 }
 
 QScrollBar:horizontal {
@@ -351,9 +352,9 @@ QMainWindow::separator
 QMainWindow::separator:hover
 {
 
-    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #2c3e50, stop:1 #034456);
+    background-color: #034456;
     padding-left: 4px;
-    border: 1px solid #6c6c6c;
+    border: 1px solid #034456;
     spacing: 3px; /* spacing between items in the tool bar */
 }
 
@@ -366,7 +367,7 @@ QToolBar::handle
 QMenu::separator
 {
     height: 2px;
-    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #161616, stop: 0.5 #151515, stop: 0.6 #212121, stop:1 #343434);
+    background-color: #141414;
     padding-left: 4px;
     margin-left: 10px;
     margin-right: 5px;
@@ -434,11 +435,9 @@ QTabBar::tab:selected
 
 QTabBar::tab:!selected:hover
 {
-    /*border-top: 2px solid #ffaa00;
-    padding-bottom: 3px;*/
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:1 #212121, stop:0.4 #343434, stop:0.2 #343434, stop:0.1 #ffaa00);
+    background-color: 343434;
 }
 
 QRadioButton::indicator:checked, QRadioButton::indicator:unchecked{

@@ -4,28 +4,22 @@
         <file alias="ggpo-ng.qss">qss/ggpo-ng.qss</file>
     </qresource>
     <qresource prefix="/images">
-        <file alias="sword-no.png">img/sword-no.png</file>
-        <file alias="sword.png">img/sword.png</file>
+        <file alias="available.png">img/available.png</file>
+        <file alias="away.png">img/away.png</file>
+        <file alias="cancel-challenge.png">img/cancel-challenge.png</file>
+        <file alias="ignored.png">img/ignored.png</file>
+        <file alias="playing-watch.png">img/playing-watch.png</file>
         <file alias="checkbox.png">img/checkbox.png</file>
-        <file alias="swords.png">img/swords.png</file>
         <file alias="handle.png">img/handle.png</file>
-        <file alias="sword-yes.png">img/sword-yes.png</file>
-        <file alias="eye.png">img/eye.png</file>
         <file alias="down_arrow.png">img/down_arrow.png</file>
     </qresource>
     <qresource prefix="/assets">
         <file alias="logo-horizontal.png">assets/logo-horizontal.png</file>
         <file alias="challenger-comes.mp3">assets/challenger-comes.mp3</file>
-        <file alias="face-ignore.png">assets/face-ignore.png</file>
-        <file alias="face-grin.png">assets/face-grin.png</file>
         <file alias="logo.png">assets/logo.png</file>
-        <file alias="face-sleeping-ignored.png">assets/face-sleeping-ignored.png</file>
         <file alias="icon-16.png">assets/icon-16.png</file>
-        <file alias="icon-playing-ignored.png">assets/icon-playing-ignored.png</file>
-        <file alias="face-sleeping.png">assets/face-sleeping.png</file>
         <file alias="icon-128.png">assets/icon-128.png</file>
         <file alias="logo-vertical.png">assets/logo-vertical.png</file>
-        <file alias="icon-playing.png">assets/icon-playing.png</file>
         <file alias="icon-32.png">assets/icon-32.png</file>
         <file alias="icon-48.png">assets/icon-48.png</file>
     </qresource>
