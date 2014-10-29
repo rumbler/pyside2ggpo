@@ -96,8 +96,9 @@ QTableView:item {
 
 QTableView::indicator
 {
-        border: 1px solid #b1b1b1;
-	border-radius: 1px;
+        border: 2px solid #b1b1b1;
+	border-radius: 4px;
+	margin-right: 3px;
 }
  
 QTableView::indicator:checked
