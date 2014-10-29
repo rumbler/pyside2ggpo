@@ -98,6 +98,25 @@ class ColorTheme:
             QtGui.QApplication.instance().setStyleSheet(qss)
 
     @staticmethod
+    def setGNGTheme(boolean):
+        if boolean:
+            qss = ''
+            ColorTheme.SELECTED = ColorTheme.DARK
+            Settings.setValue(Settings.COLORTHEME, 'ggpong')
+            # noinspection PyBroadException
+            try:
+                qfile = QFile(':qss/ggpo-ng.qss')
+                if qfile.open(QIODevice.ReadOnly | QIODevice.Text):
+                    qss = str(qfile.readAll())
+                    qfile.close()
+            except:
+                qss = ''
+                pass
+            QtGui.QApplication.setStyle(ColorTheme.originalStyle)
+            QtGui.QApplication.setPalette(ColorTheme.originalPalette)
+            QtGui.QApplication.instance().setStyleSheet(qss)
+
+    @staticmethod
     def setNormalTheme(boolean):
         if boolean:
             ColorTheme.SELECTED = ColorTheme.LIGHT

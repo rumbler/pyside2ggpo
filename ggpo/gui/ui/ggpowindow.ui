@@ -261,6 +261,14 @@
     <string>Wiki (Japanese)</string>
    </property>
   </action>
+  <action name="uiGNGThemeAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;GGPO-NG</string>
+   </property>
+  </action>
   <action name="uiDarkThemeAct">
    <property name="checkable">
     <bool>true</bool>

@@ -350,6 +350,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if theme:
             if theme == 'darkorange':
                 self.uiDarkThemeAct.setChecked(True)
+            elif theme == 'ggpong':
+                self.uiGNGThemeAct.setChecked(True)
             elif theme == 'custom':
                 fname = Settings.value(Settings.CUSTOM_THEME_FILENAME)
                 self.setCustomQssfile(fname)
@@ -587,10 +589,17 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             return ret
 
         self.uiMenuThemeGroup = QtGui.QActionGroup(self.uiThemeMenu, exclusive=True)
+
+        self.uiGNGThemeAct = QtGui.QAction(actionTitle("GGPO-NG"), self)
+        self.uiGNGThemeAct.setCheckable(True)
+        self.uiGNGThemeAct.toggled.connect(ColorTheme.setGNGTheme)
+        self.uiThemeMenu.addAction(self.uiMenuThemeGroup.addAction(self.uiGNGThemeAct))
+
         self.uiDarkThemeAct = QtGui.QAction(actionTitle("Dark Orange"), self)
         self.uiDarkThemeAct.setCheckable(True)
         self.uiDarkThemeAct.toggled.connect(ColorTheme.setDarkTheme)
         self.uiThemeMenu.addAction(self.uiMenuThemeGroup.addAction(self.uiDarkThemeAct))
+
         for k in QtGui.QStyleFactory.keys():
             act = QtGui.QAction(actionTitle(k), self)
             act.setCheckable(True)
