@@ -280,6 +280,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.uiChannelsList.setItemSelected(self.uiChannelsList.item(0), False)
                 self.uiChannelsList.setItemSelected(self.uiChannelsList.item(idx), True)
                 self.controller.sendJoinChannelRequest(lastChannel)
+            else:
+                self.controller.sendJoinChannelRequest("lobby")
         self.uiChannelsList.itemSelectionChanged.connect(self.joinChannel)
 
     def onMOTDReceived(self, channel, topic, msg):
