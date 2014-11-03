@@ -21,17 +21,17 @@ clean:
 	rm -f $(UIPYFILES) $(UIPYFILES:.py=.pyc) $(QRCPYFILES:.py=.pyc) 
 
 linux: cleanbuild
-	pyinstaller --onefile -i ggpo/resources/img/icon.ico -n ggpo-ng --runtime-hook ggpo/scripts/runtimehook.py main.py
+	pyinstaller --onefile -i ggpo/resources/img/icon.ico -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
 win: cleanbuild
-	/Development/python-windows-packager/package.sh ./main.py ggpo-ng
+	/Development/python-windows-packager/package.sh ./main.py fightcade
 osx: cleanbuild
-	pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n ggpo-ng --runtime-hook ggpo/scripts/runtimehook.py main.py
+	pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
 
 dmg: osx
 	cd dist; \
-	hdiutil create -srcfolder ggpo-ng.app -volname GGPO-NG -fs HFS+ -fsargs '-c c=64,a=16,e=16' -format UDRW -size 60M ggpo-ng_tmp.dmg; \
-	hdiutil convert ggpo-ng_tmp.dmg -format UDZO -imagekey zlib-level=9 -o ggpo-ng.dmg ; \
-	rm -f ggpo-ng_tmp.dmg
+	hdiutil create -srcfolder FightCade.app -volname FightCade -fs HFS+ -fsargs '-c c=64,a=16,e=16' -format UDRW -size 60M fightcade_tmp.dmg; \
+	hdiutil convert fightcade_tmp.dmg -format UDZO -imagekey zlib-level=9 -o fightcade.dmg ; \
+	rm -f fightcade_tmp.dmg
 
 cleanbuild:
 	rm -rf build dist

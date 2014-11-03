@@ -246,7 +246,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "GGPO-NG", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "FightCade", None))
         self.uiEmoticonTbtn.setText(_translate("MainWindow", ":)", None))
         self.uiAfkChk.setText(_translate("MainWindow", "away", None))
         self.menuAction.setTitle(_translate("MainWindow", "&Action", None))
@@ -270,10 +270,10 @@ class Ui_MainWindow(object):
         self.uiSafejumpGuideAct.setText(_translate("MainWindow", "&Safejump Guide", None))
         self.uiMatchVideosAct.setText(_translate("MainWindow", "&Match Videos", None))
         self.uiSRKForumAct.setText(_translate("MainWindow", "Shoryuken &Forum", None))
-        self.uiGNGWebAct.setText(_translate("MainWindow", "GGPO-NG website", None))
+        self.uiGNGWebAct.setText(_translate("MainWindow", "FightCade website", None))
         self.uiSRKWikiAct.setText(_translate("MainWindow", "Wiki (English)", None))
         self.uiJPWikiAct.setText(_translate("MainWindow", "Wiki (Japanese)", None))
-        self.uiGNGThemeAct.setText(_translate("MainWindow", "&GGPO-NG", None))
+        self.uiGNGThemeAct.setText(_translate("MainWindow", "&FightCade", None))
         self.uiDarkThemeAct.setText(_translate("MainWindow", "&Dark Orange", None))
         self.uiDebugLogAct.setText(_translate("MainWindow", "Debug &Log", None))
         self.uiEmoticonAct.setText(_translate("MainWindow", "&Insert Emoticon", None))

@@ -352,7 +352,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if theme:
             if theme == 'darkorange':
                 self.uiDarkThemeAct.setChecked(True)
-            elif theme == 'ggpong':
+            elif theme == 'fightcade':
                 self.uiGNGThemeAct.setChecked(True)
             elif theme == 'custom':
                 fname = Settings.value(Settings.CUSTOM_THEME_FILENAME)
@@ -523,7 +523,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiHitboxViewerAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/'))
         self.uiSafejumpGuideAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/st-safejump/'))
         self.uiMatchVideosAct.triggered.connect(lambda: openURL('http://www.strevival.com/yt/'))
-        self.uiGNGWebAct.triggered.connect(lambda: openURL('http://www.ggpo-ng.com'))
+        self.uiGNGWebAct.triggered.connect(lambda: openURL('http://www.fightcade.com'))
         self.uiAboutAct.triggered.connect(self.aboutDialog)
 
     def setupMenuSettings(self):
@@ -592,7 +592,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
         self.uiMenuThemeGroup = QtGui.QActionGroup(self.uiThemeMenu, exclusive=True)
 
-        self.uiGNGThemeAct = QtGui.QAction(actionTitle("GGPO-NG"), self)
+        self.uiGNGThemeAct = QtGui.QAction(actionTitle("FightCade"), self)
         self.uiGNGThemeAct.setCheckable(True)
         self.uiGNGThemeAct.toggled.connect(ColorTheme.setGNGTheme)
         self.uiThemeMenu.addAction(self.uiMenuThemeGroup.addAction(self.uiGNGThemeAct))

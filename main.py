@@ -24,10 +24,10 @@ def main(argv=None):
     if not QtGui.QApplication.instance():
         app = QtGui.QApplication(argv)
         app.setQuitOnLastWindowClosed(True)
-        app.setOrganizationName("GGPO-NG")
-        QtCore.QCoreApplication.setApplicationName("GGPO-NG")
+        app.setOrganizationName("FightCade")
+        QtCore.QCoreApplication.setApplicationName("FightCade")
     ColorTheme.saveDefaultStyle()
-    if not Settings.value(Settings.COLORTHEME) or Settings.value(Settings.COLORTHEME)=='ggpong':
+    if not Settings.value(Settings.COLORTHEME) or Settings.value(Settings.COLORTHEME)=='fightcade' or Settings.value(Settings.COLORTHEME)=='ggpong':
         ColorTheme.setGNGTheme(True)
     controller = Controller()
     thread = QtCore.QThread()

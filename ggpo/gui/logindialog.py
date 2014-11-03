@@ -14,7 +14,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
         # ggpo.gui.loadUi(__file__, self)
         self.setupUi(self)
         self.uiNewVersionLink.clicked.connect(
-            lambda: openURL('http://www.ggpo-ng.com/#download'))
+            lambda: openURL('http://www.fightcade.com/#download'))
         self.uiNewVersionLink.setVisible(False)
         versionLabel = 'v' + copyright.versionString()
         self.uiVersionLbl.setText(versionLabel)
@@ -32,7 +32,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
         self.uiPasswordLine.returnPressed.connect(self.login)
         self.uiLoginBtn.clicked.connect(self.login)
         self.uiRegisterLink.clicked.connect(
-            lambda: openURL('http://www.ggpo-ng.com/#register'))
+            lambda: openURL('http://www.fightcade.com/#register'))
 
     def displayErrorMessage(self, errmsg):
         self.uiErrorLbl.setText(errmsg)
@@ -64,7 +64,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
 
         if not self.controller.connectTcp():
             # noinspection PyCallByClass,PyTypeChecker,PyArgumentList
-            QtGui.QMessageBox.warning(self, 'Error', "Cannot connect to ggpo-ng.com")
+            QtGui.QMessageBox.warning(self, 'Error', "Cannot connect to fightcade.com")
             self.uiLoginBtn.setEnabled(True)
             return -1
 
@@ -77,7 +77,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
 
     def onServerDisconnected(self):
         self.uiLoginBtn.setEnabled(True)
-        self.displayErrorMessage("Disconnected from ggpo-ng.com.\nPlease restart application")
+        self.displayErrorMessage("Disconnected from FightCade.\nPlease restart application")
 
     def onStatusMessage(self, msg):
         self.uiLoginBtn.setEnabled(True)

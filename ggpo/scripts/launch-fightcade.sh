@@ -9,5 +9,5 @@ if [ ! -e "ROMs" ] ; then
 	ln -s ${HOME}/ROMs ROMs
 fi
 
-# launch ggpo-ng
-./ggpo-ng
+# launch fightcade client
+./fightcade

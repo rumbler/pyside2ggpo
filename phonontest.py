@@ -10,8 +10,8 @@ from PyQt4 import QtGui, QtCore
 import ggpo.resources.ggpo_rc
 
 app = QtGui.QApplication(sys.argv)
-app.setOrganizationName("GGPO-NG")
-QtCore.QCoreApplication.setApplicationName("GGPO-NG")
+app.setOrganizationName("FightCade")
+QtCore.QCoreApplication.setApplicationName("FightCade")
 
 from PyQt4.phonon import Phonon
 audioOutput = Phonon.AudioOutput(Phonon.MusicCategory)

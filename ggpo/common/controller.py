@@ -158,10 +158,10 @@ class Controller(QtCore.QObject):
             if self.tcpSock:
                 self.tcpSock.close()
             self.tcpSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.tcpSock.connect(('ggpo-ng.com', 7000,))
+            self.tcpSock.connect(('fightcade.com', 7000,))
             self.tcpConnected = True
         except Exception:
-            self.sigStatusMessage.emit("Cannot connect to GGPO-NG server")
+            self.sigStatusMessage.emit("Cannot connect to FightCade server")
             self.sigServerDisconnected.emit()
         return self.tcpConnected
 

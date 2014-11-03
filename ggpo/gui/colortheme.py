@@ -102,10 +102,10 @@ class ColorTheme:
         if boolean:
             qss = ''
             ColorTheme.SELECTED = ColorTheme.DARK
-            Settings.setValue(Settings.COLORTHEME, 'ggpong')
+            Settings.setValue(Settings.COLORTHEME, 'fightcade')
             # noinspection PyBroadException
             try:
-                qfile = QFile(':qss/ggpo-ng.qss')
+                qfile = QFile(':qss/fightcade.qss')
                 if qfile.open(QIODevice.ReadOnly | QIODevice.Text):
                     qss = str(qfile.readAll())
                     qfile.close()

@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/qss">
         <file alias="darkorange.qss">qss/darkorange.qss</file>
-        <file alias="ggpo-ng.qss">qss/ggpo-ng.qss</file>
+        <file alias="fightcade.qss">qss/fightcade.qss</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="available.png">img/available.png</file>
