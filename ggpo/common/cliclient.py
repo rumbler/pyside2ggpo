@@ -16,6 +16,8 @@ class CLI:
         ("/challenge", [REQUIRED_ARG, "challenge player"]),
         ("/cancel", [NO_ARG, "cancel outgoing challenge"]),
         ("/watch", [REQUIRED_ARG, "spectate a game"]),
+        ("/replay", [REQUIRED_ARG, "replay a saved game"]),
+        ("/play", [NO_ARG, "play game alone"]),
         ("/ignore", [REQUIRED_ARG, "ignore a player"]),
         ("/unignore", [REQUIRED_ARG, "unignore a player"]),
         ("/motd", [NO_ARG, "clear screen and show message of the day"]),
@@ -115,6 +117,15 @@ class CLI:
                 controller.sendSpectateRequest(name)
             else:
                 controller.sigStatusMessage.emit("{} is not playing".format(name))
+
+        def clireplay(name):
+            quark = "quark:stream,"+controller.channel+","+name+",7000"
+            controller.runFBA(quark)
+            controller.sigStatusMessage.emit("Replaying game-id {} @ {}".format(name, controller.channel))
+
+        def cliplay():
+            controller.runFBA(controller.channel)
+            controller.sigStatusMessage.emit("Launching {}".format(controller.channel))
 
         if line.startswith("/geo"):
             return cligeoip()
