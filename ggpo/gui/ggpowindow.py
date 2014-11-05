@@ -272,6 +272,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.channels[title] = 'lobby'
             self.uiChannelsList.setItemSelected(self.uiChannelsList.item(0), True)
         self.uiChannelsList.addItems(sortedRooms)
+	i=0
+        for chan in sortedRooms:
+            chan = self.channels[chan]
+            if self.controller.isRomAvailable(chan):
+                self.uiChannelsList.item(i).setTextColor(QtGui.QColor(255, 255, 0))
+            i=i+1
         if self.expectFirstChannelResponse:
             self.expectFirstChannelResponse = False
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)

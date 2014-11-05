@@ -121,6 +121,17 @@ class Controller(QtCore.QObject):
             self.sigStatusMessage.emit(msg)
             return False
 
+    def isRomAvailable(self, channel):
+        romdir=Settings.value(Settings.ROMS_DIR)
+        if romdir:
+            rom = os.path.join(romdir, "{}.zip".format(channel))
+            if os.path.isfile(rom):
+                return True
+        rom = self.ggpoPathJoin("ROMs", "{}.zip".format(channel))
+        if os.path.isfile(rom):
+            return True
+        return False
+
     def checkRom(self):
         if self.channel == 'unsupported':
             return True
