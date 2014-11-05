@@ -753,8 +753,11 @@ class Controller(QtCore.QObject):
 
     def sendChallenge(self, name):
         self.sendCancelChallenge()
-        self.sendAndRemember(Protocol.SEND_CHALLENGE, Protocol.packTLV(name) + Protocol.packTLV(self.rom))
-        self.challenged = name
+        if (name==self.username):
+            self.runFBA(self.channel)
+        else:
+            self.sendAndRemember(Protocol.SEND_CHALLENGE, Protocol.packTLV(name) + Protocol.packTLV(self.rom))
+            self.challenged = name
 
     def sendChat(self, line):
         if self.channel == 'unsupported' and self.unsupportedRom:
