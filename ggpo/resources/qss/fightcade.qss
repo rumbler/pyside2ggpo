@@ -11,7 +11,7 @@ QToolTip
 QWidget
 {
     border: 2px solid transparent;
-    color: #b1b1b1;
+    color: #e1e1e1;
     background-color: #323232;
     border-radius: 2px;
 }
