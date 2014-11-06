@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # define authorship information
-__authors__ = ['papasi']
+__authors__ = ['papasi', ' pof']
 __author__ = ','.join(__authors__)
 __url__ = 'https://github.com/doctorguile/pyqtggpo'
 __credits__ = [
@@ -16,7 +16,7 @@ __license__ = 'GPL'
 
 # define version information
 __requires__ = ['PyQt4']
-__version__ = 29
+__version__ = 30
 
 
 def versionString():
