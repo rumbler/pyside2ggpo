@@ -7,3 +7,4 @@
 * option to "hide missing games" in the channel list
 * add ggofba with a fixed source port
 * send the version number to the server on connect -> if it's too low, auto-update the client
+* BUGFIX: select rom folder -> only looks for roms in \fightcade folder, have to relaunch fightcade
