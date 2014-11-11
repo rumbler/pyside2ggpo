@@ -196,11 +196,14 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
         # on windows, update fba's ini file with the new location
         if IS_WINDOWS:
+            # make sure FBA is not running, otherwise we can't modify the config file
+            self.controller.killEmulator()
             fbaIniFile = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "config", "ggpofba-ng.ini")
             if fbaIniFile and os.path.isfile(fbaIniFile):
                 for line in fileinput.input(fbaIniFile, inplace=True, backup='.bak'):
                     new="szAppRomPaths[7] "+str(os.path.join(d,'')+"\\")
                     sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
+                fileinput.close()
 
     def notifyStateChange(self, name, msg):
         msg = name + msg
