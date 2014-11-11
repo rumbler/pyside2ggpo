@@ -4,5 +4,6 @@
 * make the "/replay xxx" message from System a link, so users can just click to see the replay
 * option to enable/disable autocomplete-tooltips in the chat bar
 * option to enable/disable auto-coloring of nicknames
+* option to "hide missing games" in the channel list
 * add ggofba with a fixed source port
 * send the version number to the server on connect -> if it's too low, auto-update the client
