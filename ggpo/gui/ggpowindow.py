@@ -200,10 +200,22 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.controller.killEmulator()
             fbaIniFile = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "config", "ggpofba-ng.ini")
             if fbaIniFile and os.path.isfile(fbaIniFile):
-                for line in fileinput.input(fbaIniFile, inplace=True, backup='.bak'):
-                    new="szAppRomPaths[7] "+str(os.path.join(d,'')+"\\")
-                    sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
-                fileinput.close()
+                try:
+                    for line in fileinput.input(fbaIniFile, inplace=True, backup='.bak'):
+                        new="szAppRomPaths[7] "+str(os.path.join(d,'')+"\\")
+                        sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
+                    fileinput.close()
+                except:
+                    fin = open(fbaIniFile, 'r')
+                    fout = open(fbaIniFile+".tmp", 'w')
+                    for line in fin:
+                        p = re.compile('szAppRomPaths\[7\].*')
+                        newline = p.sub("szAppRomPaths[7] "+str(os.path.join(d,'')+"\\"),line)
+                        fout.write(newline)
+                    fin.close()
+                    fout.close()
+                    shutil.move(fbaIniFile,fbaIniFile+".bak")
+                    shutil.move(fbaIniFile+".tmp",fbaIniFile)
 
     def notifyStateChange(self, name, msg):
         msg = name + msg
