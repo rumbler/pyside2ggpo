@@ -699,7 +699,7 @@ class Controller(QtCore.QObject):
                         data = None
                         # noinspection PyBroadException
                         try:
-                            data = stream.recv(8192)
+                            data = stream.recv(16384)
                         except:
                             self.tcpConnected = False
                             self.selectLoopRunning = False
