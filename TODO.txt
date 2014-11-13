@@ -7,5 +7,7 @@
 * option to "hide missing games" in the channel list
 * add ggofba with a fixed source port
 * send the version number to the server on connect -> if it's too low, auto-update the client
-* BUGFIX: select rom folder -> only looks for roms in \fightcade folder, have to relaunch fightcade
+* refresh channel list after select rom folder
+* fix crash when wathing a vs-null game
 * if client can't bind to 6009/udp for pings, use a different port
+* add non-port based mechanism for ping
