@@ -600,9 +600,9 @@ class Controller(QtCore.QObject):
         if IS_WINDOWS:
             try:
                 args = ['taskkill', '/f', '/im', 'ggpofba-ng.exe']
-                Popen(args)
+                Popen(args, shell=True)
                 args = ['tskill', 'ggpofba-ng', '/a']
-                Popen(args)
+                Popen(args, shell=True)
             except:
                 pass
         else:
@@ -662,7 +662,7 @@ class Controller(QtCore.QObject):
             # python WindowsError(6, 'The handle is invalid')
             # apparently it's still not fixed
             if IS_WINDOWS:
-                Popen(args)
+                Popen(args, shell=True)
             else:
                 devnull = open(os.devnull, 'w')
                 Popen(args, stdout=devnull, stderr=devnull)
