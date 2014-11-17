@@ -11,3 +11,5 @@
 * fix crash when wathing a vs-null game
 * if client can't bind to 6009/udp for pings, use a different port
 * add non-port based mechanism for ping
+* remember away status from last time in settings
+* auto-reconnect when connection to server is closed
