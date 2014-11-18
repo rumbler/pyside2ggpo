@@ -19,6 +19,7 @@ from ggpo.common.settings import Settings
 from ggpo.common.unsupportedsavestates import readLocalJsonDigest
 from ggpo.common.util import findFba, logdebug, loguser, packagePathJoin, findUnsupportedGamesavesDir, sha256digest
 from ggpo.gui.colortheme import ColorTheme
+from ggpo.common import copyright
 
 
 class Controller(QtCore.QObject):
@@ -747,7 +748,7 @@ class Controller(QtCore.QObject):
             port = self.udpSock.getsockname()[1]
         except:
             port=6009
-        authdata = Protocol.packTLV(username) + Protocol.packTLV(password) + Protocol.packInt(port)
+        authdata = Protocol.packTLV(username) + Protocol.packTLV(password) + Protocol.packInt(port) + Protocol.packInt(copyright.versionNum())
         self.sendAndRemember(Protocol.AUTH, authdata)
 
     def sendCancelChallenge(self, name=None):

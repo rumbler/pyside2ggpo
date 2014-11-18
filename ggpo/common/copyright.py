@@ -20,7 +20,10 @@ __version__ = 31
 
 
 def versionString():
-    return str(__version__/100.0)
+    return "{0:.2f}".format(__version__/100.0)
+
+def versionNum():
+    return __version__
 
 
 def about():
