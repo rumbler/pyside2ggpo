@@ -18,7 +18,7 @@ from ggpo.common import copyright
 from ggpo.common.cliclient import CLI
 from ggpo.common.playerstate import PlayerStates
 from ggpo.common.settings import Settings
-from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, findUnsupportedGamesavesDir, \
+from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, replaceReplayID, findUnsupportedGamesavesDir, \
     defaultdictinit
 from ggpo.common.unsupportedsavestates import UnsupportedSavestates
 from ggpo.common.allgames import *
@@ -228,6 +228,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     self.controller.sendDeclineChallenge(name)
                     self.controller.sigStatusMessage.emit("Declined {}'s challenge".format(name))
                     self.updateStatusBar()
+            elif qurl.scheme() == 'replay':
+                quark = "quark:stream,"+self.controller.channel+","+name+",7000"
+                self.controller.runFBA(quark)
+                self.controller.sigStatusMessage.emit("Replaying game-id {} @ {}".format(name, self.controller.channel))
 
     def onRemoteHasUpdates(self, added, updated, nochange):
         totalchanged = added + updated
@@ -258,7 +262,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             #for url in urls:
             #    chat += " <a href='" + url + "'><font color=green>link</font></a>"
             chat = prefix + replaceURLs(txt)
-        self.appendChat(chat)
+        self.appendChat(replaceReplayID(chat))
 
     def onChannelJoined(self):
         self.updateStatusBar()
