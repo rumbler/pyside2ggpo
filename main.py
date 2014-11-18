@@ -36,7 +36,13 @@ def main(argv=None):
     thread.start()
 
     def loggedIn():
-        controller.connectUdp()
+        UDP=False
+        port=6009
+        while True:
+            UDP = controller.connectUdp(port)
+            port=port-1
+            if (UDP==True or port < 6006):
+                break
         window = GGPOWindow()
         window.setWindowIcon(QtGui.QIcon(':/assets/icon-128.png'))
         window.setController(controller)

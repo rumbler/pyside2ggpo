@@ -176,16 +176,16 @@ class Controller(QtCore.QObject):
             self.sigServerDisconnected.emit()
         return self.tcpConnected
 
-    def connectUdp(self):
+    def connectUdp(self, port):
         self.udpConnected = False
         try:
             if self.udpSock:
                 self.udpSock.close()
             self.udpSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            self.udpSock.bind(('0.0.0.0', 6009,))
+            self.udpSock.bind(('0.0.0.0', port,))
             self.udpConnected = True
         except socket.error:
-            self.sigStatusMessage.emit("Cannot bind to port udp/6009")
+            self.sigStatusMessage.emit("Cannot bind to port udp/{}".format(str(port)))
         return self.udpConnected
 
     def dispatch(self, seq, data):
@@ -743,7 +743,11 @@ class Controller(QtCore.QObject):
 
     def sendAuth(self, username, password):
         self.username = username
-        authdata = Protocol.packTLV(username) + Protocol.packTLV(password) + "\x00\x00\x17\x79"
+        try:
+            port = self.udpSock.getsockname()[1]
+        except:
+            port=6009
+        authdata = Protocol.packTLV(username) + Protocol.packTLV(password) + Protocol.packInt(port)
         self.sendAndRemember(Protocol.AUTH, authdata)
 
     def sendCancelChallenge(self, name=None):
