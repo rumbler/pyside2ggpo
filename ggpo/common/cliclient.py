@@ -17,6 +17,7 @@ class CLI:
         ("/cancel", [NO_ARG, "cancel outgoing challenge"]),
         ("/watch", [REQUIRED_ARG, "spectate a game"]),
         ("/replay", [REQUIRED_ARG, "replay a saved game"]),
+        ("/direct", [REQUIRED_ARG, "play a direct match"]),
         ("/play", [NO_ARG, "play game alone"]),
         ("/ignore", [REQUIRED_ARG, "ignore a player"]),
         ("/unignore", [REQUIRED_ARG, "unignore a player"]),
@@ -122,6 +123,25 @@ class CLI:
             quark = "quark:stream,"+controller.channel+","+name+",7000"
             controller.runFBA(quark)
             controller.sigStatusMessage.emit("Replaying game-id {} @ {}".format(name, controller.channel))
+
+        def clidirect(name):
+            try:
+                p = controller.players[name]
+                if (str(controller.username) < str(name)):
+                    side=0
+                    port1=6000
+                    port2=6001
+                else:
+                    side=1
+                    port1=6001
+                    port2=6000
+                quark = "quark:direct,"+str(controller.channel)+","+str(port1)+","+str(p.ip)+","+str(port2)+","+str(side)
+                controller.runFBA(quark)
+                controller.sigStatusMessage.emit("Direct match with {} @ {}".format(name, controller.channel))
+                afkSetChecked(True)
+                controller.sendToggleAFK(1)
+            except KeyError:
+                controller.sigStatusMessage.emit("Can't find {} @ {}".format(name, controller.channel))
 
         def cliplay():
             controller.runFBA(controller.channel)

@@ -11,4 +11,3 @@
 * add non-port based mechanism for ping
 * remember away status from last time in settings
 * auto-reconnect when connection to server is closed
-* add a /direct command to launch quark:direct matches
