@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/logindialog.ui'
 #
-# Created: Wed Apr 16 10:17:34 2014
-#      by: PyQt4 UI code generator 4.8.5
+# Created: Wed Nov 19 13:29:18 2014
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,7 +18,6 @@ class Ui_DialogLogin(object):
     def setupUi(self, DialogLogin):
         DialogLogin.setObjectName(_fromUtf8("DialogLogin"))
         DialogLogin.resize(430, 286)
-        DialogLogin.setWindowTitle(QtGui.QApplication.translate("DialogLogin", "FightCade", None, QtGui.QApplication.UnicodeUTF8))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/assets/icon-128.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         DialogLogin.setWindowIcon(icon)
@@ -38,14 +37,12 @@ class Ui_DialogLogin(object):
         self.formLayout.setFormAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
         self.formLayout.setObjectName(_fromUtf8("formLayout"))
         self.labelUsername = QtGui.QLabel(DialogLogin)
-        self.labelUsername.setText(QtGui.QApplication.translate("DialogLogin", "Username", None, QtGui.QApplication.UnicodeUTF8))
         self.labelUsername.setObjectName(_fromUtf8("labelUsername"))
         self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.labelUsername)
         self.uiUsernameLine = QtGui.QLineEdit(DialogLogin)
         self.uiUsernameLine.setObjectName(_fromUtf8("uiUsernameLine"))
         self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.uiUsernameLine)
         self.labelPassword = QtGui.QLabel(DialogLogin)
-        self.labelPassword.setText(QtGui.QApplication.translate("DialogLogin", "Password", None, QtGui.QApplication.UnicodeUTF8))
         self.labelPassword.setObjectName(_fromUtf8("labelPassword"))
         self.formLayout.setWidget(2, QtGui.QFormLayout.LabelRole, self.labelPassword)
         self.uiPasswordLine = QtGui.QLineEdit(DialogLogin)
@@ -54,18 +51,16 @@ class Ui_DialogLogin(object):
         self.formLayout.setWidget(2, QtGui.QFormLayout.FieldRole, self.uiPasswordLine)
         self.uiSavePasswordChk = QtGui.QCheckBox(DialogLogin)
         self.uiSavePasswordChk.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.uiSavePasswordChk.setText(QtGui.QApplication.translate("DialogLogin", "Save Password", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiSavePasswordChk.setChecked(True)
         self.uiSavePasswordChk.setObjectName(_fromUtf8("uiSavePasswordChk"))
         self.formLayout.setWidget(3, QtGui.QFormLayout.FieldRole, self.uiSavePasswordChk)
         self.verticalLayout.addLayout(self.formLayout)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.uiRegisterLink = QtGui.QCommandLinkButton(DialogLogin)
-        self.uiRegisterLink.setText(QtGui.QApplication.translate("DialogLogin", "Create Account...", None, QtGui.QApplication.UnicodeUTF8))
         self.uiRegisterLink.setObjectName(_fromUtf8("uiRegisterLink"))
         self.horizontalLayout.addWidget(self.uiRegisterLink)
-        self.uiLoginBtn = QtGui.QPushButton(DialogLogin)
-        self.uiLoginBtn.setText(QtGui.QApplication.translate("DialogLogin", "Login", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiLoginBtn = QtGui.QCommandLinkButton(DialogLogin)
         self.uiLoginBtn.setObjectName(_fromUtf8("uiLoginBtn"))
         self.horizontalLayout.addWidget(self.uiLoginBtn)
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -91,7 +86,6 @@ class Ui_DialogLogin(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.uiNewVersionLink.sizePolicy().hasHeightForWidth())
         self.uiNewVersionLink.setSizePolicy(sizePolicy)
-        self.uiNewVersionLink.setText(QtGui.QApplication.translate("DialogLogin", "Updates Available...", None, QtGui.QApplication.UnicodeUTF8))
         self.uiNewVersionLink.setObjectName(_fromUtf8("uiNewVersionLink"))
         self.horizontalLayout_21.addWidget(self.uiNewVersionLink)
         self.uiVersionLbl = QtGui.QLabel(DialogLogin)
@@ -100,7 +94,6 @@ class Ui_DialogLogin(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.uiVersionLbl.sizePolicy().hasHeightForWidth())
         self.uiVersionLbl.setSizePolicy(sizePolicy)
-        self.uiVersionLbl.setText(QtGui.QApplication.translate("DialogLogin", "version", None, QtGui.QApplication.UnicodeUTF8))
         self.uiVersionLbl.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.uiVersionLbl.setObjectName(_fromUtf8("uiVersionLbl"))
         self.horizontalLayout_21.addWidget(self.uiVersionLbl)
@@ -117,4 +110,11 @@ class Ui_DialogLogin(object):
         DialogLogin.setTabOrder(self.uiLoginBtn, self.uiRegisterLink)
 
     def retranslateUi(self, DialogLogin):
-        pass
+        DialogLogin.setWindowTitle(QtGui.QApplication.translate("DialogLogin", "FightCade", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelUsername.setText(QtGui.QApplication.translate("DialogLogin", "Username", None, QtGui.QApplication.UnicodeUTF8))
+        self.labelPassword.setText(QtGui.QApplication.translate("DialogLogin", "Password", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiSavePasswordChk.setText(QtGui.QApplication.translate("DialogLogin", "Save Password", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiRegisterLink.setText(QtGui.QApplication.translate("DialogLogin", "Create Account...", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiLoginBtn.setText(QtGui.QApplication.translate("DialogLogin", "Login", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiNewVersionLink.setText(QtGui.QApplication.translate("DialogLogin", "Updates Available...", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiVersionLbl.setText(QtGui.QApplication.translate("DialogLogin", "version", None, QtGui.QApplication.UnicodeUTF8))
