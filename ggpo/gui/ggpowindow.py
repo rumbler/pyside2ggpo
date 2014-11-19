@@ -126,7 +126,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def joinChannel(self, *args):
         it = self.uiChannelsTree.currentItem().text(0)
-        if len(it) > 0:
+        if it and len(it) > 0:
             self.controller.sendJoinChannelRequest(self.channels[it])
             self.uiChatInputEdit.setFocus()
 
