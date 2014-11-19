@@ -41,10 +41,16 @@
         <property name="text">
          <string notr="true">Game</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+        </property>
        </column>
        <column>
         <property name="text">
          <string notr="true">Users</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignHCenter|AlignVCenter|AlignCenter</set>
         </property>
        </column>
       </widget>
@@ -165,6 +171,7 @@
     <addaction name="uiNotifyPlayerStateChangeAct"/>
     <addaction name="uiShowCountryFlagInChatAct"/>
     <addaction name="uiShowTimestampInChatAct"/>
+    <addaction name="uiDisableAutoColorNicks"/>
     <addaction name="uiDisableAutoAnnounceAct"/>
     <addaction name="uiHideGamesWithoutRomAct"/>
     <addaction name="menuLogging"/>
@@ -458,6 +465,14 @@
    </property>
    <property name="text">
     <string>Show timestamp in chat</string>
+   </property>
+  </action>
+  <action name="uiDisableAutoColorNicks">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable auto-color of nicknames</string>
    </property>
   </action>
   <action name="uiLocateCustomChallengeSoundAct">

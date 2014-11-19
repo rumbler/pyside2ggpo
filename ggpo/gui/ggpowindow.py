@@ -409,6 +409,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.uiShowTimestampInChatAct.setChecked(True)
         if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
             self.uiHideGamesWithoutRomAct.setChecked(True)
+        if Settings.value(Settings.DISABLE_AUTOCOLOR_NICKS):
+            self.uiDisableAutoColorNicks.setChecked(True)
         if Settings.value(Settings.AWAY):
             self.uiAwayAct.setChecked(True)
             self.uiAfkChk.setChecked(True)
@@ -584,6 +586,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiShowCountryFlagInChatAct.toggled.connect(self.__class__.toggleShowCountryFlagInChat)
         self.uiShowTimestampInChatAct.toggled.connect(self.__class__.toggleShowTimestampInChatAct)
         self.uiDisableAutoAnnounceAct.toggled.connect(self.__class__.toggleDisableAutoAnnounceUnsupported)
+        self.uiDisableAutoColorNicks.toggled.connect(self.__class__.toggleDisableAutoColorNicks)
         self.uiHideGamesWithoutRomAct.toggled.connect(self.toggleHideGamesWithoutRomAct)
         if Settings.value(Settings.DEBUG_LOG):
             self.uiDebugLogAct.setChecked(True)
@@ -690,6 +693,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     @staticmethod
     def toggleDisableAutoAnnounceUnsupported(state):
         Settings.setBoolean(Settings.DISABLE_AUTO_ANNOUNCE_UNSUPPORTED, state)
+
+    @staticmethod
+    def toggleDisableAutoColorNicks(state):
+        Settings.setBoolean(Settings.DISABLE_AUTOCOLOR_NICKS, state)
 
     @staticmethod
     def toggleNotifyPlayerStateChange(state):

@@ -1,8 +1,8 @@
-* add a mechanism to refresh the number of users in the channel list
 * automatically sync savestates on client start
 * option to enable/disable autocomplete-tooltips in the chat bar
-* option to enable/disable auto-coloring of nicknames
-* add an auto-update mechanism
 * add non-port based mechanism for ping
-* auto-reconnect when connection to server is closed
 * backup the ggpofba-ng.ini file (after every FBA launch), restore it on start if .dat not present (eg: after update)
+
+* add a mechanism to refresh the number of users in the channel list
+* add an auto-update mechanism
+* auto-reconnect when connection to server is closed

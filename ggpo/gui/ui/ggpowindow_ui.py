@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Wed Nov 19 17:18:49 2014
+# Created: Wed Nov 19 18:28:09 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -32,7 +32,9 @@ class Ui_MainWindow(object):
         self.uiChannelsTree = QtGui.QTreeWidget(self.uiSplitter)
         self.uiChannelsTree.setObjectName(_fromUtf8("uiChannelsTree"))
         self.uiChannelsTree.headerItem().setText(0, _fromUtf8("Game"))
+        self.uiChannelsTree.headerItem().setTextAlignment(0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.uiChannelsTree.headerItem().setText(1, _fromUtf8("Users"))
+        self.uiChannelsTree.headerItem().setTextAlignment(1, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.layoutWidget = QtGui.QWidget(self.uiSplitter)
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
@@ -171,6 +173,9 @@ class Ui_MainWindow(object):
         self.uiShowTimestampInChatAct = QtGui.QAction(MainWindow)
         self.uiShowTimestampInChatAct.setCheckable(True)
         self.uiShowTimestampInChatAct.setObjectName(_fromUtf8("uiShowTimestampInChatAct"))
+        self.uiDisableAutoColorNicks = QtGui.QAction(MainWindow)
+        self.uiDisableAutoColorNicks.setCheckable(True)
+        self.uiDisableAutoColorNicks.setObjectName(_fromUtf8("uiDisableAutoColorNicks"))
         self.uiLocateCustomChallengeSoundAct = QtGui.QAction(MainWindow)
         self.uiLocateCustomChallengeSoundAct.setObjectName(_fromUtf8("uiLocateCustomChallengeSoundAct"))
         self.uiLogChatAct = QtGui.QAction(MainWindow)
@@ -216,6 +221,7 @@ class Ui_MainWindow(object):
         self.menuSetting.addAction(self.uiNotifyPlayerStateChangeAct)
         self.menuSetting.addAction(self.uiShowCountryFlagInChatAct)
         self.menuSetting.addAction(self.uiShowTimestampInChatAct)
+        self.menuSetting.addAction(self.uiDisableAutoColorNicks)
         self.menuSetting.addAction(self.uiDisableAutoAnnounceAct)
         self.menuSetting.addAction(self.uiHideGamesWithoutRomAct)
         self.menuSetting.addAction(self.menuLogging.menuAction())
@@ -303,6 +309,7 @@ class Ui_MainWindow(object):
         self.uiDisableAutoAnnounceAct.setText(QtGui.QApplication.translate("MainWindow", "&Disable auto announce in unsupported room", None, QtGui.QApplication.UnicodeUTF8))
         self.uiHideGamesWithoutRomAct.setText(QtGui.QApplication.translate("MainWindow", "Hide games with missing ROMs", None, QtGui.QApplication.UnicodeUTF8))
         self.uiShowTimestampInChatAct.setText(QtGui.QApplication.translate("MainWindow", "Show timestamp in chat", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiDisableAutoColorNicks.setText(QtGui.QApplication.translate("MainWindow", "Disable auto-color of nicknames", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLocateCustomChallengeSoundAct.setText(QtGui.QApplication.translate("MainWindow", "Locate Custom Challenge Sound", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLogChatAct.setText(QtGui.QApplication.translate("MainWindow", "Chat history", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLogPlayHistoryAct.setText(QtGui.QApplication.translate("MainWindow", "Play history", None, QtGui.QApplication.UnicodeUTF8))

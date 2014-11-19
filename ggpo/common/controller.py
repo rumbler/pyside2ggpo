@@ -302,6 +302,8 @@ class Controller(QtCore.QObject):
         if name == self.username:
             return '#ff0000'
         elif name in self.players:
+            if Settings.value(Settings.DISABLE_AUTOCOLOR_NICKS):
+                return '#034456'
             if hasattr(self.players[name], 'id'):
                 return ColorTheme.getPlayerColor(self.players[name].id)
         return '#808080'
