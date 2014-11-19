@@ -400,6 +400,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.uiShowCountryFlagInChatAct.setChecked(True)
         if Settings.value(Settings.SHOW_TIMESTAMP_IN_CHAT):
             self.uiShowTimestampInChatAct.setChecked(True)
+        if Settings.value(Settings.AWAY):
+            self.uiAwayAct.setChecked(True)
+            self.uiAfkChk.setChecked(True)
+            self.controller.sendToggleAFK(1)
         fontsetting = Settings.pythonValue(Settings.CHAT_HISTORY_FONT)
         if fontsetting:
             self.uiChatHistoryTxtB.setFont(QtGui.QFont(*fontsetting))

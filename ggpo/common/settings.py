@@ -8,6 +8,7 @@ from PyQt4.QtCore import QSettings
 # noinspection PyClassHasNoInit
 class Settings:
     # list of saved setting for autocomplete and avoid typos
+    AWAY = 'away'
     IGNORED = 'ignored'
     SELECTED_CHANNEL = 'channel'
     AUTOLOGIN = 'autoLogin'

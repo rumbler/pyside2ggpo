@@ -824,9 +824,12 @@ class Controller(QtCore.QObject):
     def sendToggleAFK(self, afk):
         if afk:
             val = 1
+            state = True
         else:
             val = 0
+            state = False
         self.sendAndRemember(Protocol.TOGGLE_AFK, Protocol.packInt(val))
+        Settings.setBoolean(Settings.AWAY, state)
 
     def sendWelcome(self):
         self.sendAndRemember(Protocol.WELCOME, '\x00\x00\x00\x00\x00\x00\x00\x1d\x00\x00\x00\x01')
