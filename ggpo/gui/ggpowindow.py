@@ -205,6 +205,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
                 fileinput.close()
 
+        # refresh the channels list
+        self.controller.sigChannelsLoaded.emit()
+
     def notifyStateChange(self, name, msg):
         msg = name + msg
         if self.lastStateChangeMsg != msg:

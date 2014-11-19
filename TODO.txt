@@ -4,7 +4,6 @@
 * option to enable/disable auto-coloring of nicknames
 * option to "hide missing games" in the channel list
 * add an auto-update mechanism
-* refresh channel list after select rom folder
 * add non-port based mechanism for ping
 * remember away status from last time in settings
 * auto-reconnect when connection to server is closed
