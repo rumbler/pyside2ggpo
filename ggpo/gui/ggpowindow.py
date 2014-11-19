@@ -125,9 +125,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             dlg.destroy()
 
     def joinChannel(self, *args):
-        it = self.uiChannelsList.selectedItems()
+        it = self.uiChannelsTree.currentItem().text(0)
         if len(it) > 0:
-            self.controller.sendJoinChannelRequest(self.channels[it[0].text()])
+            self.controller.sendJoinChannelRequest(self.channels[it])
             self.uiChatInputEdit.setFocus()
 
     def locateCustomChallengeSound(self):
@@ -270,32 +270,48 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             UnsupportedSavestates.check(self, self.onStatusMessage, self.onRemoteHasUpdates)
 
     def onListChannelsReceived(self):
-        self.uiChannelsList.clear()
+        header=QtGui.QTreeWidgetItem(["Game","Users"])
+        self.uiChannelsTree.setHeaderItem(header)
+
+        self.uiChannelsTree.clear()
         self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values() if c['room'] != 'lobby')
         sortedRooms = sorted(self.channels.keys())
+
         if 'lobby' in self.controller.channels:
             title = self.controller.channels['lobby']['title']
             sortedRooms.insert(0, title)
             self.channels[title] = 'lobby'
-            self.uiChannelsList.setItemSelected(self.uiChannelsList.item(0), True)
-        self.uiChannelsList.addItems(sortedRooms)
-	i=0
-        for chan in sortedRooms:
-            chan = self.channels[chan]
+            self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(0,0), True)
+
+        l=[]
+        for i in sortedRooms:
+            item = QtGui.QTreeWidgetItem()
+            rev = i[::-1]
+            revnum = rev[rev.find("]")+1:rev.find("[")]
+            num = revnum[::-1]
+            revname = rev[rev.find("[")+2:]
+            name = revname[::-1]
+            #item.setText(0, name)
+            item.setText(0, i)
+            item.setText(1, num)
+            chan = self.channels[i]
             if not self.controller.isRomAvailable(chan):
-                self.uiChannelsList.item(i).setTextColor(QtGui.QColor(60, 60, 60))
-            i=i+1
+                item.setTextColor(0, QtGui.QColor(60, 60, 60))
+                item.setTextColor(1, QtGui.QColor(60, 60, 60))
+            l.append(item)
+        self.uiChannelsTree.addTopLevelItems(l)
+
         if self.expectFirstChannelResponse:
             self.expectFirstChannelResponse = False
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)
             if lastChannel in self.controller.channels:
                 idx = sortedRooms.index(self.controller.channels[lastChannel]['title'])
-                self.uiChannelsList.setItemSelected(self.uiChannelsList.item(0), False)
-                self.uiChannelsList.setItemSelected(self.uiChannelsList.item(idx), True)
+                self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(0,0), False)
+                self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(idx,0), True)
                 self.controller.sendJoinChannelRequest(lastChannel)
             else:
                 self.controller.sendJoinChannelRequest("lobby")
-        self.uiChannelsList.itemSelectionChanged.connect(self.joinChannel)
+        self.uiChannelsTree.itemSelectionChanged.connect(self.joinChannel)
 
     def onMOTDReceived(self, channel, topic, msg):
         self.uiChatHistoryTxtB.setHtml('<font color="#034456"><strong>'+channel+'</strong> || <strong>'+ topic +'</strong></font><br/><br/>' + nl2br(replaceURLs(msg)) + '<br/><br/>Type /help to see a list of commands<br/><br/>')
