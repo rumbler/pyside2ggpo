@@ -1,4 +1,4 @@
-* add a column in the channel list to show the number of users in that channel (and a mechanism to refresh it)
+* add a mechanism to refresh the number of users in the channel list
 * automatically sync savestates on client start
 * option to enable/disable autocomplete-tooltips in the chat bar
 * option to enable/disable auto-coloring of nicknames
