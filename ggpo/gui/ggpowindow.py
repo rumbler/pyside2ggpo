@@ -286,15 +286,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         l=[]
         for i in sortedRooms:
             item = QtGui.QTreeWidgetItem()
-            rev = i[::-1]
-            revnum = rev[rev.find("]")+1:rev.find("[")]
-            num = revnum[::-1]
-            revname = rev[rev.find("[")+2:]
-            name = revname[::-1]
-            #item.setText(0, name)
-            item.setText(0, i)
-            item.setText(1, num)
             chan = self.channels[i]
+            item.setText(0, i)
+            item.setText(1, str(self.controller.channels[chan]['users']))
             if not self.controller.isRomAvailable(chan):
                 item.setTextColor(0, QtGui.QColor(60, 60, 60))
                 item.setTextColor(1, QtGui.QColor(60, 60, 60))
