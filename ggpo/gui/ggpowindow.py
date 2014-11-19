@@ -125,7 +125,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             dlg.destroy()
 
     def joinChannel(self, *args):
-        it = self.uiChannelsTree.currentItem().text(0)
+        try:
+            it = self.uiChannelsTree.currentItem().text(0)
+        except AttributeError:
+            it = ''
         if it and len(it) > 0:
             self.controller.sendJoinChannelRequest(self.channels[it])
             self.uiChatInputEdit.setFocus()
@@ -295,7 +298,11 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             if not self.controller.isRomAvailable(chan):
                 item.setTextColor(0, QtGui.QColor(60, 60, 60))
                 item.setTextColor(1, QtGui.QColor(60, 60, 60))
-            l.append(item)
+            if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
+                if self.controller.isRomAvailable(chan):
+                    l.append(item)
+            else:
+                l.append(item)
         self.uiChannelsTree.addTopLevelItems(l)
 
         if self.expectFirstChannelResponse:
@@ -400,6 +407,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.uiShowCountryFlagInChatAct.setChecked(True)
         if Settings.value(Settings.SHOW_TIMESTAMP_IN_CHAT):
             self.uiShowTimestampInChatAct.setChecked(True)
+        if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
+            self.uiHideGamesWithoutRomAct.setChecked(True)
         if Settings.value(Settings.AWAY):
             self.uiAwayAct.setChecked(True)
             self.uiAfkChk.setChecked(True)
@@ -575,6 +584,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiShowCountryFlagInChatAct.toggled.connect(self.__class__.toggleShowCountryFlagInChat)
         self.uiShowTimestampInChatAct.toggled.connect(self.__class__.toggleShowTimestampInChatAct)
         self.uiDisableAutoAnnounceAct.toggled.connect(self.__class__.toggleDisableAutoAnnounceUnsupported)
+        self.uiHideGamesWithoutRomAct.toggled.connect(self.toggleHideGamesWithoutRomAct)
         if Settings.value(Settings.DEBUG_LOG):
             self.uiDebugLogAct.setChecked(True)
         if Settings.value(Settings.USER_LOG_CHAT):
@@ -692,6 +702,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     @staticmethod
     def toggleShowTimestampInChatAct(state):
         Settings.setBoolean(Settings.SHOW_TIMESTAMP_IN_CHAT, state)
+
+    def toggleHideGamesWithoutRomAct(self, state):
+        Settings.setBoolean(Settings.HIDE_GAMES_WITHOUT_ROM, state)
+        self.controller.sigChannelsLoaded.emit()
 
     @staticmethod
     def toggleSound(state):

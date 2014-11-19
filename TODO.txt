@@ -2,7 +2,6 @@
 * automatically sync savestates on client start
 * option to enable/disable autocomplete-tooltips in the chat bar
 * option to enable/disable auto-coloring of nicknames
-* option to "hide missing games" in the channel list
 * add an auto-update mechanism
 * add non-port based mechanism for ping
 * auto-reconnect when connection to server is closed

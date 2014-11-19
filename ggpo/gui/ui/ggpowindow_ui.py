@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Wed Nov 19 12:13:44 2014
+# Created: Wed Nov 19 17:18:49 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,6 +31,8 @@ class Ui_MainWindow(object):
         self.uiSplitter.setObjectName(_fromUtf8("uiSplitter"))
         self.uiChannelsTree = QtGui.QTreeWidget(self.uiSplitter)
         self.uiChannelsTree.setObjectName(_fromUtf8("uiChannelsTree"))
+        self.uiChannelsTree.headerItem().setText(0, _fromUtf8("Game"))
+        self.uiChannelsTree.headerItem().setText(1, _fromUtf8("Users"))
         self.layoutWidget = QtGui.QWidget(self.uiSplitter)
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
@@ -163,6 +165,9 @@ class Ui_MainWindow(object):
         self.uiDisableAutoAnnounceAct = QtGui.QAction(MainWindow)
         self.uiDisableAutoAnnounceAct.setCheckable(True)
         self.uiDisableAutoAnnounceAct.setObjectName(_fromUtf8("uiDisableAutoAnnounceAct"))
+        self.uiHideGamesWithoutRomAct = QtGui.QAction(MainWindow)
+        self.uiHideGamesWithoutRomAct.setCheckable(True)
+        self.uiHideGamesWithoutRomAct.setObjectName(_fromUtf8("uiHideGamesWithoutRomAct"))
         self.uiShowTimestampInChatAct = QtGui.QAction(MainWindow)
         self.uiShowTimestampInChatAct.setCheckable(True)
         self.uiShowTimestampInChatAct.setObjectName(_fromUtf8("uiShowTimestampInChatAct"))
@@ -212,6 +217,7 @@ class Ui_MainWindow(object):
         self.menuSetting.addAction(self.uiShowCountryFlagInChatAct)
         self.menuSetting.addAction(self.uiShowTimestampInChatAct)
         self.menuSetting.addAction(self.uiDisableAutoAnnounceAct)
+        self.menuSetting.addAction(self.uiHideGamesWithoutRomAct)
         self.menuSetting.addAction(self.menuLogging.menuAction())
         self.menuAbout.addAction(self.uiSRKForumAct)
         self.menuAbout.addAction(self.uiSRKWikiAct)
@@ -295,6 +301,7 @@ class Ui_MainWindow(object):
         self.uiCustomEmoticonsAct.setText(QtGui.QApplication.translate("MainWindow", "Custom &Emoticons", None, QtGui.QApplication.UnicodeUTF8))
         self.uiShowCountryFlagInChatAct.setText(QtGui.QApplication.translate("MainWindow", "Show &country flag in chat", None, QtGui.QApplication.UnicodeUTF8))
         self.uiDisableAutoAnnounceAct.setText(QtGui.QApplication.translate("MainWindow", "&Disable auto announce in unsupported room", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiHideGamesWithoutRomAct.setText(QtGui.QApplication.translate("MainWindow", "Hide games with missing ROMs", None, QtGui.QApplication.UnicodeUTF8))
         self.uiShowTimestampInChatAct.setText(QtGui.QApplication.translate("MainWindow", "Show timestamp in chat", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLocateCustomChallengeSoundAct.setText(QtGui.QApplication.translate("MainWindow", "Locate Custom Challenge Sound", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLogChatAct.setText(QtGui.QApplication.translate("MainWindow", "Chat history", None, QtGui.QApplication.UnicodeUTF8))

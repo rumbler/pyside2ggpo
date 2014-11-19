@@ -19,6 +19,7 @@ class Settings:
     NOTIFY_PLAYER_STATE_CHANGE = 'notifyPlayerStateChange'
     SHOW_COUNTRY_FLAG_IN_CHAT = 'showCountryFlagInChat'
     SHOW_TIMESTAMP_IN_CHAT = 'ShowTimestampInChat'
+    HIDE_GAMES_WITHOUT_ROM = 'HideGamesWithoutRom'
     WINDOW_GEOMETRY = 'mainWindowGeometry'
     WINDOW_STATE = 'mainWindowState'
     SPLITTER_STATE = 'splitterState'

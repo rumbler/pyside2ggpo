@@ -36,7 +36,18 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTreeWidget" name="uiChannelsTree"/>
+      <widget class="QTreeWidget" name="uiChannelsTree">
+       <column>
+        <property name="text">
+         <string notr="true">Game</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string notr="true">Users</string>
+        </property>
+       </column>
+      </widget>
       <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="bottomMargin">
@@ -155,6 +166,7 @@
     <addaction name="uiShowCountryFlagInChatAct"/>
     <addaction name="uiShowTimestampInChatAct"/>
     <addaction name="uiDisableAutoAnnounceAct"/>
+    <addaction name="uiHideGamesWithoutRomAct"/>
     <addaction name="menuLogging"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
@@ -430,6 +442,14 @@
    </property>
    <property name="text">
     <string>&amp;Disable auto announce in unsupported room</string>
+   </property>
+  </action>
+  <action name="uiHideGamesWithoutRomAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hide games with missing ROMs</string>
    </property>
   </action>
   <action name="uiShowTimestampInChatAct">
