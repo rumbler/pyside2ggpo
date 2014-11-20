@@ -1,7 +1,7 @@
 * automatically sync savestates on client start
-* option to enable/disable autocomplete-tooltips in the chat bar
-* add non-port based mechanism for ping
 * backup the ggpofba-ng.ini file (after every FBA launch), restore it on start if .dat not present (eg: after update)
 
+* add non-port based mechanism for ping
 * add an auto-update mechanism
+* add a search filter in the game list
 * auto-reconnect when connection to server is closed
