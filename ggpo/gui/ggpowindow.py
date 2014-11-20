@@ -298,7 +298,6 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 title = self.controller.channels['lobby']['title']
                 sortedRooms.insert(0, title)
                 self.channels[title] = 'lobby'
-                self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(0,0), True)
 
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)
             root = self.uiChannelsTree.invisibleRootItem()
@@ -332,6 +331,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     self.controller.sendJoinChannelRequest(lastChannel)
             else:
                 self.controller.sendJoinChannelRequest("lobby")
+                self.uiChannelsTree.setItemSelected(root.child(0), True)
 
             self.uiChannelsTree.itemSelectionChanged.connect(self.joinChannel)
 
