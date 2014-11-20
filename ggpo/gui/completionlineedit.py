@@ -59,7 +59,7 @@ class PlayerNameCompletionModel(QAbstractItemModel):
 
     def setFilter(self, prefix):
         self._prefix = prefix.lower()
-        self._filtered = [x for x in self._data if x.lower().find(self._prefix) != -1]
+        self._filtered = [x for x in self._data if x.lower().find(self._prefix, 0) != -1]
         self._rowcount = len(self._filtered)
         # noinspection PyUnresolvedReferences
         self.dataChanged.emit(self.createIndex(0, 0), self.createIndex(self._rowcount - 1, 0))
