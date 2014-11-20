@@ -439,7 +439,7 @@ class Controller(QtCore.QObject):
         self.sendListUsers()
 
     def parseListChannelsResponse(self, data):
-        self.channels = {}
+        #self.channels = {}
         if len(data) <= 8:
             logdebug().error('No channels found')
             self.sigChannelsLoaded.emit()

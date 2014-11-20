@@ -45,6 +45,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.addSplitterHandleToggleButton()
         self.uiChatHistoryTxtB.anchorClicked.connect(self.onAnchorClicked)
         self.autoAnnounceUnsupportedTime = 0
+        self.refreshChannelsListTime = time.time()
 
     def aboutDialog(self):
         QtGui.QMessageBox.information(self, 'About', copyright.about())
@@ -276,46 +277,63 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             UnsupportedSavestates.check(self, self.onStatusMessage, self.onRemoteHasUpdates)
 
     def onListChannelsReceived(self):
-        header=QtGui.QTreeWidgetItem(["Game","Users"])
-        self.uiChannelsTree.setHeaderItem(header)
 
-        self.uiChannelsTree.clear()
-        self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values() if c['room'] != 'lobby')
-        sortedRooms = sorted(self.channels.keys())
-
-        if 'lobby' in self.controller.channels:
-            title = self.controller.channels['lobby']['title']
-            sortedRooms.insert(0, title)
-            self.channels[title] = 'lobby'
-            self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(0,0), True)
-
-        l=[]
-        for i in sortedRooms:
-            item = QtGui.QTreeWidgetItem()
-            chan = self.channels[i]
-            item.setText(0, i)
-            item.setText(1, str(self.controller.channels[chan]['users']))
-            if not self.controller.isRomAvailable(chan):
-                item.setTextColor(0, QtGui.QColor(60, 60, 60))
-                item.setTextColor(1, QtGui.QColor(60, 60, 60))
-            if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
-                if self.controller.isRomAvailable(chan):
-                    l.append(item)
-            else:
-                l.append(item)
-        self.uiChannelsTree.addTopLevelItems(l)
-
-        if self.expectFirstChannelResponse:
+        if not self.expectFirstChannelResponse:
+            root = self.uiChannelsTree.invisibleRootItem()
+            child_count = root.childCount()
+            for i in range(child_count):
+                item = root.child(i)
+                n = item.text(0)
+                chan = self.channels[n]
+                item.setText(1, str(self.controller.channels[chan]['users']))
+        else:
             self.expectFirstChannelResponse = False
+            self.uiChannelsTree.clear()
+
+            self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values() if c['room'] != 'lobby')
+            sortedRooms = sorted(self.channels.keys())
+
+            if 'lobby' in self.controller.channels:
+                title = self.controller.channels['lobby']['title']
+                sortedRooms.insert(0, title)
+                self.channels[title] = 'lobby'
+                self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(0,0), True)
+
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)
+            root = self.uiChannelsTree.invisibleRootItem()
+            n=0
+            idx=0
+            l=[]
+            for i in sortedRooms:
+                item = QtGui.QTreeWidgetItem()
+                chan = self.channels[i]
+                item.setText(0, i)
+                item.setText(1, str(self.controller.channels[chan]['users']))
+                if not self.controller.isRomAvailable(chan):
+                    item.setTextColor(0, QtGui.QColor(60, 60, 60))
+                    item.setTextColor(1, QtGui.QColor(60, 60, 60))
+                if chan==lastChannel:
+                    idx=n
+                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
+                    if self.controller.isRomAvailable(chan):
+                        l.append(item)
+                        n+=1
+                else:
+                    l.append(item)
+                    n+=1
+
+            self.uiChannelsTree.addTopLevelItems(l)
+
             if lastChannel in self.controller.channels:
-                idx = sortedRooms.index(self.controller.channels[lastChannel]['title'])
-                self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(0,0), False)
-                self.uiChannelsTree.setItemSelected(self.uiChannelsTree.itemAt(idx,0), True)
-                self.controller.sendJoinChannelRequest(lastChannel)
+                self.uiChannelsTree.setItemSelected(root.child(0), False)
+                self.uiChannelsTree.setItemSelected(root.child(idx), True)
+                if self.controller.channel == 'lobby':
+                    self.controller.sendJoinChannelRequest(lastChannel)
             else:
                 self.controller.sendJoinChannelRequest("lobby")
-        self.uiChannelsTree.itemSelectionChanged.connect(self.joinChannel)
+
+            self.uiChannelsTree.itemSelectionChanged.connect(self.joinChannel)
+
 
     def onMOTDReceived(self, channel, topic, msg):
         self.uiChatHistoryTxtB.setHtml('<font color="#034456"><strong>'+channel+'</strong> || <strong>'+ topic +'</strong></font><br/><br/>' + nl2br(replaceURLs(msg)) + '<br/><br/>Type /help to see a list of commands<br/><br/>')
@@ -343,6 +361,11 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             elif state == PlayerStates.AFK:
                 self.notifyStateChange(name, " is away")
         self.updateStatusBar()
+
+        # refresh the channel list
+        if time.time() - self.refreshChannelsListTime > 300:
+            self.refreshChannelsListTime = time.time()
+            self.controller.sendListChannels()
 
     def onStatusMessage(self, msg):
         self.appendChat(ColorTheme.statusHtml(msg))
@@ -714,7 +737,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def toggleHideGamesWithoutRomAct(self, state):
         Settings.setBoolean(Settings.HIDE_GAMES_WITHOUT_ROM, state)
-        self.controller.sigChannelsLoaded.emit()
+        if not self.expectFirstChannelResponse:
+            self.expectFirstChannelResponse=True
+            self.controller.sigChannelsLoaded.emit()
 
     @staticmethod
     def toggleSound(state):

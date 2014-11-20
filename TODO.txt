@@ -2,7 +2,7 @@
 * option to enable/disable autocomplete-tooltips in the chat bar
 * add non-port based mechanism for ping
 * backup the ggpofba-ng.ini file (after every FBA launch), restore it on start if .dat not present (eg: after update)
+* keep column position in channels list (and make it sortable?)
 
-* add a mechanism to refresh the number of users in the channel list
 * add an auto-update mechanism
 * auto-reconnect when connection to server is closed
