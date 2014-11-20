@@ -340,6 +340,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.notifyStateChange(name, " becomes available")
             elif state == PlayerStates.PLAYING:
                 self.notifyStateChange(name, " is in a game")
+            elif state == PlayerStates.AFK:
+                self.notifyStateChange(name, " is away")
         self.updateStatusBar()
 
     def onStatusMessage(self, msg):
