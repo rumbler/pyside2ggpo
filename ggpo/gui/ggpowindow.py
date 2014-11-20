@@ -90,6 +90,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         Settings.setValue(Settings.WINDOW_STATE, self.saveState())
         Settings.setValue(Settings.SPLITTER_STATE, self.uiSplitter.saveState())
         Settings.setValue(Settings.TABLE_HEADER_STATE, self.uiPlayersTableV.horizontalHeader().saveState())
+        Settings.setValue(Settings.CHANNELS_HEADER_STATE, self.uiChannelsTree.header().saveState())
         super(GGPOWindow, self).closeEvent(evnt)
 
     @staticmethod
@@ -127,7 +128,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def joinChannel(self, *args):
         try:
-            it = self.uiChannelsTree.currentItem().text(0)
+            it = self.uiChannelsTree.currentItem().text(1)
         except AttributeError:
             it = ''
         if it and len(it) > 0:
@@ -283,9 +284,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             child_count = root.childCount()
             for i in range(child_count):
                 item = root.child(i)
-                n = item.text(0)
+                n = item.text(1)
                 chan = self.channels[n]
-                item.setText(1, str(self.controller.channels[chan]['users']))
+                item.setText(0, str(self.controller.channels[chan]['users']))
         else:
             self.expectFirstChannelResponse = False
             self.uiChannelsTree.clear()
@@ -307,8 +308,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             for i in sortedRooms:
                 item = QtGui.QTreeWidgetItem()
                 chan = self.channels[i]
-                item.setText(0, i)
-                item.setText(1, str(self.controller.channels[chan]['users']))
+                item.setText(0, str(self.controller.channels[chan]['users']))
+                item.setText(1, i)
                 if not self.controller.isRomAvailable(chan):
                     item.setTextColor(0, QtGui.QColor(60, 60, 60))
                     item.setTextColor(1, QtGui.QColor(60, 60, 60))
@@ -458,6 +459,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         saved = Settings.value(Settings.TABLE_HEADER_STATE)
         if saved:
             self.uiPlayersTableV.horizontalHeader().restoreState(saved)
+        saved = Settings.value(Settings.CHANNELS_HEADER_STATE)
+        if saved:
+            self.uiChannelsTree.header().restoreState(saved)
+        else:
+            self.uiChannelsTree.setColumnWidth(0,50)
+            self.uiChannelsTree.setColumnWidth(1,300)
 
     def returnPressed(self):
         line = self.uiChatInputEdit.text().strip()

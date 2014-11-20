@@ -25,6 +25,7 @@ class Settings:
     WINDOW_STATE = 'mainWindowState'
     SPLITTER_STATE = 'splitterState'
     TABLE_HEADER_STATE = 'tableHeaderState'
+    CHANNELS_HEADER_STATE = 'channelsTreeState'
     EMOTICON_DIALOG_GEOMETRY = 'emoticonDialogGeometry'
     SAVESTATES_DIALOG_GEOMETRY = 'savestatesDialogGeometry'
     SAVESTATES_DIALOG_TABLE_HEADER_STATE = 'savestatesDialogTableHeaderState'

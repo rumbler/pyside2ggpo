@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Wed Nov 19 18:28:09 2014
+# Created: Thu Nov 20 15:44:15 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,9 +31,9 @@ class Ui_MainWindow(object):
         self.uiSplitter.setObjectName(_fromUtf8("uiSplitter"))
         self.uiChannelsTree = QtGui.QTreeWidget(self.uiSplitter)
         self.uiChannelsTree.setObjectName(_fromUtf8("uiChannelsTree"))
-        self.uiChannelsTree.headerItem().setText(0, _fromUtf8("Game"))
+        self.uiChannelsTree.headerItem().setText(0, _fromUtf8("#"))
         self.uiChannelsTree.headerItem().setTextAlignment(0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
-        self.uiChannelsTree.headerItem().setText(1, _fromUtf8("Users"))
+        self.uiChannelsTree.headerItem().setText(1, _fromUtf8("Game"))
         self.uiChannelsTree.headerItem().setTextAlignment(1, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.layoutWidget = QtGui.QWidget(self.uiSplitter)
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
