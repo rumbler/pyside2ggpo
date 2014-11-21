@@ -369,7 +369,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.updateStatusBar()
 
         # refresh the channel list
-        if time.time() - self.refreshChannelsListTime > 300:
+        sizes = self.uiSplitter.sizes()
+        if time.time() - self.refreshChannelsListTime > 300 and sizes[0] > 0:
             self.refreshChannelsListTime = time.time()
             self.controller.sendListChannels()
 
