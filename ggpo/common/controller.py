@@ -7,6 +7,7 @@ import time
 import struct
 import select
 import errno
+from shutil import copyfile
 from random import randint
 from subprocess import Popen
 from PyQt4 import QtCore
@@ -661,6 +662,14 @@ class Controller(QtCore.QObject):
             fba = fba.replace('ggpofba-ng.exe', 'ggpofba.sh')
         args = [fba, quark, '-w']
 
+        # if dat file doesn't exist, restore FBA settings from backup
+        fbaini = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.ini')
+        fbadat = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.roms.dat')
+        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpofba-ng.bkp.ini')
+        if not os.path.isfile(fbadat) and os.path.isfile(fbainibkp):
+            self.sigStatusMessage.emit("Restoring emulator settings")
+            copyfile(fbainibkp, fbaini)
+
         logdebug().info(" ".join(args))
         try:
             # starting python from cmd.exe and redirect stderr and we got
@@ -674,6 +683,10 @@ class Controller(QtCore.QObject):
                 devnull.close()
         except OSError, ex:
             self.sigStatusMessage.emit("Error executing " + " ".join(args) + "\n" + repr(ex))
+
+        # backup FBA settings
+        if os.path.isfile(fbaini) and os.path.isfile(fbadat):
+            copyfile(fbaini, fbainibkp)
 
     def saveIgnored(self):
         Settings.setPythonValue(Settings.IGNORED, self.ignored)
