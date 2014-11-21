@@ -124,6 +124,9 @@ class Controller(QtCore.QObject):
             return False
 
     def isRomAvailable(self, channel):
+        if channel=='lobby':
+            # always true for lobby
+            return True
         romdir=Settings.value(Settings.ROMS_DIR)
         if romdir:
             rom = os.path.join(romdir, "{}.zip".format(channel))

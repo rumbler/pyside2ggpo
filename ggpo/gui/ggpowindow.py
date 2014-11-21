@@ -132,8 +132,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         except AttributeError:
             it = ''
         if it and len(it) > 0:
-            self.controller.sendJoinChannelRequest(self.channels[it])
-            self.uiChatInputEdit.setFocus()
+            if not self.expectFirstChannelResponse:
+                self.controller.sendJoinChannelRequest(self.channels[it])
+                self.uiChatInputEdit.setFocus()
 
     def locateCustomChallengeSound(self):
         oldval = Settings.value(Settings.CUSTOM_CHALLENGE_SOUND_LOCATION)
@@ -288,8 +289,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 chan = self.channels[n]
                 item.setText(0, str(self.controller.channels[chan]['users']))
         else:
-            self.expectFirstChannelResponse = False
             self.uiChannelsTree.clear()
+            try:
+                self.uiChannelsTree.itemSelectionChanged.disconnect(self.joinChannel)
+            except:
+                pass
+            self.expectFirstChannelResponse = False
 
             self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values() if c['room'] != 'lobby')
             sortedRooms = sorted(self.channels.keys())
@@ -300,7 +305,6 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.channels[title] = 'lobby'
 
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)
-            root = self.uiChannelsTree.invisibleRootItem()
             n=0
             idx=0
             l=[]
@@ -309,13 +313,13 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 chan = self.channels[i]
                 item.setText(0, str(self.controller.channels[chan]['users']))
                 item.setText(1, i)
-                if not self.controller.isRomAvailable(chan):
+                if not self.controller.isRomAvailable(chan) and chan!='lobby':
                     item.setTextColor(0, QtGui.QColor(60, 60, 60))
                     item.setTextColor(1, QtGui.QColor(60, 60, 60))
                 if chan==lastChannel:
                     idx=n
                 if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
-                    if self.controller.isRomAvailable(chan):
+                    if self.controller.isRomAvailable(chan) or chan==self.controller.channel:
                         l.append(item)
                         n+=1
                 else:
@@ -323,6 +327,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     n+=1
 
             self.uiChannelsTree.addTopLevelItems(l)
+            root = self.uiChannelsTree.invisibleRootItem()
 
             if lastChannel in self.controller.channels:
                 self.uiChannelsTree.setItemSelected(root.child(0), False)
