@@ -242,7 +242,12 @@ class Controller(QtCore.QObject):
                 if status != 0:
                     codestr = Protocol.codeToString(origRequest)
                     logdebug().error("{} failed, data {}".format(codestr, repr(data)))
-                    self.sigActionFailed.emit(codestr)
+                    if codestr=="SEND_CHALLENGE":
+                        self.sigActionFailed.emit("SEND_CHALLENGE failed")
+                    elif codestr=="CANCEL_CHALLENGE":
+                        pass
+                    else:
+                        self.sigActionFailed.emit(codestr)
             else:
                 logdebug().error("Unknown response for {}; seq {}; data {}".format(
                     Protocol.codeToString(origRequest), seq, repr(data)))
