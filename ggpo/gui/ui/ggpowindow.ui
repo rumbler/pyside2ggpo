@@ -128,9 +128,6 @@
     <addaction name="uiContractPlayerListAct"/>
     <addaction name="uiExpandPlayerListAct"/>
     <addaction name="separator"/>
-    <addaction name="uiSelectUnsupportedSavestateAct"/>
-    <addaction name="uiSyncUnsupportedSavestatesAct"/>
-    <addaction name="separator"/>
     <addaction name="uiQuitAct"/>
    </widget>
    <widget class="QMenu" name="menuSetting">
@@ -165,7 +162,6 @@
     <addaction name="uiLocateGgpofbaAct"/>
     <addaction name="uiLocateROMsAct"/>
     <addaction name="uiLocateCustomChallengeSoundAct"/>
-    <addaction name="uiLocateUnsupportedSavestatesDirAct"/>
     <addaction name="uiLocateGeommdbAct"/>
     <addaction name="separator"/>
     <addaction name="uiNotifyPlayerStateChangeAct"/>

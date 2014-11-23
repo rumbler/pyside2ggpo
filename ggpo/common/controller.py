@@ -18,7 +18,7 @@ from ggpo.common.playerstate import PlayerStates
 from ggpo.common.protocol import Protocol
 from ggpo.common.settings import Settings
 from ggpo.common.unsupportedsavestates import readLocalJsonDigest
-from ggpo.common.util import findFba, logdebug, loguser, packagePathJoin, findUnsupportedGamesavesDir, sha256digest
+from ggpo.common.util import findFba, logdebug, loguser, packagePathJoin, findGamesavesDir, sha256digest
 from ggpo.gui.colortheme import ColorTheme
 from ggpo.common import copyright
 
@@ -156,7 +156,7 @@ class Controller(QtCore.QObject):
 
     def checkUnsupportedRom(self):
         if self.fba:
-            d = findUnsupportedGamesavesDir()
+            d = findGamesavesDir()
             if d:
                 unsupported = os.path.join(os.path.dirname(self.fba), 'savestates', 'unsupported_ggpo.fs')
                 if os.path.isfile(unsupported):

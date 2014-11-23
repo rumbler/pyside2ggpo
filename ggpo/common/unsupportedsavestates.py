@@ -8,12 +8,12 @@ import urllib
 import urllib2
 import time
 from PyQt4 import QtCore
-from ggpo.common.util import logdebug, findUnsupportedGamesavesDir, sha256digest
+from ggpo.common.util import logdebug, findGamesavesDir, sha256digest
 
 
 def readLocalJsonDigest():
     localJsonDigest = {}
-    d = findUnsupportedGamesavesDir()
+    d = findGamesavesDir()
     if d:
         localjson = os.path.join(d, SyncWorker.JSON_INDEX_FILENAME)
         if os.path.isfile(localjson):
@@ -29,7 +29,7 @@ def readLocalJsonDigest():
 
 def writeLocalJsonDigest():
     localJsonDigest = {}
-    d = findUnsupportedGamesavesDir()
+    d = findGamesavesDir()
     if d:
         localjson = os.path.join(d, SyncWorker.JSON_INDEX_FILENAME)
         for filename in glob.glob(os.path.join(d, '*.fs')):
@@ -46,7 +46,7 @@ def writeLocalJsonDigest():
 class SyncWorker(QtCore.QObject):
     sigFinished = QtCore.pyqtSignal(int, int, int)
     sigStatusMessage = QtCore.pyqtSignal(str)
-    SAVESTATES_GITHUB_BASE_URL = 'https://raw.github.com/afurlani/ggpostates/master/'
+    SAVESTATES_GITHUB_BASE_URL = 'https://raw.github.com/poliva/fightcadestates/master/'
     JSON_INDEX_FILENAME = 'index.json'
     SAVESTATES_INDEX_URL = SAVESTATES_GITHUB_BASE_URL + JSON_INDEX_FILENAME
 
@@ -58,9 +58,9 @@ class SyncWorker(QtCore.QObject):
         self.nochange = 0
 
     def download(self):
-        d = findUnsupportedGamesavesDir()
+        d = findGamesavesDir()
         if not d:
-            self.sigStatusMessage.emit('Unsupported Savestates Directory is not set')
+            self.sigStatusMessage.emit('Can\'t find Savestates Directory')
             self.sigFinished.emit(self.added, self.updated, self.nochange)
             return
         localJsonDigest = readLocalJsonDigest()
@@ -115,8 +115,11 @@ class UnsupportedSavestates(QtCore.QObject):
 
     @classmethod
     def cleanup(cls, x, y, z):
-        cls._thread.quit()
-        cls._thread.wait()
+        try:
+            cls._thread.quit()
+            cls._thread.wait()
+        except:
+            pass
         cls._thread = None
         cls._worker = None
 

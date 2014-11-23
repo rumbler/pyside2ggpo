@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Thu Nov 20 15:44:15 2014
+# Created: Sun Nov 23 18:52:51 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -198,9 +198,6 @@ class Ui_MainWindow(object):
         self.menuAction.addAction(self.uiContractPlayerListAct)
         self.menuAction.addAction(self.uiExpandPlayerListAct)
         self.menuAction.addSeparator()
-        self.menuAction.addAction(self.uiSelectUnsupportedSavestateAct)
-        self.menuAction.addAction(self.uiSyncUnsupportedSavestatesAct)
-        self.menuAction.addSeparator()
         self.menuAction.addAction(self.uiQuitAct)
         self.menuLogging.addAction(self.uiLogChatAct)
         self.menuLogging.addAction(self.uiLogPlayHistoryAct)
@@ -215,7 +212,6 @@ class Ui_MainWindow(object):
         self.menuSetting.addAction(self.uiLocateGgpofbaAct)
         self.menuSetting.addAction(self.uiLocateROMsAct)
         self.menuSetting.addAction(self.uiLocateCustomChallengeSoundAct)
-        self.menuSetting.addAction(self.uiLocateUnsupportedSavestatesDirAct)
         self.menuSetting.addAction(self.uiLocateGeommdbAct)
         self.menuSetting.addSeparator()
         self.menuSetting.addAction(self.uiNotifyPlayerStateChangeAct)

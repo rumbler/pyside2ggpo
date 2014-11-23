@@ -37,11 +37,8 @@ def defaultdictinit(startdic):
     return d
 
 
-def findUnsupportedGamesavesDir():
-    d = Settings.value(Settings.UNSUPPORTED_GAMESAVES_DIR)
-    if d and os.path.isdir(d):
-        return d
-    d = os.path.abspath(os.path.join(expanduser("~"), "ggpoUnsupportedGamesavestates"))
+def findGamesavesDir():
+    d = os.path.join(os.path.dirname(findFba()),"savestates")
     if d and os.path.isdir(d):
         return d
     # noinspection PyBroadException

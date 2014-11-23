@@ -7,7 +7,7 @@ from PyQt4.QtCore import Qt
 import operator
 from ggpo.common.allgames import allgames
 from ggpo.common.settings import Settings
-from ggpo.common.util import findUnsupportedGamesavesDir
+from ggpo.common.util import findGamesavesDir
 from ggpo.gui.ui.savestatesdialog_ui import Ui_SavestatesDialog
 
 
@@ -55,7 +55,7 @@ class SavestatesModel(QtCore.QAbstractTableModel):
         return len(self.filteredGames)
 
     def scanFsFiles(self):
-        d = findUnsupportedGamesavesDir()
+        d = findGamesavesDir()
         if not d:
             return
         for f in glob(os.path.join(d, '*.fs')):

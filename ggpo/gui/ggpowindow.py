@@ -18,7 +18,7 @@ from ggpo.common import copyright
 from ggpo.common.cliclient import CLI
 from ggpo.common.playerstate import PlayerStates
 from ggpo.common.settings import Settings
-from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, replaceReplayID, findUnsupportedGamesavesDir, \
+from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, replaceReplayID, findGamesavesDir, \
     defaultdictinit
 from ggpo.common.unsupportedsavestates import UnsupportedSavestates
 from ggpo.common.allgames import *
@@ -46,6 +46,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiChatHistoryTxtB.anchorClicked.connect(self.onAnchorClicked)
         self.autoAnnounceUnsupportedTime = 0
         self.refreshChannelsListTime = time.time()
+        self.savestatesChecked = False
 
     def aboutDialog(self):
         QtGui.QMessageBox.information(self, 'About', copyright.about())
@@ -246,8 +247,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         totalchanged = added + updated
         if totalchanged:
             self.appendChat(ColorTheme.statusHtml(
-                "{} savestate(s) added/updated.\nGo to `Action > Sync Unsupported Savestates` for updates".format(
+                "Syncronizing {} savestate(s). Please wait...".format(
                     totalchanged)))
+            UnsupportedSavestates.sync(self.onStatusMessage)
 
     def onChallengeCancelled(self, name):
         self.appendChat(ColorTheme.statusHtml(name + " cancelled challenge"))
@@ -276,8 +278,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def onChannelJoined(self):
         self.updateStatusBar()
-        if self.controller.channel == 'unsupported':
+        if not self.savestatesChecked:
             UnsupportedSavestates.check(self, self.onStatusMessage, self.onRemoteHasUpdates)
+            self.savestatesChecked=True
 
     def onListChannelsReceived(self):
 
@@ -490,7 +493,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if not self.controller.fba:
             self.onStatusMessage('ggpofba is not set, cannot locate unsupported_ggpo.fs')
             return
-        d = findUnsupportedGamesavesDir()
+        d = findGamesavesDir()
         if not d or not os.path.isdir(d):
             self.onStatusMessage('Unsupported Savestates Directory is not set')
             return
@@ -591,8 +594,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiExpandChannelSidebarAct.triggered.connect(self.onSplitterHotkeyResizeAction(channelPart, +1))
         self.uiContractPlayerListAct.triggered.connect(self.onSplitterHotkeyResizeAction(playerViewPart, -1))
         self.uiExpandPlayerListAct.triggered.connect(self.onSplitterHotkeyResizeAction(playerViewPart, +1))
-        self.uiSelectUnsupportedSavestateAct.triggered.connect(self.selectUnsupportedSavestate)
-        self.uiSyncUnsupportedSavestatesAct.triggered.connect(lambda: UnsupportedSavestates.sync(self.onStatusMessage))
+        #self.uiSelectUnsupportedSavestateAct.triggered.connect(self.selectUnsupportedSavestate)
+        #self.uiSyncUnsupportedSavestatesAct.triggered.connect(lambda: UnsupportedSavestates.sync(self.onStatusMessage))
 
     def setupMenuHelp(self):
         self.uiSRKForumAct.triggered.connect(
@@ -615,7 +618,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
         self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
         self.uiLocateROMsAct.triggered.connect(self.locateROMsDir)
-        self.uiLocateUnsupportedSavestatesDirAct.triggered.connect(self.locateUnsupportedSavestatesDirAct)
+        #self.uiLocateUnsupportedSavestatesDirAct.triggered.connect(self.locateUnsupportedSavestatesDirAct)
         self.uiLocateCustomChallengeSoundAct.triggered.connect(self.locateCustomChallengeSound)
         if GeoIP2Reader:
             self.uiLocateGeommdbAct.triggered.connect(self.locateGeoMMDB)
