@@ -168,7 +168,6 @@
     <addaction name="uiShowCountryFlagInChatAct"/>
     <addaction name="uiShowTimestampInChatAct"/>
     <addaction name="uiDisableAutoColorNicks"/>
-    <addaction name="uiDisableAutoAnnounceAct"/>
     <addaction name="uiHideGamesWithoutRomAct"/>
     <addaction name="menuLogging"/>
    </widget>

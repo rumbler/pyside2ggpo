@@ -627,7 +627,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiNotifyPlayerStateChangeAct.toggled.connect(self.__class__.toggleNotifyPlayerStateChange)
         self.uiShowCountryFlagInChatAct.toggled.connect(self.__class__.toggleShowCountryFlagInChat)
         self.uiShowTimestampInChatAct.toggled.connect(self.__class__.toggleShowTimestampInChatAct)
-        self.uiDisableAutoAnnounceAct.toggled.connect(self.__class__.toggleDisableAutoAnnounceUnsupported)
+        #self.uiDisableAutoAnnounceAct.toggled.connect(self.__class__.toggleDisableAutoAnnounceUnsupported)
         self.uiDisableAutoColorNicks.toggled.connect(self.__class__.toggleDisableAutoColorNicks)
         self.uiHideGamesWithoutRomAct.toggled.connect(self.toggleHideGamesWithoutRomAct)
         if Settings.value(Settings.DEBUG_LOG):

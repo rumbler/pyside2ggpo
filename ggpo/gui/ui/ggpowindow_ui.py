@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Sun Nov 23 18:52:51 2014
+# Created: Sun Nov 23 22:24:55 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -218,7 +218,6 @@ class Ui_MainWindow(object):
         self.menuSetting.addAction(self.uiShowCountryFlagInChatAct)
         self.menuSetting.addAction(self.uiShowTimestampInChatAct)
         self.menuSetting.addAction(self.uiDisableAutoColorNicks)
-        self.menuSetting.addAction(self.uiDisableAutoAnnounceAct)
         self.menuSetting.addAction(self.uiHideGamesWithoutRomAct)
         self.menuSetting.addAction(self.menuLogging.menuAction())
         self.menuAbout.addAction(self.uiSRKForumAct)
