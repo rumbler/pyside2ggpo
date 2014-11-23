@@ -3,8 +3,10 @@
 # define authorship information
 __authors__ = ['papasi', ' pof']
 __author__ = ','.join(__authors__)
-__url__ = 'https://github.com/doctorguile/pyqtggpo'
+__url__ = 'https://github.com/poliva/pyqtggpo'
 __credits__ = [
+    ('papasi',
+     'https://github.com/doctorguile/pyqtggpo'),
     ('Tony Cannon (Ponder), Tom Cannon (ProtomCannon)',
      'http://ggpo.net'),
     ('Pau Oliva Fora (@pof)',
@@ -16,7 +18,7 @@ __license__ = 'GPL'
 
 # define version information
 __requires__ = ['PyQt4']
-__version__ = 32
+__version__ = 33
 
 
 def versionString():
