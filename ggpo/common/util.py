@@ -139,7 +139,7 @@ def packagePathJoin(*args):
 
 
 def replaceURLs(text):
-    return re.sub(r'(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+)',
+    return re.sub(r'(https?:\/\/\S+)',
                   r'<a href="\1"><font color=green>\1</font></a>', text)
 
 def replaceReplayID(text):
