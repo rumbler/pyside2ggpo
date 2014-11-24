@@ -312,7 +312,7 @@
   </action>
   <action name="uiLocateROMsAct">
    <property name="text">
-    <string>Locate &amp;ROMs folder</string>
+    <string>Locate &amp;ROMs Folder</string>
    </property>
   </action>
   <action name="uiLocateGeommdbAct">
@@ -433,7 +433,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show &amp;country flag in chat</string>
+    <string>Show Country Flag in Chat</string>
    </property>
   </action>
   <action name="uiDisableAutoAnnounceAct">
@@ -449,7 +449,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Hide games with missing ROMs</string>
+    <string>Hide Games with Missing ROMs</string>
    </property>
   </action>
   <action name="uiShowTimestampInChatAct">
@@ -457,7 +457,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show timestamp in chat</string>
+    <string>Show Timestamp in Chat</string>
    </property>
   </action>
   <action name="uiDisableAutoColorNicks">
@@ -465,7 +465,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Disable auto-color of nicknames</string>
+    <string>Disable auto-color of Nicknames</string>
    </property>
   </action>
   <action name="uiLocateCustomChallengeSoundAct">

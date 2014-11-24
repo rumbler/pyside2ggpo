@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Mon Nov 24 02:16:35 2014
+# Created: Mon Nov 24 02:38:05 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -274,7 +274,7 @@ class Ui_MainWindow(object):
         self.uiEmoticonAct.setText(QtGui.QApplication.translate("MainWindow", "&Insert Emoticon", None, QtGui.QApplication.UnicodeUTF8))
         self.uiEmoticonAct.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+I", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLocateGgpofbaAct.setText(QtGui.QApplication.translate("MainWindow", "&Locate ggpofba-ng.exe", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiLocateROMsAct.setText(QtGui.QApplication.translate("MainWindow", "Locate &ROMs folder", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiLocateROMsAct.setText(QtGui.QApplication.translate("MainWindow", "Locate &ROMs Folder", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLocateGeommdbAct.setText(QtGui.QApplication.translate("MainWindow", "Locate &GeoIP mmdb", None, QtGui.QApplication.UnicodeUTF8))
         self.uiNotifyPlayerStateChangeAct.setText(QtGui.QApplication.translate("MainWindow", "&Notify Player State Change", None, QtGui.QApplication.UnicodeUTF8))
         self.uiFocusOnChatAct.setText(QtGui.QApplication.translate("MainWindow", "Foc&us on chat", None, QtGui.QApplication.UnicodeUTF8))
@@ -298,11 +298,11 @@ class Ui_MainWindow(object):
         self.uiNormalThemeAct.setText(QtGui.QApplication.translate("MainWindow", "&Normal", None, QtGui.QApplication.UnicodeUTF8))
         self.action0.setText(QtGui.QApplication.translate("MainWindow", "0", None, QtGui.QApplication.UnicodeUTF8))
         self.uiCustomEmoticonsAct.setText(QtGui.QApplication.translate("MainWindow", "Custom &Emoticons", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiShowCountryFlagInChatAct.setText(QtGui.QApplication.translate("MainWindow", "Show &country flag in chat", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiShowCountryFlagInChatAct.setText(QtGui.QApplication.translate("MainWindow", "Show Country Flag in Chat", None, QtGui.QApplication.UnicodeUTF8))
         self.uiDisableAutoAnnounceAct.setText(QtGui.QApplication.translate("MainWindow", "&Disable auto announce in unsupported room", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiHideGamesWithoutRomAct.setText(QtGui.QApplication.translate("MainWindow", "Hide games with missing ROMs", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiShowTimestampInChatAct.setText(QtGui.QApplication.translate("MainWindow", "Show timestamp in chat", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiDisableAutoColorNicks.setText(QtGui.QApplication.translate("MainWindow", "Disable auto-color of nicknames", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiHideGamesWithoutRomAct.setText(QtGui.QApplication.translate("MainWindow", "Hide Games with Missing ROMs", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiShowTimestampInChatAct.setText(QtGui.QApplication.translate("MainWindow", "Show Timestamp in Chat", None, QtGui.QApplication.UnicodeUTF8))
+        self.uiDisableAutoColorNicks.setText(QtGui.QApplication.translate("MainWindow", "Disable auto-color of Nicknames", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLocateCustomChallengeSoundAct.setText(QtGui.QApplication.translate("MainWindow", "Locate Custom Challenge Sound", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLogChatAct.setText(QtGui.QApplication.translate("MainWindow", "Chat history", None, QtGui.QApplication.UnicodeUTF8))
         self.uiLogPlayHistoryAct.setText(QtGui.QApplication.translate("MainWindow", "Play history", None, QtGui.QApplication.UnicodeUTF8))
