@@ -247,7 +247,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     replay_id = name
                 quark = "quark:stream,"+channel+","+replay_id+",7000"
                 self.controller.runFBA(quark)
-                controller.sigStatusMessage.emit("Replaying game-id {}@{}".format(replay_id, channel))
+                self.controller.sigStatusMessage.emit("Replaying game-id {}@{}".format(replay_id, channel))
 
     def onRemoteHasUpdates(self, added, updated, nochange):
         totalchanged = added + updated
