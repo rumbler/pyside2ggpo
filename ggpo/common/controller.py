@@ -660,7 +660,7 @@ class Controller(QtCore.QObject):
         self.checkRom()
         self.fba = findFba()
         if not self.fba:
-            self.sigStatusMessage.emit("Please configure Setting > Locate ggpofba-ng.exe")
+            self.sigStatusMessage.emit("ERROR: make sure ggpofba-ng.exe is in the same folder as FightCade")
             return
         args = []
         fba=self.fba
