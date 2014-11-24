@@ -4,6 +4,7 @@ import os
 import sys
 from subprocess import Popen
 
+from ggpo.common.util import findFba
 from ggpo.common.runtime import *
 from ggpo.common.settings import Settings
 
@@ -19,7 +20,7 @@ class Backend(object):
         filename = Settings.value(Settings.CUSTOM_CHALLENGE_SOUND_LOCATION)
         if filename and os.path.isfile(filename):
             return filename
-        fba = Settings.value(Settings.GGPOFBA_LOCATION)
+        fba = findFba()
         if fba:
             filename = os.path.join(os.path.dirname(fba), "assets", "challenger-comes.wav")
             if os.path.isfile(filename):

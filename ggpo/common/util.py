@@ -54,9 +54,9 @@ def findURLs(url):
 
 
 def findFba():
-    saved = Settings.value(Settings.GGPOFBA_LOCATION)
-    if saved and os.path.isfile(saved):
-        return saved
+    #saved = Settings.value(Settings.GGPOFBA_LOCATION)
+    #if saved and os.path.isfile(saved):
+    #    return saved
 
     FBA="ggpofba-ng.exe"
 

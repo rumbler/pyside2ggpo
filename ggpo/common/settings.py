@@ -37,7 +37,7 @@ class Settings:
     USER_LOG_CHAT = 'userlogchat'
     USER_LOG_PLAYHISTORY = 'userlogplayhistory'
     SAVE_USERNAME_PASSWORD = 'saveUsernameAndPassword'
-    GGPOFBA_LOCATION = 'ggpofbaLocation'
+    #GGPOFBA_LOCATION = 'ggpofbaLocation'
     ROMS_DIR = 'romsLocation'
     GEOIP2DB_LOCATION = 'geoip2dbLocation'
     CUSTOM_CHALLENGE_SOUND_LOCATION = 'customChallengeSoundLocation'

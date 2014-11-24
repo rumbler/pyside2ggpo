@@ -616,14 +616,14 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.setupMenuSmoothing()
         self.uiCustomEmoticonsAct.triggered.connect(self.setCustomEmoticons)
 
-        self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
+        #self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
         self.uiLocateROMsAct.triggered.connect(self.locateROMsDir)
         #self.uiLocateUnsupportedSavestatesDirAct.triggered.connect(self.locateUnsupportedSavestatesDirAct)
         self.uiLocateCustomChallengeSoundAct.triggered.connect(self.locateCustomChallengeSound)
-        if GeoIP2Reader:
-            self.uiLocateGeommdbAct.triggered.connect(self.locateGeoMMDB)
-        else:
-            self.uiLocateGeommdbAct.setVisible(False)
+        #if GeoIP2Reader:
+        #    self.uiLocateGeommdbAct.triggered.connect(self.locateGeoMMDB)
+        #else:
+        #    self.uiLocateGeommdbAct.setVisible(False)
         self.uiNotifyPlayerStateChangeAct.toggled.connect(self.__class__.toggleNotifyPlayerStateChange)
         self.uiShowCountryFlagInChatAct.toggled.connect(self.__class__.toggleShowCountryFlagInChat)
         self.uiShowTimestampInChatAct.toggled.connect(self.__class__.toggleShowTimestampInChatAct)

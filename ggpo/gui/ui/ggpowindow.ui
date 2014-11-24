@@ -159,10 +159,8 @@
     <addaction name="uiFontAct"/>
     <addaction name="uiCustomEmoticonsAct"/>
     <addaction name="separator"/>
-    <addaction name="uiLocateGgpofbaAct"/>
     <addaction name="uiLocateROMsAct"/>
     <addaction name="uiLocateCustomChallengeSoundAct"/>
-    <addaction name="uiLocateGeommdbAct"/>
     <addaction name="separator"/>
     <addaction name="uiNotifyPlayerStateChangeAct"/>
     <addaction name="uiShowCountryFlagInChatAct"/>

@@ -111,7 +111,7 @@ class Controller(QtCore.QObject):
                     p.cc, p.country, p.city = geolookup(p.ip)
 
     def checkInstallation(self):
-        fba = Settings.value(Settings.GGPOFBA_LOCATION)
+        fba = findFba()
         if fba and os.path.isfile(fba):
             self.fba = os.path.abspath(fba)
         if self.fba:
@@ -119,7 +119,7 @@ class Controller(QtCore.QObject):
         else:
             msg = ''
             if not self.fba:
-                msg += "ggpo installation not found\n"
+                msg += "ggpofba-ng not found in fightcade folder\n"
             self.sigStatusMessage.emit(msg)
             return False
 
