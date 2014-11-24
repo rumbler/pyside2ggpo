@@ -140,7 +140,7 @@ def replaceURLs(text):
                   r'<a href="\1"><font color=green>\1</font></a>', text)
 
 def replaceReplayID(text):
-    return re.sub(r'(challenge-[0-9]{4}-[0-9]{10,11}[.][0-9]{2}$)',r'<a href="replay:\1"><font color=green>\1</font></a>',text)
+    return re.sub(r'(challenge\-[0-9]{4}\-[0-9]{10,11}[.][0-9]{2}(\@[a-z0-9_]+)?)',r'<a href="replay:\1"><font color=green>\1</font></a>',text)
 
 def nl2br(s):
     return '<br/>\n'.join(s.split('\n'))

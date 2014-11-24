@@ -120,9 +120,15 @@ class CLI:
                 controller.sigStatusMessage.emit("{} is not playing".format(name))
 
         def clireplay(name):
-            quark = "quark:stream,"+controller.channel+","+name+",7000"
+            if '@' in name:
+                channel = name.split('@')[1]
+                replay_id = name.split('@')[0]
+            else:
+                channel = controller.channel
+                replay_id = name
+            quark = "quark:stream,"+channel+","+replay_id+",7000"
             controller.runFBA(quark)
-            controller.sigStatusMessage.emit("Replaying game-id {} @ {}".format(name, controller.channel))
+            controller.sigStatusMessage.emit("Replaying game-id {}@{}".format(replay_id, channel))
 
         def clidirect(name):
             try:

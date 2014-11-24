@@ -239,9 +239,15 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     self.controller.sigStatusMessage.emit("Declined {}'s challenge".format(name))
                     self.updateStatusBar()
             elif qurl.scheme() == 'replay':
-                quark = "quark:stream,"+self.controller.channel+","+name+",7000"
+                if '@' in name:
+                    channel = name.split('@')[1]
+                    replay_id = name.split('@')[0]
+                else:
+                    channel = controller.channel
+                    replay_id = name
+                quark = "quark:stream,"+channel+","+replay_id+",7000"
                 self.controller.runFBA(quark)
-                self.controller.sigStatusMessage.emit("Replaying game-id {} @ {}".format(name, self.controller.channel))
+                controller.sigStatusMessage.emit("Replaying game-id {}@{}".format(replay_id, channel))
 
     def onRemoteHasUpdates(self, added, updated, nochange):
         totalchanged = added + updated
