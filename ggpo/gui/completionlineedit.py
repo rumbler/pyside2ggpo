@@ -34,7 +34,8 @@ class PlayerNameCompletionModel(QAbstractItemModel):
         return QModelIndex()
 
     def playerStateChange(self, name, state):
-        if state == PlayerStates.AVAILABLE and name not in self._data:
+        #if state == PlayerStates.AVAILABLE and name not in self._data:
+        if name not in self._data:
             self._data.append(name)
             self._filtered = self._data
             self._rowcount = len(self._data)
