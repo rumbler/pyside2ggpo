@@ -25,13 +25,14 @@ linux: cleanbuild
 win: cleanbuild
 	/Development/python-windows-packager/package.sh ./main.py fightcade
 osx: cleanbuild
-	pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
+	#pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
+	pyinstaller -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
 
-dmg: osx
-	cd dist; \
-	hdiutil create -srcfolder FightCade.app -volname FightCade -fs HFS+ -fsargs '-c c=64,a=16,e=16' -format UDRW -size 60M fightcade_tmp.dmg; \
-	hdiutil convert fightcade_tmp.dmg -format UDZO -imagekey zlib-level=9 -o fightcade.dmg ; \
-	rm -f fightcade_tmp.dmg
+dmg:
+	cd .. ; \
+	hdiutil create -srcfolder FightCade.app -volname GGPO-NG -fs HFS+ -fsargs '-c c=64,a=16,e=16' -format UDRW -size 60M FightCade_tmp.dmg; \
+	hdiutil convert FightCade_tmp.dmg -format UDZO -imagekey zlib-level=9 -o FightCade.dmg ; \
+	rm -f FightCade_tmp.dmg
 
 cleanbuild:
 	rm -rf build dist
