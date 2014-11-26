@@ -285,7 +285,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     def onChannelJoined(self):
         self.updateStatusBar()
         if not self.savestatesChecked:
-            UnsupportedSavestates.check(self, self.onStatusMessage, self.onRemoteHasUpdates)
+            UnsupportedSavestates.sync(self.onStatusMessage)
             self.savestatesChecked=True
 
     def onListChannelsReceived(self):

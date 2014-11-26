@@ -91,7 +91,8 @@ class SyncWorker(QtCore.QObject):
                     self.sigStatusMessage.emit('Downloaded {}'.format(localfile))
             if not self.checkonly:
                 if not self.added and not self.updated:
-                    self.sigStatusMessage.emit('All files are up to date')
+                    #self.sigStatusMessage.emit('All files are up to date')
+                    pass
                 else:
                     writeLocalJsonDigest()
                     self.sigStatusMessage.emit(
