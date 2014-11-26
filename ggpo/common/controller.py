@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import cgi
 import os
+import sys
 import re
 import socket
 import time
@@ -677,6 +678,19 @@ class Controller(QtCore.QObject):
         if not os.path.isfile(fbadat) and os.path.isfile(fbainibkp):
             self.sigStatusMessage.emit("Restoring emulator settings")
             copyfile(fbainibkp, fbaini)
+
+            #on linux & MAC, symlink the ROMs folder to avoid configuring FBA
+            if not IS_WINDOWS:
+                romdir=Settings.value(Settings.ROMS_DIR)
+                if romdir:
+                    fbaRomPath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ROMs")
+                    # remove it if it's a link or an empty dir
+                    if os.path.islink(fbaRomPath):
+                        os.remove(fbaRomPath)
+                    if os.path.isdir(fbaRomPath) and not os.listdir(fbaRomPath):
+                        os.rmdir(fbaRomPath)
+                    if not os.path.exists(fbaRomPath):
+                        os.symlink(romdir, fbaRomPath)
 
         logdebug().info(" ".join(args))
         try:
