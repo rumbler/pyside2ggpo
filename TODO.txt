@@ -4,3 +4,5 @@
 * auto-reconnect when connection to server is closed
 * use a fixed source port
 * when sync'ing savestates, remove config/games/<game>.fs
+* sort game lobbies by number of people inside
+* add a fightcade:// uri handler in windows and osx
