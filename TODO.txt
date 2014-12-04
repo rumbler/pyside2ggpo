@@ -2,3 +2,5 @@
 * add an auto-update mechanism
 * add a search filter in the game list
 * auto-reconnect when connection to server is closed
+* use a fixed source port
+* when sync'ing savestates, remove config/games/<game>.fs
