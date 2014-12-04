@@ -11,6 +11,7 @@
 # keep OSX happy:
 cd "${0%/*}"
 
+PARAM=${1+"$@"}
 FBA="./ggpofba"
 if [ ! -x ${FBA} ] ; then
 	THIS_SCRIPT_PATH=`readlink -f $0`
@@ -22,9 +23,35 @@ if [ ! -x ${FBA} ] ; then
 	exit 1
 fi
 
+if [ ! -x ~/.local/share/applications/fightcade-quark.desktop ]; then
+	# register fightcade:// url handler
+	echo "[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=FightCade Replay
+Exec=${THIS_SCRIPT_DIR}/ggpofba.sh %U
+Terminal=false
+MimeType=x-scheme-handler/fightcade
+" > ~/.local/share/applications/fightcade-quark.desktop
+	if [ -x /usr/bin/xdg-mime ]; then
+		xdg-mime default fightcade-quark.desktop x-scheme-handler/fightcade
+	fi
+	if [ -x /usr/bin/gconftool-2 ]; then
+		gconftool-2 -t string -s /desktop/gnome/url-handlers/fightcade/command "${THIS_SCRIPT_DIR}/ggpofba.sh %s"
+		gconftool-2 -s /desktop/gnome/url-handlers/fightcade/needs_terminal false -t bool
+		gconftool-2 -t bool -s /desktop/gnome/url-handlers/fightcade/enabled true
+	fi
+fi
+
+echo ${PARAM} |grep "^fightcade://challenge-.*@" >/dev/null
+if [ $? -eq 0 ]; then
+	quark=$(echo ${PARAM} |cut -f 1 -d "@" |cut -f 3 -d "/")
+	game=$(echo ${PARAM} |cut -f 2 -d "@")
+	PARAM="quark:stream,${game},${quark},7000 -w"
+fi
 
 if [ ! -x /usr/bin/pulseaudio ] || [ ! -x /usr/bin/pacmd ] || [ ! -x /usr/bin/pactl ]; then
-	${FBA} ${1+"$@"} &
+	${FBA} ${PARAM} &
 	exit 0
 fi
 
@@ -40,7 +67,7 @@ if [ ${tot} -eq 0 ]; then
 fi
 
 echo "-!- starting the real ggpofba"
-${FBA} ${1+"$@"} &
+${FBA} ${PARAM} &
 
 if [ ${tot} -eq 0 ]; then
 	sleep 1s
