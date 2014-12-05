@@ -118,10 +118,7 @@ class Controller(QtCore.QObject):
         if self.fba:
             return True
         else:
-            msg = ''
-            if not self.fba:
-                msg += "ERROR: ggpofba-ng not found in fightcade folder: you will not be able to play or spectate!\n"
-            self.sigStatusMessage.emit(msg)
+            self.sigStatusMessage.emit("ERROR: ggpofba-ng not found in fightcade folder: you will not be able to play or spectate!")
             return False
 
     def isRomAvailable(self, channel):
@@ -151,8 +148,8 @@ class Controller(QtCore.QObject):
             if os.path.isfile(rom):
                 return True
             else:
-                self.sigStatusMessage.emit('Warning: {} not found. Required to play or spectate.'.format(rom))
-                self.sigStatusMessage.emit("Please close emulator and configure Setting > Locate ROMs folder")
+                self.sigStatusMessage.emit('Warning: {}.zip not found. Required to play or spectate.'.format(self.rom))
+                self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
         return False
 
     def checkUnsupportedRom(self):
@@ -772,6 +769,10 @@ class Controller(QtCore.QObject):
                             self.handleUdpResponse(dgram, addr)
 
     def sendAcceptChallenge(self, name):
+        isFbaPresent = self.checkInstallation()
+        isRomPresent = self.checkRom()
+        if not isRomPresent or not isFbaPresent:
+            return
         if name in self.challengers:
             self.sendAndRemember(Protocol.ACCEPT_CHALLENGE, Protocol.packTLV(name) + Protocol.packTLV(self.rom))
             self.challengers.remove(name)
@@ -801,6 +802,10 @@ class Controller(QtCore.QObject):
 
     def sendChallenge(self, name):
         self.sendCancelChallenge()
+        isFbaPresent = self.checkInstallation()
+        isRomPresent = self.checkRom()
+        if not isRomPresent or not isFbaPresent:
+            return
         if (name==self.username):
             self.runFBA(self.channel)
         else:
