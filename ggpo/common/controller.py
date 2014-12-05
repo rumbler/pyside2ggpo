@@ -120,7 +120,7 @@ class Controller(QtCore.QObject):
         else:
             msg = ''
             if not self.fba:
-                msg += "ggpofba-ng not found in fightcade folder\n"
+                msg += "ERROR: ggpofba-ng not found in fightcade folder: you will not be able to play or spectate!\n"
             self.sigStatusMessage.emit(msg)
             return False
 

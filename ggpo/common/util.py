@@ -38,9 +38,12 @@ def defaultdictinit(startdic):
 
 
 def findGamesavesDir():
-    d = os.path.join(os.path.dirname(findFba()),"savestates")
-    if d and os.path.isdir(d):
-        return d
+    try:
+        d = os.path.join(os.path.dirname(findFba()),"savestates")
+        if d and os.path.isdir(d):
+            return d
+    except:
+        pass
     # noinspection PyBroadException
     try:
         os.makedirs(d)
