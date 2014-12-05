@@ -89,6 +89,13 @@ class SyncWorker(QtCore.QObject):
                     fileurl = self.SAVESTATES_GITHUB_BASE_URL + urllib.quote(filename)
                     urllib.urlretrieve(fileurl, localfile)
                     self.sigStatusMessage.emit('Downloaded {}'.format(localfile))
+                    # remove config/games/<game>.fs
+                    gamefs=os.path.abspath(os.path.join(d,"..","config","games",filename.replace("_ggpo.fs",".fs")))
+                    if os.path.isfile(gamefs):
+                        try:
+                            os.remove(gamefs)
+                        except:
+                            pass
             if not self.checkonly:
                 if not self.added and not self.updated:
                     #self.sigStatusMessage.emit('All files are up to date')
