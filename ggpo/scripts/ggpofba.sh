@@ -12,10 +12,12 @@
 cd "${0%/*}"
 
 PARAM=${1+"$@"}
+
+THIS_SCRIPT_PATH=`readlink -f $0`
+THIS_SCRIPT_DIR=`dirname ${THIS_SCRIPT_PATH}`
+
 FBA="./ggpofba"
 if [ ! -x ${FBA} ] ; then
-	THIS_SCRIPT_PATH=`readlink -f $0`
-	THIS_SCRIPT_DIR=`dirname ${THIS_SCRIPT_PATH}`
 	FBA="${THIS_SCRIPT_DIR}/ggpofba"
 fi
 if [ ! -x ${FBA} ] ; then
@@ -23,9 +25,10 @@ if [ ! -x ${FBA} ] ; then
 	exit 1
 fi
 
-if [ ! -x ~/.local/share/applications/fightcade-quark.desktop ]; then
+if [ -x /usr/bin/xdg-mime ]; then
 	# register fightcade:// url handler
-	echo "[Desktop Entry]
+	if [ ! -x ~/.local/share/applications/fightcade-quark.desktop ]; then
+		echo "[Desktop Entry]
 Type=Application
 Encoding=UTF-8
 Name=FightCade Replay
@@ -33,14 +36,13 @@ Exec=${THIS_SCRIPT_DIR}/ggpofba.sh %U
 Terminal=false
 MimeType=x-scheme-handler/fightcade
 " > ~/.local/share/applications/fightcade-quark.desktop
-	if [ -x /usr/bin/xdg-mime ]; then
 		xdg-mime default fightcade-quark.desktop x-scheme-handler/fightcade
 	fi
-	if [ -x /usr/bin/gconftool-2 ]; then
-		gconftool-2 -t string -s /desktop/gnome/url-handlers/fightcade/command "${THIS_SCRIPT_DIR}/ggpofba.sh %s"
-		gconftool-2 -s /desktop/gnome/url-handlers/fightcade/needs_terminal false -t bool
-		gconftool-2 -t bool -s /desktop/gnome/url-handlers/fightcade/enabled true
-	fi
+fi
+if [ -x /usr/bin/gconftool-2 ]; then
+	gconftool-2 -t string -s /desktop/gnome/url-handlers/fightcade/command "${THIS_SCRIPT_DIR}/ggpofba.sh %s"
+	gconftool-2 -s /desktop/gnome/url-handlers/fightcade/needs_terminal false -t bool
+	gconftool-2 -t bool -s /desktop/gnome/url-handlers/fightcade/enabled true
 fi
 
 echo ${PARAM} |grep "^fightcade://challenge-.*@" >/dev/null
