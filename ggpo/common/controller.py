@@ -865,6 +865,10 @@ class Controller(QtCore.QObject):
         self.pinglist[secret] = (player.ip, player.player, time.time())
 
     def sendSpectateRequest(self, name):
+        isFbaPresent = self.checkInstallation()
+        isRomPresent = self.checkRom()
+        if not isRomPresent or not isFbaPresent:
+            return
         self.sendAndRemember(Protocol.SPECTATE, Protocol.packTLV(name))
 
     def sendToggleAFK(self, afk):

@@ -4,3 +4,8 @@
 * auto-reconnect when connection to server is closed
 * sort game lobbies by number of people inside
 * add fightcade:// uri handler for osx
+* add option to notify/sound on mention
+
+Add this to OSX Info.plist, to set the minimum osx version required:
+	<key>LSMinimumSystemVersion</key>
+	<string>10.9</string>
