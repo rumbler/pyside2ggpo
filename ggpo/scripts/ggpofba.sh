@@ -57,8 +57,8 @@ if [ ! -x /usr/bin/pulseaudio ] || [ ! -x /usr/bin/pacmd ] || [ ! -x /usr/bin/pa
 	exit 0
 fi
 
-# check if there are multiple instances running
-tot=$(ps ax |grep "ggpofba-ng.exe" |grep "quark:" |wc -l)
+# check if there's any application using audio
+tot=$(/usr/bin/pacmd list-sink-inputs |grep ">>>.*sink input(s) available." |head -n 1 |awk '{print $2}')
 
 # first instance resets pulseaudio, others don't
 if [ ${tot} -eq 0 ]; then
