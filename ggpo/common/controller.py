@@ -172,10 +172,6 @@ class Controller(QtCore.QObject):
             if self.tcpSock:
                 self.tcpSock.close()
             self.tcpSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            try:
-                self.tcpSock.bind(('0.0.0.0', 7000,))
-            except socket.error:
-                pass
             self.tcpSock.connect(('fightcade.com', 7000,))
             self.tcpConnected = True
         except Exception:
