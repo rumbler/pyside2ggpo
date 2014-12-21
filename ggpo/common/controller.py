@@ -118,7 +118,7 @@ class Controller(QtCore.QObject):
         if self.fba:
             return True
         else:
-            self.sigStatusMessage.emit("ERROR: ggpofba-ng not found in fightcade folder: you will not be able to play or spectate!")
+            self.sigStatusMessage.emit("ERROR: ggpofba-ng.exe not found in fightcade folder: you will not be able to play or spectate!")
             return False
 
     def isRomAvailable(self, channel):
@@ -668,13 +668,18 @@ class Controller(QtCore.QObject):
             fba = fba.replace('ggpofba-ng.exe', 'ggpofba.sh')
         args = [fba, quark, '-w']
 
-        # if dat file doesn't exist, restore FBA settings from backup
         fbaini = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.ini')
         fbadat = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.roms.dat')
         fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpofba-ng.bkp.ini')
+        fbainidef = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.default.ini')
+        # if dat file doesn't exist, restore FBA settings from backup
         if not os.path.isfile(fbadat) and os.path.isfile(fbainibkp):
-            self.sigStatusMessage.emit("Restoring emulator settings")
+            self.sigStatusMessage.emit("Trying to restore emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
             copyfile(fbainibkp, fbaini)
+
+        # if dat file doesn't exist and there was no backup, use the default FBA config
+        if not os.path.isfile(fbadat) and not os.path.isfile(fbaini) and not os.path.isfile(fbainibkp) and os.path.isfile(fbainidef):
+            copyfile(fbainidef, fbaini)
 
             #on linux & MAC, symlink the ROMs folder to avoid configuring FBA
             if not IS_WINDOWS:
