@@ -60,6 +60,14 @@ class PlayerModel(QtCore.QAbstractTableModel):
         if role == Qt.DisplayRole:
             if col in [PlayerModel.PLAYER, PlayerModel.PING, PlayerModel.OPPONENT]:
                 return self.players[row][col]
+        elif role == Qt.ToolTipRole and col==PlayerModel.STATE:
+            val = self.players[row][col]
+            if val == PlayerModelState.AVAILABLE:
+                return "Challenge"
+            elif val == PlayerModelState.PLAYING:
+                return "Watch"
+            elif val == PlayerModelState.AFK:
+                return "Away"
         elif role == Qt.ToolTipRole and col in [PlayerModel.PLAYER, PlayerModel.OPPONENT]:
             name = self.players[row][col]
             if name in self.controller.players:
