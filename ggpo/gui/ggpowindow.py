@@ -272,7 +272,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def onChatReceived(self, name, txt):
         prefix = self.controller.getPlayerPrefix(name, Settings.value(Settings.SHOW_COUNTRY_FLAG_IN_CHAT))
-        if (self.controller.username+" " in txt or " "+self.controller.username in txt or txt==self.controller.username):
+        if (self.controller.username+" ".lower() in txt.lower() or " "+self.controller.username.lower() in txt.lower() or txt.lower()==self.controller.username.lower()):
             txt = cgi.escape(txt.strip()).replace(self.controller.username, "<b>{}</b>".format(self.controller.username))
             ggpo.common.sound.notify()
         else:
