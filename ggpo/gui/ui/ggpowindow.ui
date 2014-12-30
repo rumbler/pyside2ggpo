@@ -154,6 +154,7 @@
      <addaction name="uiDebugLogAct"/>
     </widget>
     <addaction name="uiMuteChallengeSoundAct"/>
+    <addaction name="uiMuteNotifySoundAct"/>
     <addaction name="uiThemeMenu"/>
     <addaction name="uiSmoothingMenu"/>
     <addaction name="uiFontAct"/>
@@ -226,6 +227,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="uiMuteNotifySoundAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Mute Notify Sound</string>
    </property>
   </action>
   <action name="uiFontAct">

@@ -274,6 +274,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         prefix = self.controller.getPlayerPrefix(name, Settings.value(Settings.SHOW_COUNTRY_FLAG_IN_CHAT))
         if (self.controller.username+" " in txt or " "+self.controller.username in txt or txt==self.controller.username):
             txt = cgi.escape(txt.strip()).replace(self.controller.username, "<b>{}</b>".format(self.controller.username))
+            ggpo.common.sound.notify()
         else:
             txt = cgi.escape(txt.strip())
         urls = findURLs(txt)
@@ -444,6 +445,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 getattr(self, cleanname).setChecked(True)
         if Settings.value(Settings.MUTE_CHALLENGE_SOUND):
             self.uiMuteChallengeSoundAct.setChecked(True)
+        if Settings.value(Settings.MUTE_NOTIFY_SOUND):
+            self.uiMuteNotifySoundAct.setChecked(True)
         if Settings.value(Settings.NOTIFY_PLAYER_STATE_CHANGE):
             self.uiNotifyPlayerStateChangeAct.setChecked(True)
         if Settings.value(Settings.SHOW_COUNTRY_FLAG_IN_CHAT):
@@ -618,6 +621,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def setupMenuSettings(self):
         self.uiMuteChallengeSoundAct.toggled.connect(self.__class__.toggleSound)
+        self.uiMuteNotifySoundAct.toggled.connect(self.__class__.toggleNotifySound)
         self.uiFontAct.triggered.connect(self.changeFont)
         self.setupMenuTheme()
         self.setupMenuSmoothing()
@@ -768,6 +772,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     @staticmethod
     def toggleSound(state):
         Settings.setBoolean(Settings.MUTE_CHALLENGE_SOUND, state)
+
+    @staticmethod
+    def toggleNotifySound(state):
+        Settings.setBoolean(Settings.MUTE_NOTIFY_SOUND, state)
 
     def updateStatusBar(self):
         self.uiStatusbar.showMessage(self.controller.statusBarMessage())

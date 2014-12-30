@@ -29,13 +29,31 @@ class Backend(object):
         if filename and os.path.isfile(filename):
             return filename
 
+    @staticmethod
+    def notifyfile():
+        fba = findFba()
+        if fba:
+            filename = os.path.join(os.path.dirname(fba), "assets", "notify.wav")
+            if os.path.isfile(filename):
+                return filename
+        filename = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "assets", "notify.wav")
+        if filename and os.path.isfile(filename):
+            return filename
+
     @abc.abstractmethod
     def play(self):
         pass
 
+    @abc.abstractmethod
+    def notify(self):
+        pass
+
+
 
 class NullBackend(Backend):
     def play(self):
+        pass
+    def notify(self):
         pass
 
 
@@ -46,6 +64,17 @@ class WinSoundBackend(Backend):
     def play(self):
         if not Settings.value(Settings.MUTE_CHALLENGE_SOUND):
             filename = self.wavfile()
+            if filename:
+                #noinspection PyBroadException
+                try:
+                    # winsound can only play one clip at a time and will throw error
+                    winsound.PlaySound(filename, winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NOSTOP)
+                except:
+                    pass
+
+    def notify(self):
+        if not Settings.value(Settings.MUTE_NOTIFY_SOUND):
+            filename = self.notifyfile()
             if filename:
                 #noinspection PyBroadException
                 try:
@@ -66,6 +95,13 @@ class ExternalPlayerBackend(Backend):
             if filename:
                 Popen([self.player, filename])
 
+    def notify(self):
+        if not Settings.value(Settings.MUTE_NOTIFY_SOUND):
+            filename = self.notifyfile()
+            if filename:
+                Popen([self.player, filename])
+
+
 
 class PhononBackend(Backend):
     def __init__(self):
@@ -73,10 +109,16 @@ class PhononBackend(Backend):
         audioOutput = Phonon.AudioOutput(Phonon.MusicCategory, self)
         self.mediaObject = Phonon.MediaObject(self)
         Phonon.createPath(self.mediaObject, audioOutput)
-        self.mediaObject.setCurrentSource(Phonon.MediaSource(':/assets/challenger-comes.mp3'))
 
     def play(self):
         if not Settings.value(Settings.MUTE_CHALLENGE_SOUND):
+            self.mediaObject.setCurrentSource(Phonon.MediaSource(':/assets/challenger-comes.mp3'))
+            self.mediaObject.seek(0)
+            self.mediaObject.play()
+
+    def notify(self):
+        if not Settings.value(Settings.MUTE_NOTIFY_SOUND):
+            self.mediaObject.setCurrentSource(Phonon.MediaSource(':/assets/notify.mp3'))
             self.mediaObject.seek(0)
             self.mediaObject.play()
 
@@ -98,3 +140,6 @@ if not _backend:
 
 def play():
     _backend.play()
+
+def notify():
+    _backend.notify()

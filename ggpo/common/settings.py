@@ -16,6 +16,7 @@ class Settings:
     PASSWORD = 'password'
     SMOOTHING = 'smoothing'
     MUTE_CHALLENGE_SOUND = 'mute'
+    MUTE_NOTIFY_SOUND = 'mutenotify'
     NOTIFY_PLAYER_STATE_CHANGE = 'notifyPlayerStateChange'
     SHOW_COUNTRY_FLAG_IN_CHAT = 'showCountryFlagInChat'
     SHOW_TIMESTAMP_IN_CHAT = 'ShowTimestampInChat'
