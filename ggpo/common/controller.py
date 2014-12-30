@@ -172,7 +172,7 @@ class Controller(QtCore.QObject):
             if self.tcpSock:
                 self.tcpSock.close()
             self.tcpSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.tcpSock.connect(('fightcade.com', 7000,))
+            self.tcpSock.connect(('ggpo-ng.com', 7000,))
             self.tcpConnected = True
         except Exception:
             self.sigStatusMessage.emit("Cannot connect to FightCade server")
@@ -400,7 +400,11 @@ class Controller(QtCore.QObject):
                 self.udpSock.close()
                 self.udpConnected = False
             self.sigLoginFailed.emit()
-            self.sigStatusMessage.emit("Login failed {}".format(result))
+            #self.sigStatusMessage.emit("Login failed {}".format(result))
+            if result==6:
+                self.sigStatusMessage.emit("Login failed: wrong password")
+            else:
+                self.sigStatusMessage.emit("Login failed {}".format(result))
 
     def parseChallengeCancelledResponse(self, data):
         name, data = Protocol.extractTLV(data)
