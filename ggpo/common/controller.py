@@ -329,7 +329,7 @@ class Controller(QtCore.QObject):
             if icon==None:
                 icon=''
         if useFlag:
-            return '{}<b><font color="{}">{}</font></b> '.format(icon, c, cgi.escape(name))
+            return '{}<b><font color="{}">{}</font></b> '.format(icon, c, cgi.escape('<{}>'.format(name)))
         else:
             return '<b><font color="{}">{}</font></b> '.format(c, cgi.escape('<{}>'.format(name)))
 
