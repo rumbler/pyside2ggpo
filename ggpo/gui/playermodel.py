@@ -169,6 +169,12 @@ class PlayerModel(QtCore.QAbstractTableModel):
                 idx2 = self.createIndex(len(self.players) - 1, PlayerModel.STATE)
                 # noinspection PyUnresolvedReferences
                 self.dataChanged.emit(idx1, idx2)
+        if col == PlayerModel.PING:
+            name=self.players[row][col-1]
+            self.controller.sendPingQuery(self.controller.players[name])
+            idx1 = self.createIndex(0, PlayerModel.PING)
+            idx2 = self.createIndex(len(self.players) - 1, PlayerModel.PING)
+            self.dataChanged.emit(idx1, idx2)
 
     # noinspection PyUnusedLocal
     def reloadPlayers(self, *args):
