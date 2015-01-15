@@ -28,6 +28,16 @@ from ggpo.gui.playermodel import PlayerModel
 from ggpo.gui.savestatesdialog import SavestatesDialog
 from ggpo.gui.ui.ggpowindow_ui import Ui_MainWindow
 
+# re-implement the QTreeWidgetItem
+class TreeWidgetItem(QtGui.QTreeWidgetItem):
+    def __lt__(self, other):
+        column = self.treeWidget().sortColumn()
+        key1 = self.text(column)
+        key2 = other.text(column)
+        try:
+             return float(key1) < float(key2)
+        except ValueError:
+            return key1 < key2
 
 class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self, QWidget_parent=None):
@@ -320,7 +330,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             idx=0
             l=[]
             for i in sortedRooms:
-                item = QtGui.QTreeWidgetItem()
+                item = TreeWidgetItem()
                 chan = self.channels[i]
                 item.setText(0, str(self.controller.channels[chan]['users']))
                 item.setText(1, i)
@@ -339,6 +349,11 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
             self.uiChannelsTree.addTopLevelItems(l)
             root = self.uiChannelsTree.invisibleRootItem()
+
+            # QTreeWidget column sorting #
+            self.uiChannelsTree.setSortingEnabled(True)
+            self.uiChannelsTree.sortByColumn(1, Qt.AscendingOrder)
+            # end column sorting #
 
             if lastChannel in self.controller.channels:
                 self.uiChannelsTree.setItemSelected(root.child(0), False)
