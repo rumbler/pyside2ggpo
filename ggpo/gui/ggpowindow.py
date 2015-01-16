@@ -35,6 +35,7 @@ class TreeWidgetItem(QtGui.QTreeWidgetItem):
         key1 = self.text(column)
         key2 = other.text(column)
         try:
+            if key1 != "The Lobby":
              return float(key1) < float(key2)
         except ValueError:
             return key1 < key2
@@ -357,7 +358,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
             if lastChannel in self.controller.channels:
                 self.uiChannelsTree.setItemSelected(root.child(0), False)
-                self.uiChannelsTree.setItemSelected(root.child(idx), True)
+                self.uiChannelsTree.setItemSelected(root.child(idx-1), True)
                 if self.controller.channel == 'lobby':
                     self.controller.sendJoinChannelRequest(lastChannel)
             else:
