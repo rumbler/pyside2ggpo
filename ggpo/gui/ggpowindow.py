@@ -358,7 +358,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             if lastChannel in self.controller.channels:
                 self.uiChannelsTree.setItemSelected(root.child(0), False)
                 self.uiChannelsTree.setItemSelected(root.child(idx), True)
-				self.uiChannelsTree.scrollToItem(root.child(idx)) # scroll lobby list to last channel
+                self.uiChannelsTree.scrollToItem(root.child(idx)) # scroll lobby list to last channel
                 if self.controller.channel == 'lobby':
                     self.controller.sendJoinChannelRequest(lastChannel)
             else:
