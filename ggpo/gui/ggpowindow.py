@@ -59,7 +59,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.autoAnnounceUnsupportedTime = 0
         self.refreshChannelsListTime = time.time()
         self.savestatesChecked = False
-        self.favorites = Settings.value(Settings.CHANNELS_FAVORITES)
+        if Settings.value(Settings.CHANNELS_FAVORITES) != None: # default value if it's not present in config file
+            self.favorites = Settings.value(Settings.CHANNELS_FAVORITES)
+        else:
+            self.favorites = ''
         if Settings.value(Settings.FILTER_FAVORITES) != None:
             self.showfavorites = Settings.value(Settings.FILTER_FAVORITES)
         else:
