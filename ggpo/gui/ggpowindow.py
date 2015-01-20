@@ -36,7 +36,7 @@ class TreeWidgetItem(QtGui.QTreeWidgetItem):
         key2 = other.text(column)
         try:
             if key1 != "The Lobby":
-            return float(key1) < float(key2)
+             return float(key1) < float(key2)
         except ValueError:
             return key1 < key2
 
