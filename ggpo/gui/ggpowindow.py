@@ -35,9 +35,11 @@ class TreeWidgetItem(QtGui.QTreeWidgetItem):
         key1 = self.text(column)
         key2 = other.text(column)
         try:
+            if key1 != "The Lobby":
              return float(key1) < float(key2)
         except ValueError:
             return key1 < key2
+
 
 class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self, QWidget_parent=None):
@@ -57,6 +59,15 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.autoAnnounceUnsupportedTime = 0
         self.refreshChannelsListTime = time.time()
         self.savestatesChecked = False
+        if Settings.value(Settings.CHANNELS_FAVORITES) != None: # default value if it's not present in config file
+            self.favorites = Settings.value(Settings.CHANNELS_FAVORITES)
+        else:
+            self.favorites = ''
+        if Settings.value(Settings.FILTER_FAVORITES) != None:
+            self.showfavorites = Settings.value(Settings.FILTER_FAVORITES)
+        else:
+            self.showfavorites = False # default value if it's not present in config file
+        self.uiChannelsTree.itemDoubleClicked.connect(self.AddRemoveFavorites) # call to double click handler
 
     def aboutDialog(self):
         QtGui.QMessageBox.information(self, 'About', copyright.about())
@@ -337,10 +348,23 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 if not self.controller.isRomAvailable(chan) and chan!='lobby':
                     item.setTextColor(0, QtGui.QColor(60, 60, 60))
                     item.setTextColor(1, QtGui.QColor(60, 60, 60))
+                if "," + self.channels[i] + "," in self.favorites:
+                    bold_font = QtGui.QFont()
+                    bold_font.setBold(True)
+                    item.setFont(1, bold_font)
                 if chan==lastChannel:
-                    idx=n
+                    idx=n-1
                 if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
                     if self.controller.isRomAvailable(chan) or chan==self.controller.channel:
+                        if Settings.value(Settings.FILTER_FAVORITES): # Filtering favorites
+                            if "," + self.channels[i] + "," in self.favorites:
+                                l.append(item)
+                                n+=1
+                        else:
+                            l.append(item)
+                            n+=1
+                if Settings.value(Settings.FILTER_FAVORITES): # Filtering favorites again
+                    if "," + self.channels[i] + "," in self.favorites:
                         l.append(item)
                         n+=1
                 else:
@@ -358,6 +382,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             if lastChannel in self.controller.channels:
                 self.uiChannelsTree.setItemSelected(root.child(0), False)
                 self.uiChannelsTree.setItemSelected(root.child(idx), True)
+                self.uiChannelsTree.scrollToItem(root.child(idx)) # scroll lobby list to last channel
                 if self.controller.channel == 'lobby':
                     self.controller.sendJoinChannelRequest(lastChannel)
             else:
@@ -366,6 +391,29 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
             self.uiChannelsTree.itemSelectionChanged.connect(self.joinChannel)
 
+    def AddRemoveFavorites(self):
+        it = self.uiChannelsTree.currentItem().text(1)
+        bold_font = QtGui.QFont()
+        bold_font.setBold(True)
+        not_bold_font = QtGui.QFont()
+        not_bold_font.setBold(False)
+
+        if not("," + self.channels[it] + "," in self.favorites): # Add favorite
+            self.favorites = self.favorites + "," + self.channels[it] + ","
+            self.uiChannelsTree.currentItem().setFont(1, bold_font)
+        else: # Remove favorite
+            self.favorites = self.favorites.replace("," + self.channels[it] + ",",",")
+            self.uiChannelsTree.currentItem().setFont(1, not_bold_font)
+            if (not self.expectFirstChannelResponse) and Settings.value(Settings.FILTER_FAVORITES): # Update list when removing from the filtered list
+                self.expectFirstChannelResponse=True
+                self.controller.sigChannelsLoaded.emit()
+            self.uiChannelsTree.setCurrentItem(None)
+
+        pattern1 = re.compile(",*,") # trimming unwanted commas
+        self.favorites = pattern1.sub(",", self.favorites)
+        if self.favorites == ",": # if it's only a comma after RegEx, then clear the favorites
+            self.favorites = ""
+        Settings.setValue(Settings.CHANNELS_FAVORITES, self.favorites)
 
     def onMOTDReceived(self, channel, topic, msg):
         self.uiChatHistoryTxtB.setHtml('<font color="#034456"><strong>'+channel+'</strong> || <strong>'+ topic +'</strong></font><br/><br/>' + nl2br(replaceURLs(msg)) + '<br/><br/>Type /help to see a list of commands<br/><br/>')
@@ -470,6 +518,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.uiShowTimestampInChatAct.setChecked(True)
         if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
             self.uiHideGamesWithoutRomAct.setChecked(True)
+        if Settings.value(Settings.FILTER_FAVORITES):
+            self.uiFilterFavoriteLobbies.setChecked(True)
         if Settings.value(Settings.DISABLE_AUTOCOLOR_NICKS):
             self.uiDisableAutoColorNicks.setChecked(True)
         if Settings.value(Settings.AWAY):
@@ -656,6 +706,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         #self.uiDisableAutoAnnounceAct.toggled.connect(self.__class__.toggleDisableAutoAnnounceUnsupported)
         self.uiDisableAutoColorNicks.toggled.connect(self.__class__.toggleDisableAutoColorNicks)
         self.uiHideGamesWithoutRomAct.toggled.connect(self.toggleHideGamesWithoutRomAct)
+        self.uiFilterFavoriteLobbies.toggled.connect(self.toggleFilterFavoriteLobbies)
         if Settings.value(Settings.DEBUG_LOG):
             self.uiDebugLogAct.setChecked(True)
         if Settings.value(Settings.USER_LOG_CHAT):
@@ -780,6 +831,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def toggleHideGamesWithoutRomAct(self, state):
         Settings.setBoolean(Settings.HIDE_GAMES_WITHOUT_ROM, state)
+        if not self.expectFirstChannelResponse:
+            self.expectFirstChannelResponse=True
+            self.controller.sigChannelsLoaded.emit()
+
+    def toggleFilterFavoriteLobbies(self, state):
+        Settings.setBoolean(Settings.FILTER_FAVORITES, state)
         if not self.expectFirstChannelResponse:
             self.expectFirstChannelResponse=True
             self.controller.sigChannelsLoaded.emit()

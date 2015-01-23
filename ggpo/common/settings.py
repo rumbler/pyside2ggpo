@@ -44,6 +44,8 @@ class Settings:
     CUSTOM_CHALLENGE_SOUND_LOCATION = 'customChallengeSoundLocation'
     UNSUPPORTED_GAMESAVES_DIR = 'unsupportedGamesavesDir'
     DISABLE_AUTO_ANNOUNCE_UNSUPPORTED = 'disableAutoAnnounceUnsupported'
+    CHANNELS_FAVORITES = 'channelsFavorites'
+    FILTER_FAVORITES = 'filterFavorites'
 
     _settings = QSettings(os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpo-ng.ini'), QSettings.IniFormat)
 
