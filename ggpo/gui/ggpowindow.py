@@ -62,10 +62,13 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.favorites = Settings.value(Settings.CHANNELS_FAVORITES)
         else:
             self.favorites = ''
-        if Settings.value(Settings.FILTER_FAVORITES) != None:
-            self.showfavorites = Settings.value(Settings.FILTER_FAVORITES)
-        else:
-            self.showfavorites = False # default value if it's not present in config file
+
+        self.showfavorites=False
+        if Settings.value(Settings.FILTER_FAVORITES):
+            self.showfavorites = True
+        self.hidemissing = False
+        if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
+            self.hidemissing = True
         self.uiChannelsTree.itemDoubleClicked.connect(self.AddRemoveFavorites) # call to double click handler
 
     def aboutDialog(self):
@@ -354,18 +357,18 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 if chan==lastChannel:
                     idx=n-1
 
-                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM) and Settings.value(Settings.FILTER_FAVORITES)=='':
+                if self.hidemissing==True and self.showfavorites==False:
                     if self.controller.isRomAvailable(chan) or chan==self.controller.channel:
                         l.append(item)
                         n+=1
-                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM)=='' and Settings.value(Settings.FILTER_FAVORITES):
+                elif self.hidemissing==False and self.showfavorites==True:
                     if "," + self.channels[i] + "," in self.favorites:
                         l.append(item)
                         n+=1
-                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM)=='' and Settings.value(Settings.FILTER_FAVORITES)=='':
+                elif self.hidemissing==False and self.showfavorites==False:
                     l.append(item)
                     n+=1
-                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM) and Settings.value(Settings.FILTER_FAVORITES):
+                elif self.hidemissing==True and self.showfavorites==True:
                     if (self.controller.isRomAvailable(chan) or chan==self.controller.channel) and "," + self.channels[i] + "," in self.favorites:
                         l.append(item)
                         n+=1
@@ -516,8 +519,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if Settings.value(Settings.SHOW_TIMESTAMP_IN_CHAT):
             self.uiShowTimestampInChatAct.setChecked(True)
         if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
+            self.hidemissing=True
             self.uiHideGamesWithoutRomAct.setChecked(True)
         if Settings.value(Settings.FILTER_FAVORITES):
+            self.showfavorites=True
             self.uiFilterFavoriteLobbies.setChecked(True)
         if Settings.value(Settings.DISABLE_AUTOCOLOR_NICKS):
             self.uiDisableAutoColorNicks.setChecked(True)
@@ -830,12 +835,14 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def toggleHideGamesWithoutRomAct(self, state):
         Settings.setBoolean(Settings.HIDE_GAMES_WITHOUT_ROM, state)
+        self.hidemissing = state
         if not self.expectFirstChannelResponse:
             self.expectFirstChannelResponse=True
             self.controller.sigChannelsLoaded.emit()
 
     def toggleFilterFavoriteLobbies(self, state):
         Settings.setBoolean(Settings.FILTER_FAVORITES, state)
+        self.showfavorites = state
         if not self.expectFirstChannelResponse:
             self.expectFirstChannelResponse=True
             self.controller.sigChannelsLoaded.emit()
