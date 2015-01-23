@@ -36,10 +36,9 @@ class TreeWidgetItem(QtGui.QTreeWidgetItem):
         key2 = other.text(column)
         try:
             if key1 != "The Lobby":
-             return float(key1) < float(key2)
+                return float(key1) < float(key2)
         except ValueError:
             return key1 < key2
-
 
 class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self, QWidget_parent=None):
@@ -354,22 +353,22 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     item.setFont(1, bold_font)
                 if chan==lastChannel:
                     idx=n-1
-                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
+
+                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM) and Settings.value(Settings.FILTER_FAVORITES)=='':
                     if self.controller.isRomAvailable(chan) or chan==self.controller.channel:
-                        if Settings.value(Settings.FILTER_FAVORITES): # Filtering favorites
-                            if "," + self.channels[i] + "," in self.favorites:
-                                l.append(item)
-                                n+=1
-                        else:
-                            l.append(item)
-                            n+=1
-                if Settings.value(Settings.FILTER_FAVORITES): # Filtering favorites again
+                        l.append(item)
+                        n+=1
+                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM)=='' and Settings.value(Settings.FILTER_FAVORITES):
                     if "," + self.channels[i] + "," in self.favorites:
                         l.append(item)
                         n+=1
-                else:
+                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM)=='' and Settings.value(Settings.FILTER_FAVORITES)=='':
                     l.append(item)
                     n+=1
+                if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM) and Settings.value(Settings.FILTER_FAVORITES):
+                    if (self.controller.isRomAvailable(chan) or chan==self.controller.channel) and "," + self.channels[i] + "," in self.favorites:
+                        l.append(item)
+                        n+=1
 
             self.uiChannelsTree.addTopLevelItems(l)
             root = self.uiChannelsTree.invisibleRootItem()
