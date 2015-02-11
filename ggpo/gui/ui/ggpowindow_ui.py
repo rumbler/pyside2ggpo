@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'my_ggpowindow.ui'
+# Form implementation generated from reading ui file 'ggpowindow.ui'
 #
-# Created: Sun Jan 18 09:45:54 2015
+# Created: Wed Feb 11 06:01:04 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -233,8 +233,8 @@ class Ui_MainWindow(object):
         self.menuSetting.addAction(self.uiShowTimestampInChatAct)
         self.menuSetting.addAction(self.uiDisableAutoColorNicks)
         self.menuSetting.addAction(self.uiHideGamesWithoutRomAct)
-        self.menuSetting.addAction(self.uiFilterFavoriteLobbies)
         self.menuSetting.addAction(self.menuLogging.menuAction())
+        self.menuSetting.addAction(self.uiFilterFavoriteLobbies)
         self.menuAbout.addAction(self.uiSRKForumAct)
         self.menuAbout.addAction(self.uiSRKWikiAct)
         self.menuAbout.addAction(self.uiJPWikiAct)
