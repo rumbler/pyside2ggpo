@@ -568,6 +568,9 @@ class Controller(QtCore.QObject):
             # quark len(53) = 'quark:stream,ssf2t,challenge-07389-1393539605.46,7000'
         quark, data = Protocol.extractTLV(data)
         logdebug().info("Quark " + repr(quark))
+        # when someone leaves and p1 is playing vs 'null'
+        if quark=='':
+            quark=p2
         if quark.startswith('quark:served'):
             smooth = Settings.value(Settings.SMOOTHING)
             if smooth:
