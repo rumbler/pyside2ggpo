@@ -507,7 +507,7 @@ class Controller(QtCore.QObject):
                 city=city,
                 cc=cc,
                 country=country,
-                spectators=spectators,
+                spectators=spectators+1,
             )
             if state == PlayerStates.AVAILABLE:
                 self.available[p1] = True
