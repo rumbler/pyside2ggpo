@@ -452,7 +452,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.refreshChannelsListTime = time.time()
             self.controller.sendListChannels()
 
-        if time.time() - self.refreshListUsersTime > 300:
+        if time.time() - self.refreshListUsersTime > 120:
             self.refreshListUsersTime = time.time()
             self.controller.sendListUsers()
 
