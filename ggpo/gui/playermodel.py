@@ -18,18 +18,19 @@ class PlayerModel(QtCore.QAbstractTableModel):
     PLAYER = 1
     PING = 2
     OPPONENT = 3
-    IGNORE = 4
-    COUNTRY = 5
-    OPPONENT_COUNTRY = 6
-    N_COLS = 7
+    SPECTATORS = 4
+    IGNORE = 5
+    COUNTRY = 6
+    OPPONENT_COUNTRY = 7
+    N_COLS = 8
 
     DEFAULT_SORT = PLAYER
 
     # state, player, ping, opponent, ignore
-    displayColumns = ["", "Player", "Ping", "Opponent", ""]
+    displayColumns = ["", "Player", "Ping", "Opponent", "", ""]
     N_DISPLAY_COLS = len(displayColumns)
 
-    sortableColumns = [PLAYER, PING, OPPONENT]
+    sortableColumns = [PLAYER, PING, SPECTATORS, OPPONENT]
 
     def __init__(self, controller):
         super(PlayerModel, self).__init__()
@@ -58,7 +59,7 @@ class PlayerModel(QtCore.QAbstractTableModel):
         col = modelIndex.column()
 
         if role == Qt.DisplayRole:
-            if col in [PlayerModel.PLAYER, PlayerModel.PING, PlayerModel.OPPONENT]:
+            if col in [PlayerModel.PLAYER, PlayerModel.PING, PlayerModel.SPECTATORS, PlayerModel.OPPONENT]:
                 return self.players[row][col]
         elif role == Qt.ToolTipRole and col==PlayerModel.STATE:
             val = self.players[row][col]
@@ -80,7 +81,7 @@ class PlayerModel(QtCore.QAbstractTableModel):
         elif role == Qt.DecorationRole:
             return self.dataIcon(row, col)
         elif role == Qt.TextAlignmentRole:
-            if col == PlayerModel.PING:
+            if col == PlayerModel.PING or col==PlayerModel.SPECTATORS:
                 return Qt.AlignRight | Qt.AlignVCenter
 
     def dataIcon(self, row, col):
@@ -129,6 +130,8 @@ class PlayerModel(QtCore.QAbstractTableModel):
         if role == Qt.DecorationRole and Qt_Orientation == Qt.Horizontal:
             if section == PlayerModel.IGNORE:
                 return QtGui.QIcon(':/images/ignored.png')
+            elif section == PlayerModel.SPECTATORS:
+                return QtGui.QIcon(':/images/playing-watch.png')
 
     def onCellClicked(self, index):
         col = index.column()
@@ -183,20 +186,22 @@ class PlayerModel(QtCore.QAbstractTableModel):
             ignored = (p in self.controller.ignored) and Qt.Checked or Qt.Unchecked
             self.players.append([PlayerModelState.AVAILABLE,
                                  p, self.getPlayerStat(p, 'ping'),
-                                 '', ignored,
+                                 '', '', ignored,
                                  self.getPlayerStat(p, 'cc'), ''])
         for p, p2 in self.controller.playing.items():
             ignored = (p in self.controller.ignored) and Qt.Checked or Qt.Unchecked
             self.players.append([PlayerModelState.PLAYING,
                                  p, self.getPlayerStat(p, 'ping'),
-                                 p2, ignored,
+                                 p2,
+                                 self.getPlayerStat(p, 'spectators'),
+                                 ignored,
                                  self.getPlayerStat(p, 'cc'),
                                  self.getPlayerStat(p2, 'cc')])
         for p in self.controller.awayfromkb.keys():
             ignored = (p in self.controller.ignored) and Qt.Checked or Qt.Unchecked
             self.players.append([PlayerModelState.AFK,
                                  p, self.getPlayerStat(p, 'ping'),
-                                 '', ignored,
+                                 '', '', ignored,
                                  self.getPlayerStat(p, 'cc'), ''])
         self.sort(self.lastSort, self.lastSortOrder)
         # idx1 = self.createIndex(0, 0)

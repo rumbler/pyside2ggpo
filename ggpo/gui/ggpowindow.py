@@ -57,6 +57,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiChatHistoryTxtB.anchorClicked.connect(self.onAnchorClicked)
         self.autoAnnounceUnsupportedTime = 0
         self.refreshChannelsListTime = time.time()
+        self.refreshListUsersTime = time.time()
         self.savestatesChecked = False
         if Settings.value(Settings.CHANNELS_FAVORITES) != None: # default value if it's not present in config file
             self.favorites = Settings.value(Settings.CHANNELS_FAVORITES)
@@ -450,6 +451,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if time.time() - self.refreshChannelsListTime > 300 and sizes[0] > 0:
             self.refreshChannelsListTime = time.time()
             self.controller.sendListChannels()
+
+        if time.time() - self.refreshListUsersTime > 300:
+            self.refreshListUsersTime = time.time()
+            self.controller.sendListUsers()
 
     def onStatusMessage(self, msg):
         self.appendChat(ColorTheme.statusHtml(msg))

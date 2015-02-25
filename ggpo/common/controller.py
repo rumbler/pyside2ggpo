@@ -285,6 +285,7 @@ class Controller(QtCore.QObject):
                 city=city,
                 cc=cc,
                 country=country,
+                spectators=0,
             )
             return state, p1, p2, playerinfo, data
 
@@ -498,6 +499,7 @@ class Controller(QtCore.QObject):
                 cc = cc.lower()
             country, data = Protocol.extractTLV(data)
             port, data = Protocol.extractInt(data)
+            spectators, data = Protocol.extractInt(data)
             self.addUser(
                 player=p1,
                 ip=ip,
@@ -505,6 +507,7 @@ class Controller(QtCore.QObject):
                 city=city,
                 cc=cc,
                 country=country,
+                spectators=spectators,
             )
             if state == PlayerStates.AVAILABLE:
                 self.available[p1] = True
