@@ -13,12 +13,12 @@ cd "${0%/*}"
 
 PARAM=${1+"$@"}
 
-THIS_SCRIPT_PATH=`readlink -f $0`
+THIS_SCRIPT_PATH=`readlink -f $0 2>/dev/null || pwd`
 THIS_SCRIPT_DIR=`dirname ${THIS_SCRIPT_PATH}`
 
-FBA="./ggpofba"
+FBA="./ggpofba.py"
 if [ ! -x ${FBA} ] ; then
-	FBA="${THIS_SCRIPT_DIR}/ggpofba"
+	FBA="${THIS_SCRIPT_DIR}/ggpofba.py"
 fi
 if [ ! -x ${FBA} ] ; then
 	echo "Can't find ggpofba"
