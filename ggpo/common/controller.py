@@ -588,10 +588,10 @@ class Controller(QtCore.QObject):
             state, p1, p2, playerinfo, data = self.__class__.extractStateChangesResponse(data)
             if state == PlayerStates.PLAYING:
                 self.parsePlayerStartGameResponse(p1, p2, playerinfo)
-		if self.username == p1:
-			self.playingagainst = p2
-		if self.username == p2:
-			self.playingagainst = p1
+                if self.username == p1:
+                    self.playingagainst = p2
+                if self.username == p2:
+                    self.playingagainst = p1
                 if Settings.USER_LOG_PLAYHISTORY and self.username in [p1, p2]:
                     loguser().info(u"[IN A GAME] {} vs {}".format(p1, p2))
             elif state == PlayerStates.AVAILABLE:
