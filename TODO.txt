@@ -1,6 +1,4 @@
 * add non-port based mechanism for ping
 * add an auto-update mechanism
 * add a search filter in the game list
-* sort game lobbies by number of people inside
 * add fightcade:// uri handler for osx
-* add an optional "spectators" column
