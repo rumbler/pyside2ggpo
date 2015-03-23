@@ -12,7 +12,7 @@ QRCPYFILES := $(QRCFILES:.qrc=_rc.py)
 %_rc.py : %.qrc
 	$(PYRCC) $< -o $@
 
-.PHONY: all ui qrc clean osxapp osxdmg osxclean
+.PHONY: all ui qrc clean
 all: ui qrc
 ui: $(UIPYFILES)
 qrc: $(QRCPYFILES)
@@ -21,7 +21,16 @@ clean:
 	rm -f $(UIPYFILES) $(UIPYFILES:.py=.pyc) $(QRCPYFILES:.py=.pyc) 
 
 linux: cleanbuild
-	pyinstaller --onefile -i ggpo/resources/img/icon.ico -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
+	rm -rf /tmp/FightCade/
+	mkdir /tmp/FightCade/
+	cp -R assets config fightcade ggpo ggpofba-ng.exe ggpofba.sh ggponet.dll __init__.py kailleraclient.dll LICENSE main.py README.md VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
+	rm -rf /tmp/FightCade/ggpo/resources/assets/
+	echo "sudo apt-get install wine python-qt4-phonon python-qt4" > /tmp/FightCade/install.sh
+	chmod 755 /tmp/FightCade/install.sh
+	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
+	rm -rf /tmp/FightCade
+	ls -lat /tmp/fightcade-linux-v0* |head -n 1
+
 win: cleanbuild
 	/Development/python-windows-packager/package.sh ./main.py fightcade
 osx: cleanbuild
@@ -36,3 +45,6 @@ dmg:
 
 cleanbuild:
 	rm -rf build dist
+	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
+	mkdir cheats flyers previews recordings ROMs savestates screenshots titles
+	cp ../fightcadestates/*.fs savestates/
