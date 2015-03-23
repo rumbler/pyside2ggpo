@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
+from ggpo.common.runtime import *
+
+if IS_OSX:
+    sys.path.append("../Resources/lib/python2.7/site-packages/")
+
 import sip
 # Tell qt to return python string instead of QString
 # These are only needed for Python v2 but are harmless for Python v3.
@@ -64,6 +70,4 @@ def main(argv=None):
 
 
 if __name__ == '__main__':
-    import sys
-
     sys.exit(main(sys.argv))
