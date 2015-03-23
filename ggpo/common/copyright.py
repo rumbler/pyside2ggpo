@@ -18,7 +18,7 @@ __license__ = 'GPL'
 
 # define version information
 __requires__ = ['PyQt4']
-__version__ = 39
+__version__ = 40
 
 
 def versionString():
