@@ -27,30 +27,34 @@ linux: cleanbuild
 	rm -rf /tmp/FightCade/ggpo/resources/assets/
 	rm -rf /tmp/FightCade/ggpo/scripts/
 	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
-	rm -rf /tmp/FightCade savestates/
-	ls -lat /tmp/fightcade-linux-v0* |head -n 1
+	rm -rf /tmp/FightCade
+	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
+	ls -laht /tmp/fightcade-linux-v0* |head -n 1
 
 win: cleanbuild
-	/Development/python-windows-packager/package.sh ./ggpofba.py ggpofba
+	../python-windows-packager/package.sh ./ggpofba.py ggpofba
 	cp dist/ggpofba.exe .
-	/Development/python-windows-packager/package.sh ./main.py fightcade
+	../python-windows-packager/package.sh ./main.py fightcade
 	cp dist/fightcade.exe ./FightCade.exe
 	rm -rf build dist
 	mkdir /tmp/FightCade/
 	cp -R assets config FightCade.exe ggpofba.exe ggpofba-ng.exe ggponet.dll kailleraclient.dll LICENSE VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
 	cd /tmp ; zip -r fightcade-win32-v0`cat FightCade/VERSION`.zip FightCade
-	rm -rf /tmp/FightCade savestates/ FightCade.exe fightcade.spec ggpofba.exe ggpofba.spec
-	ls -lat /tmp/fightcade-win32-v0* |head -n 1
+	rm -rf /tmp/FightCade FightCade.exe fightcade.spec ggpofba.exe ggpofba.spec
+	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
+	ls -laht /tmp/fightcade-win32-v0* |head -n 1
 
 osx: cleanbuild
-	#pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
-	pyinstaller -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
-
-dmg:
-	cd .. ; \
-	hdiutil create -srcfolder FightCade.app -volname GGPO-NG -fs HFS+ -fsargs '-c c=64,a=16,e=16' -format UDRW -size 60M FightCade_tmp.dmg; \
-	hdiutil convert FightCade_tmp.dmg -format UDZO -imagekey zlib-level=9 -o FightCade.dmg ; \
-	rm -f FightCade_tmp.dmg
+	rm -rf /tmp/FightCade.app/
+	tar zxvfp ../Fightcade-app-skeleton-osx.tgz -C /tmp/
+	mkdir -p /tmp/FightCade.app/Contents/MacOS/
+	cp -R * /tmp/FightCade.app/Contents/MacOS/
+	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/
+	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/scripts/
+	cd /tmp ; /Users/pau/Development/yoursway-create-dmg/create-dmg --icon FightCade.app 160 205 --volname FightCade --volicon /Users/pau/Development/pyqtggpo/ggpo/resources/img/icon.icns --background /Users/pau/Development/pyqtggpo/ggpo/resources/img/osx-installer-bg.png --icon-size 128 --app-drop-link 380 205 --window-size 600 450 fightcade-osx64-v0`cat /Users/pau/Development/pyqtggpo/VERSION`.dmg FightCade.app
+	rm -rf /tmp/FightCade.app
+	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
+	ls -laht /tmp/fightcade-osx64-v0* |head -n 1
 
 cleanbuild:
 	rm -rf build dist
