@@ -103,9 +103,10 @@ def puncher(sock, remote_host, port):
 
 		if r:
 			data, addr = sock.recvfrom(1024)
-			if addr[0]==remote_host and addr[1]!=port:
-				logging.info("remote end uses symmetric or restricted nat. Changing port from %d to %d." % (port, addr[1]))
+			if addr[1]!=port or addr[0]!=remote_host:
+				logging.info("remote end uses symmetric or restricted nat. Changing from %s:%d to %s:%d." % (str(remote_host), port, str(addr[0]), addr[1]))
 				port=addr[1]
+				remote_host=addr[0]
 			logging.debug("recv: %r" % data)
 			if remote_token == "_":
 				remote_token = data.split()[0]
@@ -124,7 +125,7 @@ def puncher(sock, remote_host, port):
 
 	logging.debug("puncher done")
 
-	return remote_token != "_", port
+	return remote_token != "_", remote_host, port
 
 
 def udp_proxy(args,q):
@@ -149,17 +150,17 @@ def udp_proxy(args,q):
 	sockfd = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
 	# bind the socket to a port, so we can test the user's NAT type
 	try:
-		sockfd.bind(("0.0.0.0", 21112))
+		sockfd.bind(("0.0.0.0", 6006))
 	except socket.error:
-		logging.info("Can't bind to port 21112, using system assigned port.")
+		logging.info("Can't bind to port 6006, using system assigned port.")
 		bindok+=1
 
 	if bindok>=2:
 		logging.info("WARNING: Another instance of ggpofba seems to be running.")
-		#l_sockfd.close()
-		#sockfd.close()
-		#killGgpoFba()
-		#os._exit(1)
+		l_sockfd.close()
+		sockfd.close()
+		killGgpoFbaNG()
+		os._exit(1)
 
 	sockfd.sendto( quark+"/"+str(port), master )
 	try:
@@ -197,7 +198,9 @@ def udp_proxy(args,q):
 	target = bytes2addr(data)
 	logging.debug("connected to %s:%d" % target)
 
-	punch_ok, port = puncher(sockfd, target[0], target[1])
+	punch_ok, r_addr, r_port = puncher(sockfd, target[0], target[1])
+	target = (r_addr, r_port)
+	port = r_port
 	logging.info ("Puncher result: %s" % punch_ok)
 
 	restricted_nat=False
@@ -209,7 +212,8 @@ def udp_proxy(args,q):
 			n_sockfd.bind(("0.0.0.0", 6004))
 		except socket.error:
 			logging.info("Error listening on 0.0.0.0:6004/udp")
-		punch_ok, port = puncher(n_sockfd, target[0], 6004)
+		punch_ok, r_addr, r_port = puncher(n_sockfd, target[0], 6004)
+		target = (r_addr, r_port)
 		restricted_nat=True
 
 	if not punch_ok:
@@ -222,8 +226,7 @@ def udp_proxy(args,q):
 		sockfd=n_sockfd
 
 	if port!=target[1]:
-		logging.info("Changing remote port from %d to %d." % (target[1], port))
-		target = (target[0], port)
+		logging.info("Changing remote port from %d to %d." % (port, target[1]))
 
 	fba_pid=start_fba(args)
 	q.put(fba_pid)
@@ -286,10 +289,10 @@ def udp_proxy(args,q):
 			l_sockfd.close()
 			os._exit(0)
 
-def killGgpoFba():
+def killGgpoFbaNG():
 	if platform.system()=="Windows":
 		try:
-			args = ['taskkill', '/f', '/im', 'ggpofba.exe']
+			args = ['taskkill', '/f', '/im', 'ggpofba-ng.exe']
 			Popen(args, shell=True)
 			args = ['tskill', 'ggpofba', '/a']
 			Popen(args, shell=True)
@@ -297,7 +300,7 @@ def killGgpoFba():
 			pass
 	else:
 		try:
-			args = ['pkill', '-f', 'ggpofba.*quark:served']
+			args = ['pkill', '-f', 'ggpofba-ng.exe*quark:served']
 			devnull = open(os.devnull, 'w')
 			Popen(args, stdout=devnull, stderr=devnull)
 			devnull.close()
@@ -383,6 +386,10 @@ if __name__ == "__main__":
 
 	log = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ggpofba.log")
 	errorlog = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ggpofba-errors.log")
+
+	# make sure ggpofba-ng is not running
+	killGgpoFbaNG()
+	time.sleep(1)
 
 	try:
 		#loglevel=logging.DEBUG
