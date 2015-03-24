@@ -25,8 +25,7 @@ linux: cleanbuild
 	mkdir /tmp/FightCade/
 	cp -R assets config fightcade ggpo ggpofba-ng.exe ggpofba.sh ggponet.dll __init__.py kailleraclient.dll LICENSE main.py README.md VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
 	rm -rf /tmp/FightCade/ggpo/resources/assets/
-	echo "sudo apt-get install wine python-qt4-phonon python-qt4" > /tmp/FightCade/install.sh
-	chmod 755 /tmp/FightCade/install.sh
+	rm -rf /tmp/FightCade/ggpo/scripts/
 	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
 	rm -rf /tmp/FightCade
 	ls -lat /tmp/fightcade-linux-v0* |head -n 1
