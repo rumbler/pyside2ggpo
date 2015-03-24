@@ -23,15 +23,25 @@ clean:
 linux: cleanbuild
 	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
-	cp -R assets config fightcade ggpo ggpofba-ng.exe ggpofba.sh ggponet.dll __init__.py kailleraclient.dll LICENSE main.py README.md VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
+	cp -R assets config fightcade ggpo ggpofba-ng.exe ggpofba.sh ggponet.dll __init__.py kailleraclient.dll LICENSE linux-install.sh main.py README.md VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
 	rm -rf /tmp/FightCade/ggpo/resources/assets/
 	rm -rf /tmp/FightCade/ggpo/scripts/
 	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
-	rm -rf /tmp/FightCade
+	rm -rf /tmp/FightCade savestates/
 	ls -lat /tmp/fightcade-linux-v0* |head -n 1
 
 win: cleanbuild
+	/Development/python-windows-packager/package.sh ./ggpofba.py ggpofba
+	cp dist/ggpofba.exe .
 	/Development/python-windows-packager/package.sh ./main.py fightcade
+	cp dist/fightcade.exe ./FightCade.exe
+	rm -rf build dist
+	mkdir /tmp/FightCade/
+	cp -R assets config FightCade.exe ggpofba.exe ggpofba-ng.exe ggponet.dll kailleraclient.dll LICENSE VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
+	cd /tmp ; zip -r fightcade-win32-v0`cat FightCade/VERSION`.zip FightCade
+	rm -rf /tmp/FightCade savestates/ FightCade.exe fightcade.spec ggpofba.exe ggpofba.spec
+	ls -lat /tmp/fightcade-win32-v0* |head -n 1
+
 osx: cleanbuild
 	#pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
 	pyinstaller -w -i ggpo/resources/img/icon.icns -n fightcade --runtime-hook ggpo/scripts/runtimehook.py main.py
