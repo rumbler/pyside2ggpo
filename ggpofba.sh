@@ -59,6 +59,7 @@ fi
 
 # check if there's any application using audio
 tot=$(/usr/bin/pacmd list-sink-inputs |grep ">>>.*sink input(s) available." |head -n 1 |awk '{print $2}')
+if [ -z "${tot}" ]; then tot=99 ; fi
 
 # first instance resets pulseaudio, others don't
 if [ ${tot} -eq 0 ]; then
