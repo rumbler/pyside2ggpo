@@ -23,7 +23,7 @@ clean:
 linux: cleanbuild
 	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
-	cp -R assets config fightcade ggpo ggpofba-ng.exe ggpofba.sh ggponet.dll __init__.py kailleraclient.dll LICENSE linux-install.sh main.py README.md VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
+	cp -R * /tmp/FightCade/
 	rm -rf /tmp/FightCade/ggpo/resources/assets/
 	rm -rf /tmp/FightCade/ggpo/scripts/
 	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
