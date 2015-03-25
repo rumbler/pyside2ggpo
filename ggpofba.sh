@@ -12,6 +12,7 @@
 cd "${0%/*}"
 
 . ggpo/scripts/shell-functions.sh
+find_python
 
 PARAM=${1+"$@"}
 

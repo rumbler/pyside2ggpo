@@ -58,13 +58,13 @@ def start_fba(args):
 	FBA=os.path.join(dirtest,FBA)
 
 	# try to find wine
-	wine="/Applications/Wine.app/Contents/Resources/bin/wine"
+	wine=os.path.join(dirtest,"../Resources/bin/wine")
 	if not os.path.isfile(wine):
 		wine="/usr/bin/wine"
 	if not os.path.isfile(wine):
 		wine='/usr/local/bin/wine'
 	if not os.path.isfile(wine):
-		wine=os.path.join(dirtest,"../Resources/bin/wine")
+		wine="/Applications/Wine.app/Contents/Resources/bin/wine"
 	if not os.path.isfile(wine):
 		# assume we are on windows
 		args.insert(0, FBA)
