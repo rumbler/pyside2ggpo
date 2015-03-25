@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 import sys
-from ggpo.common.runtime import *
+import platform
 
-if IS_OSX:
+if platform.system() == 'Darwin':
     sys.path.append("../Resources/lib/python2.7/site-packages/")
 
 import sip
