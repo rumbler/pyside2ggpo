@@ -1,3 +1,5 @@
 #!/bin/sh
 cd "${0%/*}"
-./main.py 2>/dev/null &
+. ggpo/scripts/shell-functions.sh
+find_python
+${PYTHON} ./main.py 2>/dev/null &

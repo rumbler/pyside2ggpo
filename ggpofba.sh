@@ -11,6 +11,8 @@
 # keep OSX happy:
 cd "${0%/*}"
 
+. ggpo/scripts/shell-functions.sh
+
 PARAM=${1+"$@"}
 
 THIS_SCRIPT_PATH=`readlink -f $0 2>/dev/null || pwd`
@@ -53,7 +55,7 @@ if [ $? -eq 0 ]; then
 fi
 
 if [ ! -x /usr/bin/pulseaudio ] || [ ! -x /usr/bin/pacmd ] || [ ! -x /usr/bin/pactl ]; then
-	${FBA} ${PARAM} &
+	${PYTHON} ${FBA} ${PARAM} &
 	exit 0
 fi
 
@@ -70,7 +72,7 @@ if [ ${tot} -eq 0 ]; then
 fi
 
 echo "-!- starting the real ggpofba"
-${FBA} ${PARAM} &
+${PYTHON} ${FBA} ${PARAM} &
 
 if [ ${tot} -eq 0 ]; then
 	sleep 1s
