@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/logindialog.ui'
 #
-# Created: Wed Nov 19 13:29:18 2014
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Thu Mar 26 17:52:10 2015
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_DialogLogin(object):
     def setupUi(self, DialogLogin):
@@ -110,11 +119,13 @@ class Ui_DialogLogin(object):
         DialogLogin.setTabOrder(self.uiLoginBtn, self.uiRegisterLink)
 
     def retranslateUi(self, DialogLogin):
-        DialogLogin.setWindowTitle(QtGui.QApplication.translate("DialogLogin", "FightCade", None, QtGui.QApplication.UnicodeUTF8))
-        self.labelUsername.setText(QtGui.QApplication.translate("DialogLogin", "Username", None, QtGui.QApplication.UnicodeUTF8))
-        self.labelPassword.setText(QtGui.QApplication.translate("DialogLogin", "Password", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiSavePasswordChk.setText(QtGui.QApplication.translate("DialogLogin", "Save Password", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiRegisterLink.setText(QtGui.QApplication.translate("DialogLogin", "Create Account...", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiLoginBtn.setText(QtGui.QApplication.translate("DialogLogin", "Login", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiNewVersionLink.setText(QtGui.QApplication.translate("DialogLogin", "Updates Available...", None, QtGui.QApplication.UnicodeUTF8))
-        self.uiVersionLbl.setText(QtGui.QApplication.translate("DialogLogin", "version", None, QtGui.QApplication.UnicodeUTF8))
+        DialogLogin.setWindowTitle(_translate("DialogLogin", "FightCade", None))
+        self.labelUsername.setText(_translate("DialogLogin", "Username", None))
+        self.labelPassword.setText(_translate("DialogLogin", "Password", None))
+        self.uiSavePasswordChk.setText(_translate("DialogLogin", "Save Password", None))
+        self.uiRegisterLink.setText(_translate("DialogLogin", "Create Account...", None))
+        self.uiLoginBtn.setText(_translate("DialogLogin", "Login", None))
+        self.uiNewVersionLink.setText(_translate("DialogLogin", "Updates Available...", None))
+        self.uiVersionLbl.setText(_translate("DialogLogin", "version", None))
+
+import ggpo_rc

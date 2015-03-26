@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ggpo/gui/ui/customemoticondialog.ui'
+# Form implementation generated from reading ui file 'ggpo/gui/ui/customemoticonsdialog.ui'
 #
-# Created: Sat Mar 22 15:37:32 2014
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Thu Mar 26 17:52:10 2015
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_EmoticonDialog(object):
     def setupUi(self, EmoticonDialog):
@@ -38,6 +47,6 @@ class Ui_EmoticonDialog(object):
         QtCore.QMetaObject.connectSlotsByName(EmoticonDialog)
 
     def retranslateUi(self, EmoticonDialog):
-        EmoticonDialog.setWindowTitle(QtGui.QApplication.translate("EmoticonDialog", "Custom Emoticons", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("EmoticonDialog", "One emoticon per line", None, QtGui.QApplication.UnicodeUTF8))
+        EmoticonDialog.setWindowTitle(_translate("EmoticonDialog", "Custom Emoticons", None))
+        self.label.setText(_translate("EmoticonDialog", "One emoticon per line", None))
 
