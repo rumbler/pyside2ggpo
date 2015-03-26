@@ -128,4 +128,4 @@ class Ui_DialogLogin(object):
         self.uiNewVersionLink.setText(_translate("DialogLogin", "Updates Available...", None))
         self.uiVersionLbl.setText(_translate("DialogLogin", "version", None))
 
-import ggpo_rc
+#import ggpo_rc
