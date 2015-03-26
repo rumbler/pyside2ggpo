@@ -4,7 +4,9 @@
 uid=$(id -ur)
 if [ "$uid" != "0" ]; then
         echo "ERROR: This script must be run as root."
-	echo "try: sudo $0"
+	if [ -x /usr/bin/sudo ]; then
+		echo "try: sudo $0"
+	fi
         exit 1
 fi
 
@@ -19,3 +21,19 @@ if [ -x /usr/bin/pacman ]; then
 	pacman -S multilib/wine extra/pyqt4-common extra/python-pyqt4 extra/phonon-qt4
 	exit $?
 fi
+
+# fedora (untested)
+if [ -x /usr/bin/yum ]; then
+	yum install wine pyqt4
+	exit $?
+fi
+
+# suse/opensuse (untested)
+if [ -x /usr/bin/zypper ] ; then
+	zypper in wine python-qt4
+	exit $?
+fi
+
+echo "Your distribution is not supported :("
+echo "Please install 'pyqt4' and 'wine' to run fightcade."
+exit 1
