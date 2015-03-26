@@ -109,7 +109,7 @@
      <x>0</x>
      <y>0</y>
      <width>810</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAction">
@@ -169,6 +169,7 @@
     <addaction name="uiDisableAutoColorNicks"/>
     <addaction name="uiHideGamesWithoutRomAct"/>
     <addaction name="menuLogging"/>
+    <addaction name="uiFilterFavoriteLobbies"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -501,6 +502,14 @@
   <action name="uiGNGWebAct">
    <property name="text">
     <string>FightCade website</string>
+   </property>
+  </action>
+  <action name="uiFilterFavoriteLobbies">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Filter Favorite Lobbies</string>
    </property>
   </action>
  </widget>
