@@ -50,7 +50,7 @@ osx: cleanbuild
 	cp -R * /tmp/FightCade.app/Contents/MacOS/
 	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/ /tmp/FightCade.app/Contents/MacOS/linux-install.sh /tmp/FightCade.app/Contents/MacOS/Makefile
 	sed -i '' -e 's/nVidSelect 1/nVidSelect 3/' /tmp/FightCade.app/Contents/MacOS/config/ggpofba-ng.default.ini
-	cd /tmp ; /Users/pau/Development/yoursway-create-dmg/create-dmg --icon FightCade.app 160 205 --volname FightCade --volicon /Users/pau/Development/pyqtggpo/ggpo/resources/img/icon.icns --background /Users/pau/Development/pyqtggpo/ggpo/resources/img/osx-installer-bg.png --icon-size 128 --app-drop-link 380 205 --window-size 600 450 fightcade-osx64-v0`cat /Users/pau/Development/pyqtggpo/VERSION`.dmg FightCade.app
+	cd /tmp ; /Users/pau/Development/yoursway-create-dmg/create-dmg --icon FightCade.app 160 205 --volname 'FightCade Installer' --background /Users/pau/Development/pyqtggpo/ggpo/resources/img/osx-installer-bg.png --icon-size 128 --app-drop-link 380 205 --window-size 600 450 fightcade-osx64-v0`cat /Users/pau/Development/pyqtggpo/VERSION`.dmg FightCade.app
 	rm -rf /tmp/FightCade.app
 	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
 	ls -laht /tmp/fightcade-osx64-v0* |head -n 1
