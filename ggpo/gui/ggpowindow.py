@@ -19,7 +19,7 @@ from ggpo.common.cliclient import CLI
 from ggpo.common.playerstate import PlayerStates
 from ggpo.common.settings import Settings
 from ggpo.common.util import logdebug, openURL, findURLs, nl2br, replaceURLs, replaceReplayID, findGamesavesDir, \
-    defaultdictinit
+    defaultdictinit, findFba
 from ggpo.common.unsupportedsavestates import UnsupportedSavestates
 from ggpo.common.allgames import *
 from ggpo.gui.customemoticonsdialog import CustomEmoticonsDialog
@@ -172,6 +172,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if fname:
             Settings.setValue(Settings.CUSTOM_CHALLENGE_SOUND_LOCATION, fname)
             ggpo.common.sound.play()
+            for a in self.uiMenuChallengeSoundGroup.actions():
+                if a.isChecked():
+                    a.setChecked(False)
 
     def locateGGPOFBA(self):
         oldval = Settings.value(Settings.GGPOFBA_LOCATION)
@@ -699,6 +702,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiFontAct.triggered.connect(self.changeFont)
         self.setupMenuTheme()
         self.setupMenuSmoothing()
+        self.setupMenuChallengeSound()
         self.uiCustomEmoticonsAct.triggered.connect(self.setCustomEmoticons)
 
         #self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
@@ -725,6 +729,150 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiDebugLogAct.triggered.connect(self.__class__.logdebugTriggered)
         self.uiLogChatAct.triggered.connect(self.__class__.loguserChatTriggered)
         self.uiLogPlayHistoryAct.triggered.connect(self.__class__.loguserPlayHistoryTriggered)
+
+
+    def setupMenuChallengeSound(self):
+
+        def GetChallengeSoundFile(name):
+            fba = findFba()
+            if fba:
+                filename = os.path.join(os.path.dirname(fba), "assets", name+"-challenge.wav")
+                if os.path.isfile(filename):
+                    return filename
+            filename = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "assets", name+"-challenge.wav")
+            if filename and os.path.isfile(filename):
+                return filename
+
+        def SetChallengeSound(fname):
+            Settings.setValue(Settings.CUSTOM_CHALLENGE_SOUND_LOCATION, fname)
+            ggpo.common.sound.play()
+
+        def onChallengeSoundToggled(boolean):
+            if boolean:
+                SetChallengeSound(GetChallengeSoundFile(self.sender().text()))
+
+        self.uiMenuChallengeSoundGroup = QtGui.QActionGroup(self.uiChallengeSoundMenu, exclusive=True)
+
+        self.uiactionBreakrev = QtGui.QAction("breakrev", self)
+        self.uiactionBreakrev.setCheckable(True)
+        self.uiactionBreakrev.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionBreakrev))
+
+        self.uiactionCaptcomm = QtGui.QAction("captcomm", self)
+        self.uiactionCaptcomm.setCheckable(True)
+        self.uiactionCaptcomm.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionCaptcomm))
+
+        self.uiactionDdsom = QtGui.QAction("ddsom", self)
+        self.uiactionDdsom.setCheckable(True)
+        self.uiactionDdsom.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionDdsom))
+
+        self.uiactionDoubledr = QtGui.QAction("doubledr", self)
+        self.uiactionDoubledr.setCheckable(True)
+        self.uiactionDoubledr.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionDoubledr))
+
+        self.uiactionGarou = QtGui.QAction("garou", self)
+        self.uiactionGarou.setCheckable(True)
+        self.uiactionGarou.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionGarou))
+
+        self.uiactionJojobane = QtGui.QAction("jojobane", self)
+        self.uiactionJojobane.setCheckable(True)
+        self.uiactionJojobane.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionJojobane))
+
+        self.uiactionKarnovr = QtGui.QAction("karnovr", self)
+        self.uiactionKarnovr.setCheckable(True)
+        self.uiactionKarnovr.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionKarnovr))
+
+        self.uiactionKof2002 = QtGui.QAction("kof2002", self)
+        self.uiactionKof2002.setCheckable(True)
+        self.uiactionKof2002.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionKof2002))
+
+        self.uiactionKof98 = QtGui.QAction("kof98", self)
+        self.uiactionKof98.setCheckable(True)
+        self.uiactionKof98.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionKof98))
+
+        self.uiactionMatrim = QtGui.QAction("matrim", self)
+        self.uiactionMatrim.setCheckable(True)
+        self.uiactionMatrim.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionMatrim))
+
+        self.uiactionMshvsf = QtGui.QAction("mshvsf", self)
+        self.uiactionMshvsf.setCheckable(True)
+        self.uiactionMshvsf.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionMshvsf))
+
+        self.uiactionMslug3 = QtGui.QAction("mslug3", self)
+        self.uiactionMslug3.setCheckable(True)
+        self.uiactionMslug3.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionMslug3))
+
+        self.uiactionMvsc = QtGui.QAction("mvsc", self)
+        self.uiactionMvsc.setCheckable(True)
+        self.uiactionMvsc.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionMvsc))
+
+        self.uiactionRbffspec = QtGui.QAction("rbffspec", self)
+        self.uiactionRbffspec.setCheckable(True)
+        self.uiactionRbffspec.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionRbffspec))
+
+        self.uiactionRingdest = QtGui.QAction("ringdest", self)
+        self.uiactionRingdest.setCheckable(True)
+        self.uiactionRingdest.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionRingdest))
+
+        self.uiactionRotd = QtGui.QAction("rotd", self)
+        self.uiactionRotd.setCheckable(True)
+        self.uiactionRotd.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionRotd))
+
+        self.uiactionSamsho2 = QtGui.QAction("samsho2", self)
+        self.uiactionSamsho2.setCheckable(True)
+        self.uiactionSamsho2.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionSamsho2))
+
+        self.uiactionSf2 = QtGui.QAction("sf2", self)
+        self.uiactionSf2.setCheckable(True)
+        self.uiactionSf2.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionSf2))
+
+        self.uiactionSfiii3n = QtGui.QAction("sfiii3n", self)
+        self.uiactionSfiii3n.setCheckable(True)
+        self.uiactionSfiii3n.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionSfiii3n))
+
+        self.uiactionSsf2t = QtGui.QAction("ssf2t", self)
+        self.uiactionSsf2t.setCheckable(True)
+        self.uiactionSsf2t.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionSsf2t))
+
+        self.uiactionSvc = QtGui.QAction("svc", self)
+        self.uiactionSvc.setCheckable(True)
+        self.uiactionSvc.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionSvc))
+
+        self.uiactionVsav = QtGui.QAction("vsav", self)
+        self.uiactionVsav.setCheckable(True)
+        self.uiactionVsav.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionVsav))
+
+        self.uiactionWhp = QtGui.QAction("whp", self)
+        self.uiactionWhp.setCheckable(True)
+        self.uiactionWhp.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionWhp))
+
+        self.uiactionXmvsf = QtGui.QAction("xmvsf", self)
+        self.uiactionXmvsf.setCheckable(True)
+        self.uiactionXmvsf.toggled.connect(onChallengeSoundToggled)
+        self.uiChallengeSoundMenu.addAction(self.uiMenuChallengeSoundGroup.addAction(self.uiactionXmvsf))
+
 
     def setupMenuSmoothing(self):
         # unfortunately Qt Designer doesn't support QActionGroup, we have to code it up

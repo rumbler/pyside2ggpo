@@ -640,7 +640,7 @@ class Controller(QtCore.QObject):
     def playChallengeSound(self):
         if not self.fba:
             return
-        wavfile = os.path.join(os.path.dirname(self.fba), "assets", "challenger-comes.wav")
+        wavfile = os.path.join(os.path.dirname(self.fba), "assets", "sf2-challenge.wav")
         if not os.path.isfile(wavfile):
             return
         if IS_OSX:

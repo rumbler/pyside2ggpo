@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Thu Mar 26 17:52:10 2015
+# Created: Fri Mar 27 11:42:05 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -73,7 +73,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.uiSplitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 810, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 810, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuAction = QtGui.QMenu(self.menubar)
         self.menuAction.setObjectName(_fromUtf8("menuAction"))
@@ -85,6 +85,8 @@ class Ui_MainWindow(object):
         self.uiSmoothingMenu.setObjectName(_fromUtf8("uiSmoothingMenu"))
         self.menuLogging = QtGui.QMenu(self.menuSetting)
         self.menuLogging.setObjectName(_fromUtf8("menuLogging"))
+        self.uiChallengeSoundMenu = QtGui.QMenu(self.menuSetting)
+        self.uiChallengeSoundMenu.setObjectName(_fromUtf8("uiChallengeSoundMenu"))
         self.menuAbout = QtGui.QMenu(self.menubar)
         self.menuAbout.setObjectName(_fromUtf8("menuAbout"))
         MainWindow.setMenuBar(self.menubar)
@@ -218,23 +220,25 @@ class Ui_MainWindow(object):
         self.menuLogging.addAction(self.uiLogPlayHistoryAct)
         self.menuLogging.addSeparator()
         self.menuLogging.addAction(self.uiDebugLogAct)
-        self.menuSetting.addAction(self.uiMuteChallengeSoundAct)
+        self.uiChallengeSoundMenu.addAction(self.uiMuteChallengeSoundAct)
+        self.uiChallengeSoundMenu.addAction(self.uiLocateCustomChallengeSoundAct)
+        self.uiChallengeSoundMenu.addSeparator()
         self.menuSetting.addAction(self.uiMuteNotifySoundAct)
+        self.menuSetting.addAction(self.uiChallengeSoundMenu.menuAction())
         self.menuSetting.addAction(self.uiThemeMenu.menuAction())
         self.menuSetting.addAction(self.uiSmoothingMenu.menuAction())
         self.menuSetting.addAction(self.uiFontAct)
         self.menuSetting.addAction(self.uiCustomEmoticonsAct)
         self.menuSetting.addSeparator()
         self.menuSetting.addAction(self.uiLocateROMsAct)
-        self.menuSetting.addAction(self.uiLocateCustomChallengeSoundAct)
         self.menuSetting.addSeparator()
         self.menuSetting.addAction(self.uiNotifyPlayerStateChangeAct)
         self.menuSetting.addAction(self.uiShowCountryFlagInChatAct)
         self.menuSetting.addAction(self.uiShowTimestampInChatAct)
         self.menuSetting.addAction(self.uiDisableAutoColorNicks)
         self.menuSetting.addAction(self.uiHideGamesWithoutRomAct)
-        self.menuSetting.addAction(self.menuLogging.menuAction())
         self.menuSetting.addAction(self.uiFilterFavoriteLobbies)
+        self.menuSetting.addAction(self.menuLogging.menuAction())
         self.menuAbout.addAction(self.uiSRKForumAct)
         self.menuAbout.addAction(self.uiSRKWikiAct)
         self.menuAbout.addAction(self.uiJPWikiAct)
@@ -267,6 +271,7 @@ class Ui_MainWindow(object):
         self.uiThemeMenu.setTitle(_translate("MainWindow", "&Theme", None))
         self.uiSmoothingMenu.setTitle(_translate("MainWindow", "Smoothing / Input &lag", None))
         self.menuLogging.setTitle(_translate("MainWindow", "Logging", None))
+        self.uiChallengeSoundMenu.setTitle(_translate("MainWindow", "Challenge Sound", None))
         self.menuAbout.setTitle(_translate("MainWindow", "&Help", None))
         self.uiClearChatHistoryAct.setText(_translate("MainWindow", "Clear chat his&tory", None))
         self.uiClearChatHistoryAct.setShortcut(_translate("MainWindow", "Ctrl+T", None))
@@ -321,7 +326,7 @@ class Ui_MainWindow(object):
         self.uiHideGamesWithoutRomAct.setText(_translate("MainWindow", "Hide Games with Missing ROMs", None))
         self.uiShowTimestampInChatAct.setText(_translate("MainWindow", "Show Timestamp in Chat", None))
         self.uiDisableAutoColorNicks.setText(_translate("MainWindow", "Disable auto-color of Nicknames", None))
-        self.uiLocateCustomChallengeSoundAct.setText(_translate("MainWindow", "Locate Custom Challenge Sound", None))
+        self.uiLocateCustomChallengeSoundAct.setText(_translate("MainWindow", "Custom Challenge Sound", None))
         self.uiLogChatAct.setText(_translate("MainWindow", "Chat history", None))
         self.uiLogPlayHistoryAct.setText(_translate("MainWindow", "Play history", None))
         self.uiGNGWebAct.setText(_translate("MainWindow", "FightCade website", None))

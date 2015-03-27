@@ -14,10 +14,8 @@
         <file alias="down_arrow.png">img/down_arrow.png</file>
     </qresource>
     <qresource prefix="/assets">
-        <file alias="logo-horizontal.png">assets/logo-horizontal.png</file>
-        <file alias="challenger-comes.mp3">assets/challenger-comes.mp3</file>
+        <file alias="sf2-challenge.mp3">assets/sf2-challenge.mp3</file>
         <file alias="notify.mp3">assets/notify.mp3</file>
-        <file alias="logo.png">assets/logo.png</file>
         <file alias="icon-16.png">assets/icon-16.png</file>
         <file alias="icon-128.png">assets/icon-128.png</file>
         <file alias="logo-vertical.png">assets/logo-vertical.png</file>

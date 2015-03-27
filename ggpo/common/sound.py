@@ -22,10 +22,10 @@ class Backend(object):
             return filename
         fba = findFba()
         if fba:
-            filename = os.path.join(os.path.dirname(fba), "assets", "challenger-comes.wav")
+            filename = os.path.join(os.path.dirname(fba), "assets", "sf2-challenge.wav")
             if os.path.isfile(filename):
                 return filename
-        filename = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "assets", "challenger-comes.wav")
+        filename = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "assets", "sf2-challenge.wav")
         if filename and os.path.isfile(filename):
             return filename
 
@@ -112,7 +112,7 @@ class PhononBackend(Backend):
 
     def play(self):
         if not Settings.value(Settings.MUTE_CHALLENGE_SOUND):
-            self.mediaObject.setCurrentSource(Phonon.MediaSource(':/assets/challenger-comes.mp3'))
+            self.mediaObject.setCurrentSource(Phonon.MediaSource(':/assets/sf2-challenge.mp3'))
             self.mediaObject.seek(0)
             self.mediaObject.play()
 

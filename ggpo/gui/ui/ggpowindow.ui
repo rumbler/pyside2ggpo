@@ -109,7 +109,7 @@
      <x>0</x>
      <y>0</y>
      <width>810</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAction">
@@ -153,23 +153,30 @@
      <addaction name="separator"/>
      <addaction name="uiDebugLogAct"/>
     </widget>
-    <addaction name="uiMuteChallengeSoundAct"/>
+    <widget class="QMenu" name="uiChallengeSoundMenu">
+     <property name="title">
+      <string>Challenge Sound</string>
+     </property>
+     <addaction name="uiMuteChallengeSoundAct"/>
+     <addaction name="uiLocateCustomChallengeSoundAct"/>
+     <addaction name="separator"/>
+    </widget>
     <addaction name="uiMuteNotifySoundAct"/>
+    <addaction name="uiChallengeSoundMenu"/>
     <addaction name="uiThemeMenu"/>
     <addaction name="uiSmoothingMenu"/>
     <addaction name="uiFontAct"/>
     <addaction name="uiCustomEmoticonsAct"/>
     <addaction name="separator"/>
     <addaction name="uiLocateROMsAct"/>
-    <addaction name="uiLocateCustomChallengeSoundAct"/>
     <addaction name="separator"/>
     <addaction name="uiNotifyPlayerStateChangeAct"/>
     <addaction name="uiShowCountryFlagInChatAct"/>
     <addaction name="uiShowTimestampInChatAct"/>
     <addaction name="uiDisableAutoColorNicks"/>
     <addaction name="uiHideGamesWithoutRomAct"/>
-    <addaction name="menuLogging"/>
     <addaction name="uiFilterFavoriteLobbies"/>
+    <addaction name="menuLogging"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -480,7 +487,7 @@
   </action>
   <action name="uiLocateCustomChallengeSoundAct">
    <property name="text">
-    <string>Locate Custom Challenge Sound</string>
+    <string>Custom Challenge Sound</string>
    </property>
   </action>
   <action name="uiLogChatAct">
