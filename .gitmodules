@@ -1,0 +1,3 @@
+[submodule "savestates"]
+	path = savestates
+	url = git@github.com:poliva/fightcadestates.git
