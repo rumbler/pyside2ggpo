@@ -27,7 +27,7 @@ linux: cleanbuild
 	rm -rf /tmp/FightCade/ggpo/resources/assets/ /tmp/FightCade/Makefile
 	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
 	rm -rf /tmp/FightCade
-	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
+	rm -rf cheats flyers previews recordings ROMs screenshots titles
 	ls -laht /tmp/fightcade-linux-v0* |head -n 1
 
 win: cleanbuild
@@ -36,11 +36,12 @@ win: cleanbuild
 	../python-windows-packager/package.sh ./main.py fightcade
 	cp dist/fightcade.exe ./FightCade.exe
 	rm -rf build dist
+	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
 	cp -R assets config FightCade.exe ggpofba.exe ggpofba-ng.exe ggponet.dll kailleraclient.dll LICENSE VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
 	cd /tmp ; zip -r fightcade-win32-v0`cat FightCade/VERSION`.zip FightCade
 	rm -rf /tmp/FightCade FightCade.exe fightcade.spec ggpofba.exe ggpofba.spec
-	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
+	rm -rf cheats flyers previews recordings ROMs screenshots titles
 	ls -laht /tmp/fightcade-win32-v0* |head -n 1
 
 osx: cleanbuild
@@ -52,11 +53,10 @@ osx: cleanbuild
 	sed -i '' -e 's/nVidSelect 1/nVidSelect 3/' /tmp/FightCade.app/Contents/MacOS/config/ggpofba-ng.default.ini
 	cd /tmp ; /Users/pau/Development/yoursway-create-dmg/create-dmg --icon FightCade.app 160 205 --volname 'FightCade Installer' --background /Users/pau/Development/pyqtggpo/ggpo/resources/img/osx-installer-bg.png --icon-size 128 --app-drop-link 380 205 --window-size 600 450 fightcade-osx64-v0`cat /Users/pau/Development/pyqtggpo/VERSION`.dmg FightCade.app
 	rm -rf /tmp/FightCade.app
-	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
+	rm -rf cheats flyers previews recordings ROMs screenshots titles
 	ls -laht /tmp/fightcade-osx64-v0* |head -n 1
 
 cleanbuild:
 	rm -rf build dist
-	rm -rf cheats flyers previews recordings ROMs savestates screenshots titles
-	mkdir cheats flyers previews recordings ROMs savestates screenshots titles
-	cp ../fightcadestates/*.fs savestates/
+	rm -rf cheats flyers previews recordings ROMs screenshots titles
+	mkdir cheats flyers previews recordings ROMs screenshots titles
