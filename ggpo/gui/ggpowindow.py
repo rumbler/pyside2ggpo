@@ -272,7 +272,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 else:
                     channel = self.controller.channel
                     replay_id = name
-                quark = "quark:stream,"+channel+","+replay_id+",7000"
+                quark = "quark:stream,"+channel+","+replay_id+",7001"
                 self.controller.runFBA(quark)
                 self.controller.sigStatusMessage.emit("Replaying game-id {}@{}".format(replay_id, channel))
 

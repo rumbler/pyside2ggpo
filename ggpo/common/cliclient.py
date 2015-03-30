@@ -126,7 +126,7 @@ class CLI:
             else:
                 channel = controller.channel
                 replay_id = name
-            quark = "quark:stream,"+channel+","+replay_id+",7000"
+            quark = "quark:stream,"+channel+","+replay_id+",7001"
             controller.runFBA(quark)
             controller.sigStatusMessage.emit("Replaying game-id {}@{}".format(replay_id, channel))
 

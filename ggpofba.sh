@@ -52,7 +52,7 @@ echo ${PARAM} |grep "^fightcade://challenge-.*@" >/dev/null
 if [ $? -eq 0 ]; then
 	quark=$(echo ${PARAM} |cut -f 1 -d "@" |cut -f 3 -d "/")
 	game=$(echo ${PARAM} |cut -f 2 -d "@")
-	PARAM="quark:stream,${game},${quark},7000 -w"
+	PARAM="quark:stream,${game},${quark},7001 -w"
 fi
 
 if [ ! -x /usr/bin/pulseaudio ] || [ ! -x /usr/bin/pacmd ] || [ ! -x /usr/bin/pactl ]; then

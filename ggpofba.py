@@ -367,7 +367,7 @@ def main():
 		try:
 			quarkid=quark.split('/')[2].split('@')[0]
 			game=quark.split('/')[2].split('@')[1]
-			args=['quark:stream,'+game+','+quarkid+',7000', '-w']
+			args=['quark:stream,'+game+','+quarkid+',7001', '-w']
 		except:
 			pass
 		start_fba(args)
@@ -375,7 +375,7 @@ def main():
 		try:
 			quarkid=quark.split('@')[0]
 			game=quark.split('@')[1]
-			args=['quark:stream,'+game+','+quarkid+',7000', '-w']
+			args=['quark:stream,'+game+','+quarkid+',7001', '-w']
 		except:
 			pass
 		start_fba(args)
