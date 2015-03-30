@@ -7,7 +7,6 @@ import sys
 import re
 import shutil
 import time
-import fileinput
 from colortheme import ColorTheme
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import Qt
@@ -217,29 +216,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if d and os.path.isdir(d):
             Settings.setValue(Settings.ROMS_DIR, d)
 
-        #on linux & MAC, symlink it to the ROMs folder to avoid configuring FBA
-        if not IS_WINDOWS:
-            fbaRomPath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ROMs")
-            # remove it if it's a link or an empty dir
-            if os.path.islink(fbaRomPath):
-                os.remove(fbaRomPath)
-            if os.path.isdir(fbaRomPath) and not os.listdir(fbaRomPath):
-                os.rmdir(fbaRomPath)
-            if not os.path.exists(fbaRomPath):
-                os.symlink(d, fbaRomPath)
-
-        # on windows, update fba's ini file with the new location
-        if IS_WINDOWS:
-            # make sure FBA is not running, otherwise we can't modify the config file
-            self.controller.killEmulator()
-            fbaIniFile = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "config", "ggpofba-ng.ini")
-            if fbaIniFile and os.path.isfile(fbaIniFile):
-                for line in fileinput.input(fbaIniFile, inplace=True, backup='.bak'):
-                    new="szAppRomPaths[7] "+str(os.path.join(d.upper(),'')+"\\")
-                    sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
-                fileinput.close()
+        # create FBA ini file and setup ROMs dir
+        self.controller.createFbaIni()
+        self.controller.setupROMsDir()
 
         # refresh the channels list
+        self.expectFirstChannelResponse = True
         self.controller.sigChannelsLoaded.emit()
 
     def notifyStateChange(self, name, msg):

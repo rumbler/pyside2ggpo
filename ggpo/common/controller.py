@@ -8,6 +8,7 @@ import time
 import struct
 import select
 import errno
+import fileinput
 from shutil import copyfile
 from random import randint
 from subprocess import Popen
@@ -664,6 +665,50 @@ class Controller(QtCore.QObject):
         self.playing = {}
         self.awayfromkb = {}
 
+    def createFbaIni(self):
+
+        fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
+        fbainidef = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.default.ini')
+        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpofba-ng.bkp.ini')
+
+        # if ini file doesn't exist, try to restore FBA settings from backup
+        if not os.path.isfile(fbaini) and os.path.isfile(fbainibkp):
+            self.sigStatusMessage.emit("Restoring emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
+            copyfile(fbainibkp, fbaini)
+            self.setupROMsDir()
+
+        # if ini file doesn't exist and there was no backup, use the default FBA config
+        if not os.path.isfile(fbaini) and not os.path.isfile(fbainibkp) and os.path.isfile(fbainidef):
+            copyfile(fbainidef, fbaini)
+
+    def setupROMsDir(self):
+
+        romdir=Settings.value(Settings.ROMS_DIR)
+        if not romdir:
+            return
+
+        #on linux & MAC, symlink the ROMs folder to avoid configuring FBA
+        if not IS_WINDOWS:
+            fbaRomPath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ROMs")
+            # remove it if it's a link or an empty dir
+            if os.path.islink(fbaRomPath):
+                os.remove(fbaRomPath)
+            if os.path.isdir(fbaRomPath) and not os.listdir(fbaRomPath):
+                os.rmdir(fbaRomPath)
+            if not os.path.exists(fbaRomPath):
+                os.symlink(romdir, fbaRomPath)
+
+        # on windows, update fba's ini file with the new location
+        if IS_WINDOWS:
+            # make sure FBA is not running, otherwise we can't modify the config file
+            self.killEmulator()
+            fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
+            if fbaini and os.path.isfile(fbaini):
+                for line in fileinput.input(fbaini, inplace=True, backup='.bak'):
+                    new="szAppRomPaths[7] "+str(os.path.join(romdir.upper(),'')+"\\")
+                    sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
+                fileinput.close()
+
     def runFBA(self, quark):
         self.checkRom()
         self.fba = findFba()
@@ -678,31 +723,12 @@ class Controller(QtCore.QObject):
             fba = fba.replace('ggpofba-ng.exe', 'ggpofba.sh')
         args = [fba, quark, '-w']
 
-        fbaini = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.ini')
-        fbadat = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.roms.dat')
+        fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
+        fbadat = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.roms.dat')
         fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpofba-ng.bkp.ini')
-        fbainidef = os.path.join(os.path.dirname(self.fba), 'config', 'ggpofba-ng.default.ini')
-        # if dat file doesn't exist, restore FBA settings from backup
-        if not os.path.isfile(fbadat) and os.path.isfile(fbainibkp):
-            self.sigStatusMessage.emit("Trying to restore emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
-            copyfile(fbainibkp, fbaini)
 
-        # if dat file doesn't exist and there was no backup, use the default FBA config
-        if not os.path.isfile(fbadat) and not os.path.isfile(fbaini) and not os.path.isfile(fbainibkp) and os.path.isfile(fbainidef):
-            copyfile(fbainidef, fbaini)
-
-            #on linux & MAC, symlink the ROMs folder to avoid configuring FBA
-            if not IS_WINDOWS:
-                romdir=Settings.value(Settings.ROMS_DIR)
-                if romdir:
-                    fbaRomPath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ROMs")
-                    # remove it if it's a link or an empty dir
-                    if os.path.islink(fbaRomPath):
-                        os.remove(fbaRomPath)
-                    if os.path.isdir(fbaRomPath) and not os.listdir(fbaRomPath):
-                        os.rmdir(fbaRomPath)
-                    if not os.path.exists(fbaRomPath):
-                        os.symlink(romdir, fbaRomPath)
+        if not os.path.isfile(fbaini):
+            self.createFbaIni()
 
         logdebug().info(" ".join(args))
         try:
