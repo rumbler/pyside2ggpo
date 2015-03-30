@@ -441,7 +441,7 @@ class Controller(QtCore.QObject):
             msg = msg.decode('utf-8')
         except ValueError:
             msg = msg
-        if Settings.USER_LOG_CHAT:
+        if Settings.value(Settings.USER_LOG_CHAT):
             loguser().info(u"<{}> {}".format(name, msg))
         self.sigChatReceived.emit(name, msg)
 
@@ -593,7 +593,7 @@ class Controller(QtCore.QObject):
                     self.playingagainst = p2
                 if self.username == p2:
                     self.playingagainst = p1
-                if Settings.USER_LOG_PLAYHISTORY and self.username in [p1, p2]:
+                if Settings.value(Settings.USER_LOG_PLAYHISTORY) and self.username in [p1, p2]:
                     loguser().info(u"[IN A GAME] {} vs {}".format(p1, p2))
             elif state == PlayerStates.AVAILABLE:
                 self.parsePlayerAvailableResponse(p1, playerinfo)
