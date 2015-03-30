@@ -60,3 +60,4 @@ cleanbuild:
 	rm -rf build dist
 	rm -rf cheats flyers previews recordings ROMs screenshots titles
 	mkdir cheats flyers previews recordings ROMs screenshots titles
+	git submodule foreach git pull
