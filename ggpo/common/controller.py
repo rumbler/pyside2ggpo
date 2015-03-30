@@ -616,8 +616,8 @@ class Controller(QtCore.QObject):
                 msg = p1 + ' ' + PlayerStates.codeToString(state)
             logdebug().info(msg)
             count -= 1
-        if len(data) > 0:
-            logdebug().error("stateChangesResponse, remaining data {}".format(repr(data)))
+        #if len(data) > 0:
+        #    logdebug().error("stateChangesResponse, remaining data {}".format(repr(data)))
 
     def killEmulator(self):
         if IS_WINDOWS:
