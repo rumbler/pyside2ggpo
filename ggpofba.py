@@ -300,7 +300,7 @@ def killGgpoFbaNG():
 			pass
 	else:
 		try:
-			args = ['pkill', '-f', 'ggpofba-ng.exe*quark:served']
+			args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
 			devnull = open(os.devnull, 'w')
 			Popen(args, stdout=devnull, stderr=devnull)
 			devnull.close()
@@ -387,9 +387,10 @@ if __name__ == "__main__":
 	log = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ggpofba.log")
 	errorlog = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ggpofba-errors.log")
 
-	# make sure ggpofba-ng is not running
-	killGgpoFbaNG()
-	time.sleep(1)
+	# make sure ggpofba-ng is not running (except on windows because we kill all emu instances)
+	if platform.system()!="Windows":
+		killGgpoFbaNG()
+		time.sleep(0.5)
 
 	try:
 		#loglevel=logging.DEBUG
