@@ -34,8 +34,7 @@ class TreeWidgetItem(QtGui.QTreeWidgetItem):
         key1 = self.text(column)
         key2 = other.text(column)
         try:
-            if key1 != "The Lobby":
-                return float(key1) < float(key2)
+            return float(key1) < float(key2)
         except ValueError:
             return key1 < key2
 
@@ -316,15 +315,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 pass
             self.expectFirstChannelResponse = False
 
-            self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values() if c['room'] != 'lobby')
+            self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values())
             sortedRooms = sorted(self.channels.keys())
 
-            if 'lobby' in self.controller.channels:
-                title = self.controller.channels['lobby']['title']
-                sortedRooms.insert(0, title)
-                self.channels[title] = 'lobby'
-
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)
+            if lastChannel == None:
+                lastChannel='lobby'
             n=0
             idx=0
             l=[]
@@ -341,7 +337,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     bold_font.setBold(True)
                     item.setFont(1, bold_font)
                 if chan==lastChannel:
-                    idx=n-1
+                    idx=n
 
                 if self.hidemissing==True and self.showfavorites==False:
                     if self.controller.isRomAvailable(chan) or chan==self.controller.channel:
@@ -371,8 +367,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.uiChannelsTree.setItemSelected(root.child(0), False)
                 self.uiChannelsTree.setItemSelected(root.child(idx), True)
                 self.uiChannelsTree.scrollToItem(root.child(idx)) # scroll lobby list to last channel
-                if self.controller.channel == 'lobby':
+                if self.controller.channel != lastChannel:
                     self.controller.sendJoinChannelRequest(lastChannel)
+                elif self.controller.channel == 'lobby':
+                    self.controller.sendJoinChannelRequest("lobby")
             else:
                 self.controller.sendJoinChannelRequest("lobby")
                 self.uiChannelsTree.setItemSelected(root.child(0), True)

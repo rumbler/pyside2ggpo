@@ -867,6 +867,8 @@ class Controller(QtCore.QObject):
             if channel in self.channels:
                 if channel != 'lobby':
                     self.rom = self.channels[channel]['rom']
+                else:
+                    self.rom = ''
             else:
                 logdebug().error("Invalid channel {}".format(channel))
         self.sendAndRemember(Protocol.JOIN_CHANNEL, Protocol.packTLV(self.channel))
