@@ -24,7 +24,7 @@ linux: cleanbuild
 	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
 	cp -R * /tmp/FightCade/
-	rm -rf /tmp/FightCade/ggpo/resources/assets/ /tmp/FightCade/Makefile
+	rm -rf /tmp/FightCade/ggpo/resources/assets/ /tmp/FightCade/Makefile /tmp/FightCade/savestates/.git
 	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
 	rm -rf /tmp/FightCade
 	rm -rf cheats flyers previews recordings ROMs screenshots titles
@@ -39,6 +39,7 @@ win: cleanbuild
 	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
 	cp -R assets config FightCade.exe ggpofba.exe ggpofba-ng.exe ggponet.dll kailleraclient.dll LICENSE VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
+	rm -rf /tmp/FightCade/savestates/.git
 	cd /tmp ; zip -r fightcade-win32-v0`cat FightCade/VERSION`.zip FightCade
 	rm -rf /tmp/FightCade FightCade.exe fightcade.spec ggpofba.exe ggpofba.spec
 	rm -rf cheats flyers previews recordings ROMs screenshots titles
@@ -49,7 +50,7 @@ osx: cleanbuild
 	tar zxvfp ../Fightcade-app-skeleton-osx.tgz -C /tmp/
 	mkdir -p /tmp/FightCade.app/Contents/MacOS/
 	cp -R * /tmp/FightCade.app/Contents/MacOS/
-	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/ /tmp/FightCade.app/Contents/MacOS/linux-install.sh /tmp/FightCade.app/Contents/MacOS/Makefile
+	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/ /tmp/FightCade.app/Contents/MacOS/linux-install.sh /tmp/FightCade.app/Contents/MacOS/Makefile /tmp/FightCade/savestates/.git
 	sed -i '' -e 's/nVidSelect 1/nVidSelect 3/' /tmp/FightCade.app/Contents/MacOS/config/ggpofba-ng.default.ini
 	cd /tmp ; /Users/pau/Development/yoursway-create-dmg/create-dmg --icon FightCade.app 160 205 --volname 'FightCade Installer' --background /Users/pau/Development/pyqtggpo/ggpo/resources/img/osx-installer-bg.png --icon-size 128 --app-drop-link 380 205 --window-size 600 450 fightcade-osx64-v0`cat /Users/pau/Development/pyqtggpo/VERSION`.dmg FightCade.app
 	rm -rf /tmp/FightCade.app
@@ -60,4 +61,5 @@ cleanbuild:
 	rm -rf build dist
 	rm -rf cheats flyers previews recordings ROMs screenshots titles
 	mkdir cheats flyers previews recordings ROMs screenshots titles
+	find . -iname "*.pyc" |xargs -n 1 rm
 	git submodule foreach git pull
