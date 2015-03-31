@@ -2,6 +2,7 @@
 from PyQt4 import QtGui
 import base64
 import ggpo.gui
+from ggpo.common.runtime import *
 from ggpo.common.util import openURL, checkUpdate
 from ggpo.common import copyright
 from ggpo.common.settings import Settings
@@ -12,9 +13,15 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
     def __init__(self, parent=None):
         super(LoginDialog, self).__init__(parent)
         # ggpo.gui.loadUi(__file__, self)
+        if IS_WINDOWS:
+            download_url='http://www.fightcade.com/download/windows'
+        if IS_OSX:
+            download_url='http://www.fightcade.com/download/osx'
+        if IS_LINUX:
+            download_url='http://www.fightcade.com/download/linux'
         self.setupUi(self)
         self.uiNewVersionLink.clicked.connect(
-            lambda: openURL('http://www.fightcade.com/#download'))
+            lambda: openURL(download_url))
         self.uiNewVersionLink.setVisible(False)
         self.uiRegisterLink.setVisible(False)
         versionLabel = 'v' + copyright.versionString()
@@ -99,7 +106,11 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
 
     def showEvent(self, QShowEvent):
         QtGui.QDialog.showEvent(self, QShowEvent)
-        if checkUpdate():
+        versionDiff = checkUpdate()
+        if versionDiff > 0:
             self.uiNewVersionLink.setVisible(True)
-        if Settings.value(Settings.AUTOLOGIN):
-            self.login()
+        if versionDiff > 1:
+            self.uiLoginBtn.setVisible(False)
+            self.uiRegisterLink.setVisible(False)
+        #if Settings.value(Settings.AUTOLOGIN):
+        #    self.login()

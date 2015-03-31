@@ -20,7 +20,7 @@ def checkUpdate():
     try:
         response = urllib2.urlopen(versionurl, timeout=2)
         latestVersion = int(response.read().strip())
-        return latestVersion > int(copyright.__version__)
+        return latestVersion - int(copyright.__version__)
     except:
         pass
 

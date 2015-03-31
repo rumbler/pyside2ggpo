@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/logindialog.ui'
 #
-# Created: Thu Mar 26 17:52:10 2015
+# Created: Tue Mar 31 14:16:00 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -125,7 +125,7 @@ class Ui_DialogLogin(object):
         self.uiSavePasswordChk.setText(_translate("DialogLogin", "Save Password", None))
         self.uiRegisterLink.setText(_translate("DialogLogin", "Create Account...", None))
         self.uiLoginBtn.setText(_translate("DialogLogin", "Login", None))
-        self.uiNewVersionLink.setText(_translate("DialogLogin", "Updates Available...", None))
+        self.uiNewVersionLink.setText(_translate("DialogLogin", "Download Update...", None))
         self.uiVersionLbl.setText(_translate("DialogLogin", "version", None))
 
 #import ggpo_rc
