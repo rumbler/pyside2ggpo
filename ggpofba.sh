@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ggpofba wrapper script for version 0.2.96.74 (bundled with ggpo)
-# (c)2013-2014 Pau Oliva Fora (@pof)
+# (c)2013-2015 Pau Oliva Fora (@pof)
 # (c)2014 papasi
 
 # This resets pulseaudio on Linux because otherwise FBA hangs on my computer (WTF!?).
@@ -30,8 +30,8 @@ fi
 
 if [ -x /usr/bin/xdg-mime ]; then
 	# register fightcade:// url handler
-	if [ ! -x ~/.local/share/applications/fightcade-quark.desktop ]; then
-		echo "[Desktop Entry]
+	mkdir -p ~/.local/share/applications/
+	echo "[Desktop Entry]
 Type=Application
 Encoding=UTF-8
 Name=FightCade Replay
@@ -39,8 +39,7 @@ Exec=${THIS_SCRIPT_DIR}/ggpofba.sh %U
 Terminal=false
 MimeType=x-scheme-handler/fightcade
 " > ~/.local/share/applications/fightcade-quark.desktop
-		xdg-mime default fightcade-quark.desktop x-scheme-handler/fightcade
-	fi
+	xdg-mime default fightcade-quark.desktop x-scheme-handler/fightcade
 fi
 if [ -x /usr/bin/gconftool-2 ]; then
 	gconftool-2 -t string -s /desktop/gnome/url-handlers/fightcade/command "${THIS_SCRIPT_DIR}/ggpofba.sh %s"
@@ -67,16 +66,16 @@ if [ -z "${tot}" ]; then tot=99 ; fi
 # first instance resets pulseaudio, others don't
 if [ ${tot} -eq 0 ]; then
 	VOL=$(/usr/bin/pacmd dump |grep "^set-sink-volume" |tail -n 1 |awk '{print $3}')
-	echo "-!- resetting pulseaudio"
+	#resetting pulseaudio
 	/usr/bin/pulseaudio -k
 	/usr/bin/pulseaudio --start
 fi
 
-echo "-!- starting the real ggpofba"
+#starting the real ggpofba
 ${PYTHON} ${FBA} ${PARAM} &
 
 if [ ${tot} -eq 0 ]; then
 	sleep 1s
-	echo "-!- restoring volume value"
+	#restoring volume value
 	/usr/bin/pactl set-sink-volume 0 ${VOL}
 fi
