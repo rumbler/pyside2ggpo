@@ -16,6 +16,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
         self.uiNewVersionLink.clicked.connect(
             lambda: openURL('http://www.fightcade.com/#download'))
         self.uiNewVersionLink.setVisible(False)
+        self.uiRegisterLink.setVisible(False)
         versionLabel = 'v' + copyright.versionString()
         self.uiVersionLbl.setText(versionLabel)
         self.controller = None
@@ -27,6 +28,8 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
             self.uiUsernameLine.setText(username)
         if password:
             self.uiPasswordLine.setText(base64.decodestring(password))
+        if not username and not password:
+            self.uiRegisterLink.setVisible(True)
         self.uiSavePasswordChk.toggled.connect(self.savePassword)
         self.uiUsernameLine.returnPressed.connect(self.login)
         self.uiPasswordLine.returnPressed.connect(self.login)
