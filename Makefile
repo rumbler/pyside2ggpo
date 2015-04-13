@@ -54,8 +54,9 @@ osx: cleanbuild
 	cp ggpo/scripts/Info.plist /tmp/FightCade.app/Contents/
 	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/ /tmp/FightCade.app/Contents/MacOS/linux-install.sh /tmp/FightCade.app/Contents/MacOS/Makefile /tmp/FightCade.app/savestates/.git
 	sed -i '' -e 's/nVidSelect 1/nVidSelect 3/' /tmp/FightCade.app/Contents/MacOS/config/ggpofba-ng.default.ini
-	pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade.bin --runtime-hook ggpo/scripts/runtimehook.py main.py
-	cp dist/fightcade.bin /tmp/FightCade.app/Contents/MacOS/
+	clang ggpo/scripts/fightcade-launcher.c -arch i386 -arch x86_64 -march=core2 -mmacosx-version-min=10.7 -o /tmp/FightCade.app/Contents/MacOS/fightcade.bin
+	#pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade.bin --runtime-hook ggpo/scripts/runtimehook.py main.py
+	#cp dist/fightcade.bin /tmp/FightCade.app/Contents/MacOS/
 	cd /tmp ; /Users/pau/Development/yoursway-create-dmg/create-dmg --icon FightCade.app 160 205 --volname 'FightCade Installer' --background /Users/pau/Development/pyqtggpo/ggpo/resources/img/osx-installer-bg.png --icon-size 128 --app-drop-link 380 205 --window-size 600 450 fightcade-osx64-v0`cat /Users/pau/Development/pyqtggpo/VERSION`.dmg FightCade.app
 	rm -rf /tmp/FightCade.app
 	rm -rf cheats flyers previews recordings ROMs screenshots titles build dist fightcade.bin.spec

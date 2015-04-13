@@ -7,9 +7,6 @@ OS=$(uname -s)
 if [ "$OS" == "Darwin" ]; then
 	# make sure blitter is set to Experimental
 	sed -i '' -e 's/nVidSelect.*/nVidSelect 3/' ~/ggpofba-ng.bkp.ini 2>/dev/null
-	# run the binary version
-	./fightcade.bin 2>/dev/null
-	exit 0
 fi
 
 . ggpo/scripts/shell-functions.sh
