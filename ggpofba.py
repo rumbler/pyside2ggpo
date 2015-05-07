@@ -297,16 +297,27 @@ def killGgpoFbaNG():
 			args = ['tskill', 'ggpofba', '/a']
 			Popen(args, shell=True)
 		except:
-			pass
-	else:
+			logging.info("failed to kill ggpofbang")
+	if platform.system()=="Darwin":
 		try:
-			args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
 			devnull = open(os.devnull, 'w')
+			args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
+			Popen(args, stdout=devnull, stderr=devnull)
+			args = ['../Resources/bin/wineserver', '-k']
 			Popen(args, stdout=devnull, stderr=devnull)
 			devnull.close()
 		except:
-			pass
-
+			logging.info("failed to kill ggpofbang")
+	if platform.system()=="Linux":
+		try:
+			devnull = open(os.devnull, 'w')
+			args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
+			Popen(args, stdout=devnull, stderr=devnull)
+			args = ['wineserver', '-k']
+			Popen(args, stdout=devnull, stderr=devnull)
+			devnull.close()
+		except:
+			logging.info("failed to kill ggpofbang")
 
 def registerUriHandler():
 
