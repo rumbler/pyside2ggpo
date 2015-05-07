@@ -18,7 +18,7 @@ fi
 
 # archlinux
 if [ -x /usr/bin/pacman ]; then
-	pacman -S multilib/wine extra/pyqt4-common extra/python-pyqt4 extra/phonon-qt4
+	pacman -S multilib/wine multilib/lib32-mpg123 extra/pyqt4-common extra/python-pyqt4 extra/phonon-qt4 extra/python2-pyqt4 extra/python2-sip
 	exit $?
 fi
 
