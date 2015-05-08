@@ -104,9 +104,10 @@ def puncher(sock, remote_host, port):
 		if r:
 			data, addr = sock.recvfrom(1024)
 			if addr[1]!=port or addr[0]!=remote_host:
-				logging.info("remote end uses symmetric or restricted nat. Changing from %s:%d to %s:%d." % (str(remote_host), port, str(addr[0]), addr[1]))
-				port=addr[1]
-				remote_host=addr[0]
+				if (addr[1]!=7000):
+					logging.info("remote end uses symmetric or restricted nat. Changing from %s:%d to %s:%d." % (str(remote_host), port, str(addr[0]), addr[1]))
+					port=addr[1]
+					remote_host=addr[0]
 			logging.debug("recv: %r" % data)
 			if remote_token == "_":
 				remote_token = data.split()[0]
