@@ -303,8 +303,12 @@ class Controller(QtCore.QObject):
             extrainfo = '({}) '.format(extrainfo)
         line = self.getPlayerPrefix(name, True)
         line += " challenged you - " + extrainfo
-        line += "<a href='accept:" + name + "'><font color=green>accept</font></a>"
-        line += " / <a href='decline:" + name + "'><font color=green>decline</font></a>"
+	if "'" not in name:
+		line += "<a href='accept:" + name + "'><font color=green>accept</font></a>"
+		line += " / <a href='decline:" + name + "'><font color=green>decline</font></a>"
+	else:
+		line += '<a href="accept:' + name + '"><font color=green>accept</font></a>'
+		line += ' / <a href="decline:' + name + '"><font color=green>decline</font></a>'
         return line
 
     def getPlayerColor(self, name):
