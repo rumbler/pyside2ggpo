@@ -158,10 +158,10 @@ def udp_proxy(args,q):
 
 	if bindok>=2:
 		logging.info("WARNING: Another instance of ggpofba seems to be running.")
-		l_sockfd.close()
-		sockfd.close()
+		#l_sockfd.close()
+		#sockfd.close()
 		killGgpoFbaNG()
-		os._exit(1)
+		#os._exit(1)
 
 	sockfd.sendto( quark+"/"+str(port), master )
 	try:
@@ -407,11 +407,6 @@ if __name__ == "__main__":
 
 	log = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ggpofba.log")
 	errorlog = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ggpofba-errors.log")
-
-	# make sure ggpofba-ng is not running (except on windows because we kill all emu instances)
-	if platform.system()!="Windows":
-		killGgpoFbaNG()
-		time.sleep(0.5)
 
 	try:
 		#loglevel=logging.DEBUG
