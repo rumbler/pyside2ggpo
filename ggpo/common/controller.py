@@ -932,7 +932,7 @@ class Controller(QtCore.QObject):
         payloadLen = 4 + len(msg)
         # noinspection PyBroadException
         try:
-            self.tcpSock.send(struct.pack('!II', payloadLen, self.sequence) + msg)
+            self.tcpSock.send(struct.pack('!II', payloadLen, self.sequence) + str(msg))
         except:
             self.tcpConnected = False
             self.selectLoopRunning = False
