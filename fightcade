@@ -4,7 +4,8 @@
 cd "${0%/*}"
 
 OS=$(uname -s)
-if [ "$OS" == "Darwin" ]; then
+echo "$OS" |grep "^Darwin$" >/dev/null
+if [ $? -eq 0 ]; then
 	# make sure blitter is set to Experimental
 	sed -i '' -e 's/nVidSelect.*/nVidSelect 3/' ~/ggpofba-ng.bkp.ini 2>/dev/null
 fi
