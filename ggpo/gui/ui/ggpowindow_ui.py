@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Fri Mar 27 11:42:05 2015
+# Created: Thu Jun 18 12:51:22 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -87,6 +87,8 @@ class Ui_MainWindow(object):
         self.menuLogging.setObjectName(_fromUtf8("menuLogging"))
         self.uiChallengeSoundMenu = QtGui.QMenu(self.menuSetting)
         self.uiChallengeSoundMenu.setObjectName(_fromUtf8("uiChallengeSoundMenu"))
+        self.uiDesktopCompositionMenu = QtGui.QMenu(self.menuSetting)
+        self.uiDesktopCompositionMenu.setObjectName(_fromUtf8("uiDesktopCompositionMenu"))
         self.menuAbout = QtGui.QMenu(self.menubar)
         self.menuAbout.setObjectName(_fromUtf8("menuAbout"))
         MainWindow.setMenuBar(self.menubar)
@@ -203,6 +205,10 @@ class Ui_MainWindow(object):
         self.uiFilterFavoriteLobbies = QtGui.QAction(MainWindow)
         self.uiFilterFavoriteLobbies.setCheckable(True)
         self.uiFilterFavoriteLobbies.setObjectName(_fromUtf8("uiFilterFavoriteLobbies"))
+        self.uiCompositionEnableAct = QtGui.QAction(MainWindow)
+        self.uiCompositionEnableAct.setObjectName(_fromUtf8("uiCompositionEnableAct"))
+        self.uiCompositionDisableAct = QtGui.QAction(MainWindow)
+        self.uiCompositionDisableAct.setObjectName(_fromUtf8("uiCompositionDisableAct"))
         self.menuAction.addAction(self.uiAwayAct)
         self.menuAction.addAction(self.uiFocusOnChatAct)
         self.menuAction.addAction(self.uiEmoticonAct)
@@ -223,10 +229,13 @@ class Ui_MainWindow(object):
         self.uiChallengeSoundMenu.addAction(self.uiMuteChallengeSoundAct)
         self.uiChallengeSoundMenu.addAction(self.uiLocateCustomChallengeSoundAct)
         self.uiChallengeSoundMenu.addSeparator()
+        self.uiDesktopCompositionMenu.addAction(self.uiCompositionEnableAct)
+        self.uiDesktopCompositionMenu.addAction(self.uiCompositionDisableAct)
         self.menuSetting.addAction(self.uiMuteNotifySoundAct)
         self.menuSetting.addAction(self.uiChallengeSoundMenu.menuAction())
         self.menuSetting.addAction(self.uiThemeMenu.menuAction())
         self.menuSetting.addAction(self.uiSmoothingMenu.menuAction())
+        self.menuSetting.addAction(self.uiDesktopCompositionMenu.menuAction())
         self.menuSetting.addAction(self.uiFontAct)
         self.menuSetting.addAction(self.uiCustomEmoticonsAct)
         self.menuSetting.addSeparator()
@@ -272,6 +281,7 @@ class Ui_MainWindow(object):
         self.uiSmoothingMenu.setTitle(_translate("MainWindow", "Smoothing / Input &lag", None))
         self.menuLogging.setTitle(_translate("MainWindow", "Logging", None))
         self.uiChallengeSoundMenu.setTitle(_translate("MainWindow", "Challenge Sound", None))
+        self.uiDesktopCompositionMenu.setTitle(_translate("MainWindow", "Desktop Composition", None))
         self.menuAbout.setTitle(_translate("MainWindow", "&Help", None))
         self.uiClearChatHistoryAct.setText(_translate("MainWindow", "Clear chat his&tory", None))
         self.uiClearChatHistoryAct.setShortcut(_translate("MainWindow", "Ctrl+T", None))
@@ -331,5 +341,7 @@ class Ui_MainWindow(object):
         self.uiLogPlayHistoryAct.setText(_translate("MainWindow", "Play history", None))
         self.uiGNGWebAct.setText(_translate("MainWindow", "FightCade website", None))
         self.uiFilterFavoriteLobbies.setText(_translate("MainWindow", "Filter Favorite Lobbies", None))
+        self.uiCompositionEnableAct.setText(_translate("MainWindow", "Enable", None))
+        self.uiCompositionDisableAct.setText(_translate("MainWindow", "Disable (Recommended)", None))
 
 from ggpo.gui.completionlineedit import CompletionLineEdit

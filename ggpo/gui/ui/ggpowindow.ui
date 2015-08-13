@@ -161,10 +161,18 @@
      <addaction name="uiLocateCustomChallengeSoundAct"/>
      <addaction name="separator"/>
     </widget>
+    <widget class="QMenu" name="uiDesktopCompositionMenu">
+     <property name="title">
+      <string>Desktop Composition</string>
+     </property>
+     <addaction name="uiCompositionEnableAct"/>
+     <addaction name="uiCompositionDisableAct"/>
+    </widget>
     <addaction name="uiMuteNotifySoundAct"/>
     <addaction name="uiChallengeSoundMenu"/>
     <addaction name="uiThemeMenu"/>
     <addaction name="uiSmoothingMenu"/>
+    <addaction name="uiDesktopCompositionMenu"/>
     <addaction name="uiFontAct"/>
     <addaction name="uiCustomEmoticonsAct"/>
     <addaction name="separator"/>
@@ -517,6 +525,16 @@
    </property>
    <property name="text">
     <string>Filter Favorite Lobbies</string>
+   </property>
+  </action>
+  <action name="uiCompositionEnableAct">
+   <property name="text">
+    <string>Enable</string>
+   </property>
+  </action>
+  <action name="uiCompositionDisableAct">
+   <property name="text">
+    <string>Disable (Recommended)</string>
    </property>
   </action>
  </widget>

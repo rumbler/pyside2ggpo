@@ -128,6 +128,20 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 handler.setLevel(level)
                 break
 
+    def CompositionEnableAct(self):
+                self.controller.sigStatusMessage.emit("Enable composition")
+                Settings.setBoolean(Settings.COMPOSITION_DISABLED, False)
+                self.uiCompositionDisableAct.setChecked(False)
+                self.uiCompositionEnableAct.setChecked(True)
+                self.controller.desktopComposition(1)
+
+    def CompositionDisableAct(self):
+                self.controller.sigStatusMessage.emit("Disable composition")
+                Settings.setBoolean(Settings.COMPOSITION_DISABLED, True)
+                self.uiCompositionDisableAct.setChecked(True)
+                self.uiCompositionEnableAct.setChecked(False)
+                self.controller.desktopComposition(0)
+
     @staticmethod
     def loguserChatTriggered(value):
         Settings.setBoolean(Settings.USER_LOG_CHAT, value)
@@ -684,6 +698,18 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.setupMenuSmoothing()
         self.setupMenuChallengeSound()
         self.uiCustomEmoticonsAct.triggered.connect(self.setCustomEmoticons)
+        if not IS_WINDOWS:
+            self.uiDesktopCompositionMenu.menuAction().setVisible(False)
+        else:
+            self.uiCompositionEnableAct.triggered.connect(self.CompositionEnableAct)
+            self.uiCompositionDisableAct.triggered.connect(self.CompositionDisableAct)
+            if Settings.value(Settings.COMPOSITION_DISABLED):
+                self.uiCompositionDisableAct.setChecked(True)
+                self.uiCompositionEnableAct.setChecked(False)
+                #self.CompositionDisableAct()
+            else:
+                self.uiCompositionDisableAct.setChecked(False)
+                self.uiCompositionEnableAct.setChecked(True)
 
         #self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
         self.uiLocateROMsAct.triggered.connect(self.locateROMsDir)
@@ -709,7 +735,6 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiDebugLogAct.triggered.connect(self.__class__.logdebugTriggered)
         self.uiLogChatAct.triggered.connect(self.__class__.loguserChatTriggered)
         self.uiLogPlayHistoryAct.triggered.connect(self.__class__.loguserPlayHistoryTriggered)
-
 
     def setupMenuChallengeSound(self):
 

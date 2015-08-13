@@ -341,11 +341,6 @@ def registerUriHandler():
 		SetValueEx(registryKey, name, 0, REG_SZ, val)
 		CloseKey(registryKey)
 
-def DesktopComposition(flag):
-	from ctypes import WinDLL
-	dwm = WinDLL("dwmapi.dll")
-	dwm.DwmEnableComposition(flag)
-
 
 def process_checker(q):
 
@@ -360,8 +355,6 @@ def process_checker(q):
 		#logging.debug("FBA STATUS: %s" % str(fba_status))
 		if fba_status!=None:
 			logging.info("killing process")
-			#if platform.system()=="Windows":
-			#	DesktopComposition(1)
 			os._exit(0)
 
 def main():
@@ -375,7 +368,6 @@ def main():
 
 	if platform.system()=="Windows":
 		registerUriHandler()
-		DesktopComposition(0)
 
 	if quark.startswith('quark:served'):
 		q = Queue.Queue()

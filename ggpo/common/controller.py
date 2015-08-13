@@ -669,6 +669,18 @@ class Controller(QtCore.QObject):
         self.playing = {}
         self.awayfromkb = {}
 
+    def desktopComposition(self,flag):
+        if IS_WINDOWS:
+            try:
+                from ctypes import WinDLL
+                dwm = WinDLL("dwmapi.dll")
+                dwm.DwmEnableComposition(flag)
+            except:
+                self.sigStatusMessage.emit("ERROR: Unable to change Desktop Composition settings")
+                self.uiCompositionDisableAct.setChecked(False)
+                self.uiCompositionEnableAct.setChecked(False)
+
+
     def createFbaIni(self):
 
         fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
