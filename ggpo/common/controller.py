@@ -70,7 +70,9 @@ class Controller(QtCore.QObject):
         self.selectLoopRunning = True
 
         self.username = ''
+        self.password = ''
         self.channel = 'lobby'
+        self.channelport = 7000
         self.rom = ''
         self.fba = None
         self.checkInstallation()
@@ -173,7 +175,7 @@ class Controller(QtCore.QObject):
             if self.tcpSock:
                 self.tcpSock.close()
             self.tcpSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.tcpSock.connect(('ggpo-ng.com', 7000,))
+            self.tcpSock.connect(('ggpo-ng.com', self.channelport,))
             self.tcpConnected = True
         except Exception:
             self.sigStatusMessage.emit("Cannot connect to FightCade server")
@@ -469,6 +471,7 @@ class Controller(QtCore.QObject):
             romname, data = Protocol.extractTLV(data)
             title, data = Protocol.extractTLV(data)
             users, data = Protocol.extractInt(data)
+            port, data = Protocol.extractInt(data)
             index, data = Protocol.extractInt(data)
             # 'sfa3': {'title': 'Street Fighter Alpha 3', 'rom': 'sfa3:sfa3u', 'room': 'sfa3'},
             # 'sfa2': {'title': 'Street Fighter Alpha 2', 'rom': 'sfa2', 'room': 'sfa2'},
@@ -477,6 +480,7 @@ class Controller(QtCore.QObject):
                 'room': room,
                 'title': title,
                 'users': users,
+                'port': port,
             }
             self.channels[room] = channel
         logdebug().info(repr(self.channels))
@@ -887,6 +891,12 @@ class Controller(QtCore.QObject):
                     self.rom = ''
             else:
                 logdebug().error("Invalid channel {}".format(channel))
+
+        if (self.channelport!=self.channels[channel]['port']):
+            self.channelport = self.channels[channel]['port']
+            self.connectTcp()
+            self.sendWelcome()
+            self.sendAuth(self.username, self.password)
         self.sendAndRemember(Protocol.JOIN_CHANNEL, Protocol.packTLV(self.channel))
 
     def sendListChannels(self):

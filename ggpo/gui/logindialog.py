@@ -78,6 +78,7 @@ class LoginDialog(QtGui.QDialog, Ui_DialogLogin):
             self.uiLoginBtn.setEnabled(True)
             return -1
 
+        self.controller.password = password
         self.controller.sendWelcome()
         self.controller.sendAuth(username, password)
 
