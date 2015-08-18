@@ -175,7 +175,11 @@ class Controller(QtCore.QObject):
             if self.tcpSock:
                 self.tcpSock.close()
             self.tcpSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.tcpSock.connect(('ggpo-ng.com', self.channelport,))
+            self.channelport = Settings.value(Settings.PORT)
+            if self.channelport==None:
+                self.channelport = 7000
+                Settings.setValue(Settings.PORT, int(self.channelport))
+            self.tcpSock.connect(('ggpo-ng.com', int(self.channelport),))
             self.tcpConnected = True
         except Exception:
             self.sigStatusMessage.emit("Cannot connect to FightCade server")
@@ -892,8 +896,9 @@ class Controller(QtCore.QObject):
             else:
                 logdebug().error("Invalid channel {}".format(channel))
 
-        if (self.channelport!=self.channels[channel]['port']):
-            self.channelport = self.channels[channel]['port']
+        if (int(self.channelport)!=int(self.channels[channel]['port'])):
+            self.channelport = int(self.channels[channel]['port'])
+            Settings.setValue(Settings.PORT, self.channelport)
             self.connectTcp()
             self.sendWelcome()
             self.sendAuth(self.username, self.password)

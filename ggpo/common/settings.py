@@ -14,6 +14,7 @@ class Settings:
     AUTOLOGIN = 'autoLogin'
     USERNAME = 'username'
     PASSWORD = 'password'
+    PORT = 'port'
     SMOOTHING = 'smoothing'
     MUTE_CHALLENGE_SOUND = 'mute'
     MUTE_NOTIFY_SOUND = 'mutenotify'
