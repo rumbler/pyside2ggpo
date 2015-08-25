@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Thu Jun 18 12:51:22 2015
+# Created: Tue Aug 25 22:55:14 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -209,6 +209,8 @@ class Ui_MainWindow(object):
         self.uiCompositionEnableAct.setObjectName(_fromUtf8("uiCompositionEnableAct"))
         self.uiCompositionDisableAct = QtGui.QAction(MainWindow)
         self.uiCompositionDisableAct.setObjectName(_fromUtf8("uiCompositionDisableAct"))
+        self.actionReport_an_issue = QtGui.QAction(MainWindow)
+        self.actionReport_an_issue.setObjectName(_fromUtf8("actionReport_an_issue"))
         self.menuAction.addAction(self.uiAwayAct)
         self.menuAction.addAction(self.uiFocusOnChatAct)
         self.menuAction.addAction(self.uiEmoticonAct)
@@ -248,16 +250,10 @@ class Ui_MainWindow(object):
         self.menuSetting.addAction(self.uiHideGamesWithoutRomAct)
         self.menuSetting.addAction(self.uiFilterFavoriteLobbies)
         self.menuSetting.addAction(self.menuLogging.menuAction())
-        self.menuAbout.addAction(self.uiSRKForumAct)
-        self.menuAbout.addAction(self.uiSRKWikiAct)
-        self.menuAbout.addAction(self.uiJPWikiAct)
-        self.menuAbout.addSeparator()
-        self.menuAbout.addAction(self.uiStrevivalAct)
-        self.menuAbout.addAction(self.uiHitboxViewerAct)
-        self.menuAbout.addAction(self.uiSafejumpGuideAct)
-        self.menuAbout.addAction(self.uiMatchVideosAct)
         self.menuAbout.addSeparator()
         self.menuAbout.addAction(self.uiGNGWebAct)
+        self.menuAbout.addAction(self.actionReport_an_issue)
+        self.menuAbout.addSeparator()
         self.menuAbout.addAction(self.uiAboutAct)
         self.menubar.addAction(self.menuAction.menuAction())
         self.menubar.addAction(self.menuSetting.menuAction())
@@ -343,5 +339,6 @@ class Ui_MainWindow(object):
         self.uiFilterFavoriteLobbies.setText(_translate("MainWindow", "Filter Favorite Lobbies", None))
         self.uiCompositionEnableAct.setText(_translate("MainWindow", "Enable", None))
         self.uiCompositionDisableAct.setText(_translate("MainWindow", "Disable (Recommended)", None))
+        self.actionReport_an_issue.setText(_translate("MainWindow", "Report an issue", None))
 
 from ggpo.gui.completionlineedit import CompletionLineEdit

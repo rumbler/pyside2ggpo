@@ -190,16 +190,10 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="uiSRKForumAct"/>
-    <addaction name="uiSRKWikiAct"/>
-    <addaction name="uiJPWikiAct"/>
-    <addaction name="separator"/>
-    <addaction name="uiStrevivalAct"/>
-    <addaction name="uiHitboxViewerAct"/>
-    <addaction name="uiSafejumpGuideAct"/>
-    <addaction name="uiMatchVideosAct"/>
     <addaction name="separator"/>
     <addaction name="uiGNGWebAct"/>
+    <addaction name="actionReport_an_issue"/>
+    <addaction name="separator"/>
     <addaction name="uiAboutAct"/>
    </widget>
    <addaction name="menuAction"/>
@@ -535,6 +529,11 @@
   <action name="uiCompositionDisableAct">
    <property name="text">
     <string>Disable (Recommended)</string>
+   </property>
+  </action>
+  <action name="actionReport_an_issue">
+   <property name="text">
+    <string>Report an issue</string>
    </property>
   </action>
  </widget>

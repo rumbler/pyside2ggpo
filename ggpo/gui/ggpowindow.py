@@ -679,15 +679,16 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         #self.uiSyncUnsupportedSavestatesAct.triggered.connect(lambda: UnsupportedSavestates.sync(self.onStatusMessage))
 
     def setupMenuHelp(self):
-        self.uiSRKForumAct.triggered.connect(
-            lambda: openURL('http://forums.shoryuken.com/categories/super-street-fighter-ii-turbo'))
-        self.uiSRKWikiAct.triggered.connect(lambda: openURL('http://wiki.shoryuken.com/Super_Street_Fighter_2_Turbo'))
-        self.uiJPWikiAct.triggered.connect(lambda: openURL('http://sf2.gamedb.info/wiki/'))
-        self.uiStrevivalAct.triggered.connect(lambda: openURL('http://www.strevival.com/'))
-        self.uiHitboxViewerAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/'))
-        self.uiSafejumpGuideAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/st-safejump/'))
-        self.uiMatchVideosAct.triggered.connect(lambda: openURL('http://www.strevival.com/yt/'))
+        #self.uiSRKForumAct.triggered.connect(
+        #    lambda: openURL('http://forums.shoryuken.com/categories/super-street-fighter-ii-turbo'))
+        #self.uiSRKWikiAct.triggered.connect(lambda: openURL('http://wiki.shoryuken.com/Super_Street_Fighter_2_Turbo'))
+        #self.uiJPWikiAct.triggered.connect(lambda: openURL('http://sf2.gamedb.info/wiki/'))
+        #self.uiStrevivalAct.triggered.connect(lambda: openURL('http://www.strevival.com/'))
+        #self.uiHitboxViewerAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/'))
+        #self.uiSafejumpGuideAct.triggered.connect(lambda: openURL('http://www.strevival.com/hitbox/st-safejump/'))
+        #self.uiMatchVideosAct.triggered.connect(lambda: openURL('http://www.strevival.com/yt/'))
         self.uiGNGWebAct.triggered.connect(lambda: openURL('http://www.fightcade.com'))
+        self.actionReport_an_issue.triggered.connect(lambda: openURL('https://github.com/poliva/pyqtggpo/issues'))
         self.uiAboutAct.triggered.connect(self.aboutDialog)
 
     def setupMenuSettings(self):

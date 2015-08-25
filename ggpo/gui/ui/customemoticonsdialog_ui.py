@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/customemoticonsdialog.ui'
 #
-# Created: Fri Mar 27 09:55:22 2015
+# Created: Tue Aug 25 22:55:14 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!

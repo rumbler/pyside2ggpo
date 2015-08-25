@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/logindialog.ui'
 #
-# Created: Tue Mar 31 14:16:00 2015
+# Created: Tue Aug 25 22:55:14 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
