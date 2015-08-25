@@ -631,6 +631,24 @@ class Controller(QtCore.QObject):
         #if len(data) > 0:
         #    logdebug().error("stateChangesResponse, remaining data {}".format(repr(data)))
 
+    def killPuncher(self):
+        if IS_WINDOWS:
+            try:
+                args = ['taskkill', '/f', '/im', 'ggpofba.exe']
+                Popen(args, shell=True)
+                args = ['tskill', 'ggpofba', '/a']
+                Popen(args, shell=True)
+            except:
+                pass
+        else:
+            try:
+                devnull = open(os.devnull, 'w')
+                args = ['pkill', '-f', 'ggpofba.py.*quark:served']
+                Popen(args, stdout=devnull, stderr=devnull)
+                devnull.close()
+            except:
+                pass
+
     def killEmulator(self):
         if IS_WINDOWS:
             try:
@@ -640,10 +658,22 @@ class Controller(QtCore.QObject):
                 Popen(args, shell=True)
             except:
                 pass
-        else:
+        if IS_OSX:
             try:
-                args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
                 devnull = open(os.devnull, 'w')
+                args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
+                Popen(args, stdout=devnull, stderr=devnull)
+                args = ['../Resources/bin/wineserver', '-k']
+                Popen(args, stdout=devnull, stderr=devnull)
+                devnull.close()
+            except:
+                pass
+        if IS_LINUX:
+            try:
+                devnull = open(os.devnull, 'w')
+                args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
+                Popen(args, stdout=devnull, stderr=devnull)
+                args = ['wineserver', '-k']
                 Popen(args, stdout=devnull, stderr=devnull)
                 devnull.close()
             except:
@@ -734,6 +764,9 @@ class Controller(QtCore.QObject):
                 fileinput.close()
 
     def runFBA(self, quark):
+        if "served" in quark:
+            self.killEmulator()
+            self.killPuncher()
         self.checkRom()
         self.fba = findFba()
         if not self.fba:
