@@ -131,7 +131,7 @@ def puncher(sock, remote_host, port):
 
 def udp_proxy(args,q):
 
-	master_port  = args[0].split(",")[3]
+	master_port = int(args[0].split(",")[3])
 	master = ("ggpo-ng.com", master_port)
 	l_sockfd = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
 	bindok=0
@@ -296,7 +296,7 @@ def killGgpoFbaNG():
 		try:
 			args = ['taskkill', '/f', '/im', 'ggpofba-ng.exe']
 			Popen(args, shell=True)
-			args = ['tskill', 'ggpofba', '/a']
+			args = ['tskill', 'ggpofba-ng', '/a']
 			Popen(args, shell=True)
 		except:
 			logging.info("failed to kill ggpofbang")
