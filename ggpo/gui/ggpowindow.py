@@ -129,14 +129,14 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 break
 
     def CompositionEnableAct(self):
-                self.controller.sigStatusMessage.emit("Enable composition")
+                self.controller.sigStatusMessage.emit("Enabled Desktop Composition")
                 Settings.setBoolean(Settings.COMPOSITION_DISABLED, False)
                 self.uiCompositionDisableAct.setChecked(False)
                 self.uiCompositionEnableAct.setChecked(True)
                 self.controller.desktopComposition(1)
 
     def CompositionDisableAct(self):
-                self.controller.sigStatusMessage.emit("Disable composition")
+                self.controller.sigStatusMessage.emit("Disabld Desktop Composition")
                 Settings.setBoolean(Settings.COMPOSITION_DISABLED, True)
                 self.uiCompositionDisableAct.setChecked(True)
                 self.uiCompositionEnableAct.setChecked(False)
@@ -703,9 +703,11 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         else:
             self.uiCompositionEnableAct.triggered.connect(self.CompositionEnableAct)
             self.uiCompositionDisableAct.triggered.connect(self.CompositionDisableAct)
+            self.uiCompositionDisableAct.setCheckable(True)
+            self.uiCompositionEnableAct.setCheckable(True)
             if Settings.value(Settings.COMPOSITION_DISABLED):
-                self.uiCompositionDisableAct.setChecked(True)
                 self.uiCompositionEnableAct.setChecked(False)
+                self.uiCompositionDisableAct.setChecked(True)
                 #self.CompositionDisableAct()
             else:
                 self.uiCompositionDisableAct.setChecked(False)

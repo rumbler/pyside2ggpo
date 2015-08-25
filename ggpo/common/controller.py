@@ -684,7 +684,7 @@ class Controller(QtCore.QObject):
                 dwm = WinDLL("dwmapi.dll")
                 dwm.DwmEnableComposition(flag)
             except:
-                self.sigStatusMessage.emit("ERROR: Unable to change Desktop Composition settings")
+                self.sigStatusMessage.emit("Unable to change Desktop Composition settings on this system")
                 self.uiCompositionDisableAct.setChecked(False)
                 self.uiCompositionEnableAct.setChecked(False)
 
@@ -755,6 +755,10 @@ class Controller(QtCore.QObject):
             self.createFbaIni()
 
         logdebug().info(" ".join(args))
+
+        if Settings.value(Settings.COMPOSITION_DISABLED):
+                self.desktopComposition(0)
+
         try:
             # starting python from cmd.exe and redirect stderr and we got
             # python WindowsError(6, 'The handle is invalid')
