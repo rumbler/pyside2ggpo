@@ -293,6 +293,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.updateStatusBar()
 
     def onChatReceived(self, name, txt):
+        if "<System> GAME: " in txt and Settings.value(Settings.HIDE_INGAME_CHAT):
+            return
+        if "<System> GAME: " in txt and not Settings.value(Settings.HIDE_INGAME_CHAT):
+            txt = re.sub(r'<System> ', r'', txt)
         prefix = self.controller.getPlayerPrefix(name, Settings.value(Settings.SHOW_COUNTRY_FLAG_IN_CHAT))
         if (self.controller.username+" ".lower() in txt.lower() or " "+self.controller.username.lower() in txt.lower() or txt.lower()==self.controller.username.lower()):
             txt = cgi.escape(txt.strip()).replace(self.controller.username, "<b>{}</b>".format(self.controller.username))
@@ -520,6 +524,8 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             self.uiShowCountryFlagInChatAct.setChecked(True)
         if Settings.value(Settings.SHOW_TIMESTAMP_IN_CHAT):
             self.uiShowTimestampInChatAct.setChecked(True)
+        if Settings.value(Settings.HIDE_INGAME_CHAT):
+            self.uiHideInGameChatAct.setChecked(True)
         if Settings.value(Settings.HIDE_GAMES_WITHOUT_ROM):
             self.hidemissing=True
             self.uiHideGamesWithoutRomAct.setChecked(True)
@@ -725,6 +731,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.uiNotifyPlayerStateChangeAct.toggled.connect(self.__class__.toggleNotifyPlayerStateChange)
         self.uiShowCountryFlagInChatAct.toggled.connect(self.__class__.toggleShowCountryFlagInChat)
         self.uiShowTimestampInChatAct.toggled.connect(self.__class__.toggleShowTimestampInChatAct)
+        self.uiHideInGameChatAct.toggled.connect(self.__class__.toggleHideInGameChatAct)
         #self.uiDisableAutoAnnounceAct.toggled.connect(self.__class__.toggleDisableAutoAnnounceUnsupported)
         self.uiDisableAutoColorNicks.toggled.connect(self.__class__.toggleDisableAutoColorNicks)
         self.uiHideGamesWithoutRomAct.toggled.connect(self.toggleHideGamesWithoutRomAct)
@@ -993,6 +1000,10 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
     @staticmethod
     def toggleShowTimestampInChatAct(state):
         Settings.setBoolean(Settings.SHOW_TIMESTAMP_IN_CHAT, state)
+
+    @staticmethod
+    def toggleHideInGameChatAct(state):
+        Settings.setBoolean(Settings.HIDE_INGAME_CHAT, state)
 
     def toggleHideGamesWithoutRomAct(self, state):
         Settings.setBoolean(Settings.HIDE_GAMES_WITHOUT_ROM, state)

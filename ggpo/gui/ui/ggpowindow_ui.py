@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ggpo/gui/ui/ggpowindow.ui'
 #
-# Created: Tue Aug 25 22:55:14 2015
+# Created: Wed Aug 26 01:29:18 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -211,6 +211,9 @@ class Ui_MainWindow(object):
         self.uiCompositionDisableAct.setObjectName(_fromUtf8("uiCompositionDisableAct"))
         self.actionReport_an_issue = QtGui.QAction(MainWindow)
         self.actionReport_an_issue.setObjectName(_fromUtf8("actionReport_an_issue"))
+        self.uiHideInGameChatAct = QtGui.QAction(MainWindow)
+        self.uiHideInGameChatAct.setCheckable(True)
+        self.uiHideInGameChatAct.setObjectName(_fromUtf8("uiHideInGameChatAct"))
         self.menuAction.addAction(self.uiAwayAct)
         self.menuAction.addAction(self.uiFocusOnChatAct)
         self.menuAction.addAction(self.uiEmoticonAct)
@@ -246,6 +249,7 @@ class Ui_MainWindow(object):
         self.menuSetting.addAction(self.uiNotifyPlayerStateChangeAct)
         self.menuSetting.addAction(self.uiShowCountryFlagInChatAct)
         self.menuSetting.addAction(self.uiShowTimestampInChatAct)
+        self.menuSetting.addAction(self.uiHideInGameChatAct)
         self.menuSetting.addAction(self.uiDisableAutoColorNicks)
         self.menuSetting.addAction(self.uiHideGamesWithoutRomAct)
         self.menuSetting.addAction(self.uiFilterFavoriteLobbies)
@@ -340,5 +344,6 @@ class Ui_MainWindow(object):
         self.uiCompositionEnableAct.setText(_translate("MainWindow", "Enable", None))
         self.uiCompositionDisableAct.setText(_translate("MainWindow", "Disable (Recommended)", None))
         self.actionReport_an_issue.setText(_translate("MainWindow", "Report an issue", None))
+        self.uiHideInGameChatAct.setText(_translate("MainWindow", "Hide in-game Chat on Lobby", None))
 
 from ggpo.gui.completionlineedit import CompletionLineEdit

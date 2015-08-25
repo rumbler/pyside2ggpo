@@ -181,6 +181,7 @@
     <addaction name="uiNotifyPlayerStateChangeAct"/>
     <addaction name="uiShowCountryFlagInChatAct"/>
     <addaction name="uiShowTimestampInChatAct"/>
+    <addaction name="uiHideInGameChatAct"/>
     <addaction name="uiDisableAutoColorNicks"/>
     <addaction name="uiHideGamesWithoutRomAct"/>
     <addaction name="uiFilterFavoriteLobbies"/>
@@ -534,6 +535,14 @@
   <action name="actionReport_an_issue">
    <property name="text">
     <string>Report an issue</string>
+   </property>
+  </action>
+  <action name="uiHideInGameChatAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hide in-game Chat on Lobby</string>
    </property>
   </action>
  </widget>

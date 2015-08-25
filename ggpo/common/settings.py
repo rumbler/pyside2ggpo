@@ -21,6 +21,7 @@ class Settings:
     NOTIFY_PLAYER_STATE_CHANGE = 'notifyPlayerStateChange'
     SHOW_COUNTRY_FLAG_IN_CHAT = 'showCountryFlagInChat'
     SHOW_TIMESTAMP_IN_CHAT = 'ShowTimestampInChat'
+    HIDE_INGAME_CHAT = 'HideInGameChat'
     HIDE_GAMES_WITHOUT_ROM = 'HideGamesWithoutRom'
     DISABLE_AUTOCOLOR_NICKS = 'DisableAutoColorNicks'
     WINDOW_GEOMETRY = 'mainWindowGeometry'
