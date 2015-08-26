@@ -293,9 +293,9 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.updateStatusBar()
 
     def onChatReceived(self, name, txt):
-        if "<System> GAME: " in txt and Settings.value(Settings.HIDE_INGAME_CHAT):
+        if name=="System" and "GAME: " in txt and Settings.value(Settings.HIDE_INGAME_CHAT):
             return
-        if "<System> GAME: " in txt and not Settings.value(Settings.HIDE_INGAME_CHAT):
+        if name=="System" and "GAME: " in txt and not Settings.value(Settings.HIDE_INGAME_CHAT):
             txt = re.sub(r'<System> ', r'', txt)
         prefix = self.controller.getPlayerPrefix(name, Settings.value(Settings.SHOW_COUNTRY_FLAG_IN_CHAT))
         if (self.controller.username+" ".lower() in txt.lower() or " "+self.controller.username.lower() in txt.lower() or txt.lower()==self.controller.username.lower()):
