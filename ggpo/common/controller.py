@@ -939,6 +939,8 @@ class Controller(QtCore.QObject):
             self.connectTcp()
             self.sendWelcome()
             self.sendAuth(self.username, self.password)
+            if Settings.value(Settings.AWAY):
+                self.sendToggleAFK(1)
         self.sendAndRemember(Protocol.JOIN_CHANNEL, Protocol.packTLV(self.channel))
 
     def sendListChannels(self):
