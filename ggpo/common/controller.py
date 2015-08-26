@@ -828,7 +828,7 @@ class Controller(QtCore.QObject):
             try:
                 inputready, outputready, exceptready = select.select(inputs, [], [], self.selectTimeout)
             except select.error, ex:
-                if ex[0] != errno.EINTR:
+                if ex[0] != errno.EINTR and ex[0] != errno.EBADF:
                     raise
             if not inputready:
                 self.sendPingQueries()
@@ -936,6 +936,8 @@ class Controller(QtCore.QObject):
         if (int(self.channelport)!=int(self.channels[channel]['port'])):
             self.channelport = int(self.channels[channel]['port'])
             Settings.setValue(Settings.PORT, self.channelport)
+            self.tcpSock.close()
+            self.sequence = 0x1
             self.connectTcp()
             self.sendWelcome()
             self.sendAuth(self.username, self.password)
