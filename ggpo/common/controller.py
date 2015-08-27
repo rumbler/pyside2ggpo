@@ -895,6 +895,7 @@ class Controller(QtCore.QObject):
 
     def sendCancelChallenge(self, name=None):
         if (name is None and self.challenged) or (name and name == self.challenged):
+            self.sigStatusMessage.emit("Cancelling challenge")
             self.sendAndRemember(Protocol.CANCEL_CHALLENGE, Protocol.packTLV(self.challenged))
             self.challenged = None
 
@@ -907,6 +908,7 @@ class Controller(QtCore.QObject):
         if (name==self.username):
             self.runFBA(self.channel)
         else:
+            self.sigStatusMessage.emit("Challenging "+name)
             self.sendAndRemember(Protocol.SEND_CHALLENGE, Protocol.packTLV(name) + Protocol.packTLV(self.rom))
             self.challenged = name
 
