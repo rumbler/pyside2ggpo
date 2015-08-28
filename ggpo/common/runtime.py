@@ -6,6 +6,7 @@ __all__ = ['IS_WINDOWS', 'IS_OSX', 'IS_LINUX', 'IS_WINDOWS_XP', 'Phonon', 'GeoIP
 IS_WINDOWS = False
 IS_OSX = False
 IS_LINUX = False
+IS_WINDOWS_XP = False
 
 _platform = platform.system()
 if _platform == 'Windows':
