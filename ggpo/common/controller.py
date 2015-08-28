@@ -840,18 +840,24 @@ class Controller(QtCore.QObject):
                         try:
                             data = stream.recv(16384)
                         except:
-                            self.tcpConnected = False
-                            self.selectLoopRunning = False
-                            self.sigServerDisconnected.emit()
-                            return
+                            if not IS_WINDOWS_XP:
+                                self.tcpConnected = False
+                                self.selectLoopRunning = False
+                                self.sigServerDisconnected.emit()
+                                return
+                            else:
+                                pass
                         if data:
                             self.tcpData += data
                             self.handleTcpResponse()
                         else:
-                            stream.close()
-                            self.tcpConnected = False
-                            self.selectLoopRunning = False
-                            self.sigServerDisconnected.emit()
+                            if not IS_WINDOWS_XP:
+                                stream.close()
+                                self.tcpConnected = False
+                                self.selectLoopRunning = False
+                                self.sigServerDisconnected.emit()
+                            else:
+                                self.sigStatusMessage.emit("Reconnecting...")
                     elif stream == self.udpSock:
                         dgram = None
                         # on windows xp

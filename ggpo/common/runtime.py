@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import platform
 
-__all__ = ['IS_WINDOWS', 'IS_OSX', 'IS_LINUX', 'Phonon', 'GeoIP2Reader', 'winsound']
+__all__ = ['IS_WINDOWS', 'IS_OSX', 'IS_LINUX', 'IS_WINDOWS_XP', 'Phonon', 'GeoIP2Reader', 'winsound']
 
 IS_WINDOWS = False
 IS_OSX = False
@@ -14,6 +14,8 @@ elif _platform == 'Darwin':
     IS_OSX = True
 elif _platform == 'Linux':
     IS_LINUX = True
+if IS_WINDOWS and platform.release() == 'XP':
+    IS_WINDOWS_XP = True
 
 Phonon = None
 try:
