@@ -165,6 +165,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def joinChannel(self, *args):
         self.uiStatusbar.showMessage("Joining room, please wait...");
+        self.uiChatHistoryTxtB.clear()
         try:
             it = self.uiChannelsTree.currentItem().text(1)
         except AttributeError:

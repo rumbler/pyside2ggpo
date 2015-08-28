@@ -68,6 +68,7 @@ class Controller(QtCore.QObject):
         self.udpSock = None
         self.udpConnected = False
         self.selectLoopRunning = True
+        self.switchingServer = False
 
         self.username = ''
         self.password = ''
@@ -840,24 +841,20 @@ class Controller(QtCore.QObject):
                         try:
                             data = stream.recv(16384)
                         except:
-                            if not IS_WINDOWS_XP:
+                            if not self.switchingServer:
                                 self.tcpConnected = False
                                 self.selectLoopRunning = False
                                 self.sigServerDisconnected.emit()
                                 return
-                            else:
-                                pass
                         if data:
                             self.tcpData += data
                             self.handleTcpResponse()
                         else:
-                            if not IS_WINDOWS_XP:
+                            if not self.switchingServer:
                                 stream.close()
                                 self.tcpConnected = False
                                 self.selectLoopRunning = False
                                 self.sigServerDisconnected.emit()
-                            else:
-                                self.sigStatusMessage.emit("Reconnecting...")
                     elif stream == self.udpSock:
                         dgram = None
                         # on windows xp
@@ -942,6 +939,7 @@ class Controller(QtCore.QObject):
                 logdebug().error("Invalid channel {}".format(channel))
 
         if (int(self.channelport)!=int(self.channels[channel]['port'])):
+            self.switchingServer=True
             self.channelport = int(self.channels[channel]['port'])
             Settings.setValue(Settings.PORT, self.channelport)
             self.tcpSock.close()
@@ -961,6 +959,7 @@ class Controller(QtCore.QObject):
 
     def sendMOTDRequest(self):
         self.sendAndRemember(Protocol.MOTD)
+        self.switchingServer=False
 
     def sendPingQueries(self):
         if self.udpConnected:
