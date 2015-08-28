@@ -136,7 +136,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.controller.desktopComposition(1)
 
     def CompositionDisableAct(self):
-                self.controller.sigStatusMessage.emit("Disabld Desktop Composition")
+                self.controller.sigStatusMessage.emit("Disabled Desktop Composition")
                 Settings.setBoolean(Settings.COMPOSITION_DISABLED, True)
                 self.uiCompositionDisableAct.setChecked(True)
                 self.uiCompositionEnableAct.setChecked(False)
@@ -706,7 +706,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.setupMenuSmoothing()
         self.setupMenuChallengeSound()
         self.uiCustomEmoticonsAct.triggered.connect(self.setCustomEmoticons)
-        if not IS_WINDOWS:
+        if not IS_WINDOWS or IS_WINDOWS_XP:
             self.uiDesktopCompositionMenu.menuAction().setVisible(False)
         else:
             self.uiCompositionEnableAct.triggered.connect(self.CompositionEnableAct)
