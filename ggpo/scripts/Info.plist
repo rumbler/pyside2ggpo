@@ -4,9 +4,11 @@
 <dict><key>CFBundleShortVersionString</key>
 <string>0.0.0</string>
 <key>CFBundleExecutable</key>
-<string>MacOS/fightcade.bin</string>
+<string>applet</string>
 <key>CFBundleName</key>
 <string>FightCade</string>
+<key>CFBundleIdentifier</key>
+<string>com.fightcade</string>
 <key>CFBundleInfoDictionaryVersion</key>
 <string>6.0</string>
 <key>CFBundleDisplayName</key>
@@ -15,10 +17,8 @@
 <string>icon.icns</string>
 <key>CFBundlePackageType</key>
 <string>APPL</string>
-<key>LSBackgroundOnly</key>
-<string>0</string>
-<key>LSUIElement</key>
-<string>0</string>
+<key>LSRequiresCarbon</key>
+<true/>
 <key>CFBundleURLTypes</key>
 <array>
 	<dict>
