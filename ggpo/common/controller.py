@@ -122,7 +122,7 @@ class Controller(QtCore.QObject):
         if self.fba:
             return True
         else:
-            self.sigStatusMessage.emit("ERROR: ggpofba-ng.exe not found in fightcade folder: you will not be able to play or spectate!")
+            self.sigStatusMessage.emit("ERROR: ggpofba-ng.exe not found in fightcade folder: you will not be able to play or spectate! Did you extract FightCade from the zip before running it?")
             return False
 
     def isRomAvailable(self, channel):
@@ -768,6 +768,7 @@ class Controller(QtCore.QObject):
         if "served" in quark:
             self.killEmulator()
             self.killPuncher()
+            time.sleep(2)
         self.checkRom()
         self.fba = findFba()
         if not self.fba:
