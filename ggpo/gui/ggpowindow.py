@@ -164,14 +164,14 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             dlg.destroy()
 
     def joinChannel(self, *args):
-        self.uiStatusbar.showMessage("Joining room, please wait...");
-        self.uiChatHistoryTxtB.clear()
         try:
             it = self.uiChannelsTree.currentItem().text(1)
         except AttributeError:
             it = ''
         if it and len(it) > 0:
             if not self.expectFirstChannelResponse:
+                self.uiStatusbar.showMessage("Joining room, please wait...");
+                self.uiChatHistoryTxtB.clear()
                 self.controller.sendJoinChannelRequest(self.channels[it])
                 self.uiChatInputEdit.setFocus()
 
