@@ -416,6 +416,12 @@ class Controller(QtCore.QObject):
             #self.sigStatusMessage.emit("Login failed {}".format(result))
             if result==6:
                 self.sigStatusMessage.emit("Login failed: wrong password")
+            elif result==9:
+                self.sigStatusMessage.emit("Login failed: too many connections")
+            elif result==4:
+                self.sigStatusMessage.emit("Login failed: username doesn't exist into database")
+            elif result==8:
+                self.sigStatusMessage.emit("Clone connection closed.\nPlease login again.")
             else:
                 self.sigStatusMessage.emit("Login failed {}".format(result))
 
