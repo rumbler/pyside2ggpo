@@ -409,9 +409,9 @@ class Controller(QtCore.QObject):
             if self.tcpSock:
                 self.tcpSock.close()
                 self.tcpConnected = False
-            if self.udpSock:
-                self.udpSock.close()
-                self.udpConnected = False
+            #if self.udpSock:
+            #    self.udpSock.close()
+            #    self.udpConnected = False
             self.sigLoginFailed.emit()
             #self.sigStatusMessage.emit("Login failed {}".format(result))
             if result==6:
@@ -900,6 +900,7 @@ class Controller(QtCore.QObject):
             port = self.udpSock.getsockname()[1]
         except:
             port=6009
+            #raise
         authdata = Protocol.packTLV(username) + Protocol.packTLV(password) + Protocol.packInt(port) + Protocol.packInt(copyright.versionNum())
         self.sendAndRemember(Protocol.AUTH, authdata)
 
