@@ -28,6 +28,9 @@ if [ ! -x ${FBA} ] ; then
 	exit 1
 fi
 
+if [ -f ggpofba.log.1 ]; then mv ggpofba.log.1 ggpofba.log.2 ; fi
+if [ -f ggpofba.log ]; then mv ggpofba.log ggpofba.log.1 ; fi
+
 if [ -x /usr/bin/xdg-mime ]; then
 	# register fightcade:// url handler
 	mkdir -p ~/.local/share/applications/
