@@ -24,7 +24,7 @@ linux: cleanbuild
 	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
 	cp -R * /tmp/FightCade/
-	rm -rf /tmp/FightCade/ggpo/resources/assets/ /tmp/FightCade/Makefile /tmp/FightCade/savestates/.git
+	rm -rf /tmp/FightCade/ggpo/resources/assets/ /tmp/FightCade/Makefile /tmp/FightCade/savestates/.git /tmp/FightCade/ggpo/scripts/Info.plist /tmp/FightCade/ggpo/scripts/applet
 	cd /tmp ; tar cvfz fightcade-linux-v0`cat FightCade/VERSION`.tar.gz FightCade
 	rm -rf /tmp/FightCade
 	rm -rf cheats flyers previews recordings ROMs screenshots titles
@@ -39,7 +39,7 @@ win: cleanbuild
 	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
 	cp -R assets config FightCade.exe ggpofba.exe ggpofba-ng.exe ggponet.dll kailleraclient.dll LICENSE VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
-	rm -rf /tmp/FightCade/savestates/.git
+	rm -rf /tmp/FightCade/savestates/.git /tmp/FightCade/ggpo/scripts/Info.plist /tmp/FightCade/ggpo/scripts/applet
 	cd /tmp ; zip -r fightcade-win32-v0`cat FightCade/VERSION`.zip FightCade
 	rm -rf /tmp/FightCade FightCade.exe fightcade.spec ggpofba.exe ggpofba.spec
 	rm -rf cheats flyers previews recordings ROMs screenshots titles
@@ -53,7 +53,8 @@ osx: cleanbuild
 	cp -R * /tmp/FightCade.app/Contents/MacOS/
 	cp ggpo/resources/img/icon.icns /tmp/FightCade.app/Contents/Resources/
 	cp ggpo/scripts/Info.plist /tmp/FightCade.app/Contents/
-	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/ /tmp/FightCade.app/Contents/MacOS/linux-install.sh /tmp/FightCade.app/Contents/MacOS/Makefile /tmp/FightCade.app/savestates/.git
+	cp ggpo/scripts/applet /tmp/FightCade.app/Contents/MacOS/applet
+	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/ /tmp/FightCade.app/Contents/MacOS/linux-install.sh /tmp/FightCade.app/Contents/MacOS/Makefile /tmp/FightCade.app/savestates/.git /tmp/FightCade.app/Contents/MacOS/ggpo/scripts/Info.plist /tmp/FightCade.app/Contents/MacOS/ggpo/scripts/applet
 	sed -i '' -e 's/nVidSelect 1/nVidSelect 3/' /tmp/FightCade.app/Contents/MacOS/config/ggpofba-ng.default.ini
 	#pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade.bin --runtime-hook ggpo/scripts/runtimehook.py main.py
 	#cp dist/fightcade.bin /tmp/FightCade.app/Contents/MacOS/
