@@ -162,6 +162,7 @@ def udp_proxy(args,q):
 		#l_sockfd.close()
 		#sockfd.close()
 		killGgpoFbaNG()
+		time.sleep(2)
 		#os._exit(1)
 
 	sockfd.sendto( quark+"/"+str(port), master )
@@ -263,8 +264,9 @@ def udp_proxy(args,q):
 		if peerdata and " ok" not in peerdata and " _" not in peerdata:
 			logging.debug("sending data to emulator %s = %r" % (emuaddr, peerdata))
 			l_sockfd.sendto( peerdata, emuaddr )
-	except:
+	except Exception, e:
 		logging.info("timeout waiting for peer")
+		logging.info("ERROR: %s" % (repr(e)))
 
 	logging.info("received first request")
 
@@ -285,8 +287,9 @@ def udp_proxy(args,q):
 				peerdata, peeraddr = sockfd.recvfrom(16384)
 				if peerdata:
 					l_sockfd.sendto( peerdata, emuaddr )
-		except:
+		except Exception, e:
 			logging.info("exit loop")
+			logging.info("ERROR: %s" % (repr(e)))
 			sockfd.close()
 			l_sockfd.close()
 			os._exit(0)
