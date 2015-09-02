@@ -47,13 +47,14 @@ win: cleanbuild
 
 osx: cleanbuild
 	rm -rf /tmp/FightCade.app/
-	osacompile -e 'on open location quark' -e 'do shell script "/bin/bash /Applications/FightCade.app/Contents/MacOS/ggpofba.sh \"" & quark & "\" && kill $$PPID"' -e 'end open location' -e 'do shell script "/bin/bash /Applications/FightCade.app/Contents/MacOS/fightcade && kill $$PPID"' -a x86_64 -o /tmp/FightCade.app
+	osacompile -e 'on open location quark' -e 'do shell script "/bin/bash /Applications/FightCade.app/Contents/MacOS/ggpofba.sh \"" & quark & "\" && kill $$PPID ; exit 0"' -e 'end open location' -e 'do shell script "/bin/bash /Applications/FightCade.app/Contents/MacOS/fightcade && kill $$PPID ; exit 0"' -o /tmp/FightCade.app
 	tar zxvfp ../Fightcade-app-skeleton-osx.tgz -C /tmp/
 	mkdir -p /tmp/FightCade.app/Contents/MacOS/
 	cp -R * /tmp/FightCade.app/Contents/MacOS/
 	cp ggpo/resources/img/icon.icns /tmp/FightCade.app/Contents/Resources/
 	cp ggpo/scripts/Info.plist /tmp/FightCade.app/Contents/
 	cp ggpo/scripts/applet /tmp/FightCade.app/Contents/MacOS/applet
+	chmod 755 /tmp/FightCade.app/Contents/MacOS/applet /Applications/FightCade.app/Contents/MacOS/ggpofba.sh /Applications/FightCade.app/Contents/MacOS/fightcade
 	rm -rf /tmp/FightCade.app/Contents/MacOS/ggpo/resources/assets/ /tmp/FightCade.app/Contents/MacOS/linux-install.sh /tmp/FightCade.app/Contents/MacOS/Makefile /tmp/FightCade.app/savestates/.git /tmp/FightCade.app/Contents/MacOS/ggpo/scripts/Info.plist /tmp/FightCade.app/Contents/MacOS/ggpo/scripts/applet
 	sed -i '' -e 's/nVidSelect 1/nVidSelect 3/' /tmp/FightCade.app/Contents/MacOS/config/ggpofba-ng.default.ini
 	#pyinstaller --onefile -w -i ggpo/resources/img/icon.icns -n fightcade.bin --runtime-hook ggpo/scripts/runtimehook.py main.py
