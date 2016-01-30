@@ -148,12 +148,23 @@ def udp_proxy(args,q):
 
 	#use only the challenge id for the hole punching server
 	quark = args[0].split(",")[2]
+	logging.info("quark: %s" % quark)
 
-	sockfd = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
+	try:
+		sockfd = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
+		sockfd.settimeout(10)
+	except Exception, e:
+		logging.info("Error creating udp socket. Using ports.")
+		logging.info("ERROR: %s" % (repr(e)))
+		fba_pid=start_fba(args)
+		q.put(fba_pid)
+		sockfd.sendto( "useports/"+quark, master)
+		return
+
 	# bind the socket to a port, so we can test the user's NAT type
 	try:
 		sockfd.bind(("0.0.0.0", 6006))
-	except socket.error:
+	except:
 		logging.info("Can't bind to port 6006, using system assigned port.")
 		bindok+=1
 
@@ -165,11 +176,25 @@ def udp_proxy(args,q):
 		time.sleep(2)
 		#os._exit(1)
 
-	sockfd.sendto( quark+"/"+str(port), master )
+	try:
+		logging.debug("sending data to master")
+		sockfd.sendto( quark+"/"+str(port), master )
+	except Exception, e:
+		logging.info("Error sending data to fightcade server. Using ports.")
+		logging.info("ERROR: %s" % (repr(e)))
+		fba_pid=start_fba(args)
+		q.put(fba_pid)
+		sockfd.sendto( "useports/"+quark, master)
+		return
+
 	try:
 		data, addr = sockfd.recvfrom( len(quark)+3 )
 		logging.debug("request received from %s = %r" % (addr, data))
-	except:
+	except socket.timeout:
+		logging.info("timeout on master request, retrying.")
+		sockfd.sendto( quark+"/"+str(port), master )
+		data, addr = sockfd.recvfrom( len(quark)+3 )
+	except socket.error:
 		logging.info("Error receiving request from master. Using ports.")
 		sockfd.sendto( "useports/"+quark, master)
 		fba_pid=start_fba(args)
@@ -350,7 +375,7 @@ def process_checker(q):
 
 	time.sleep(15)
 	fba_p=q.get()
-	logging.debug("FBA pid: %d" % int(fba_p.pid))
+	logging.info("FBA pid: %d" % int(fba_p.pid))
 
 	while True:
 		time.sleep(5)
