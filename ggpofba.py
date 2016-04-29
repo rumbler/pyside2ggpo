@@ -300,6 +300,7 @@ def udp_proxy(args,q):
 	sockfd.setblocking(0)
 
 	logging.info("setting nonblocking sockets")
+	failed=0
 
 	while True:
 		try:
@@ -313,11 +314,15 @@ def udp_proxy(args,q):
 				if peerdata:
 					l_sockfd.sendto( peerdata, emuaddr )
 		except Exception, e:
-			logging.info("exit loop")
+			failed+=1
 			logging.info("ERROR: %s" % (repr(e)))
-			sockfd.close()
-			l_sockfd.close()
-			os._exit(0)
+			if (failed < 4):
+				pass
+			else:
+				logging.info("exit loop")
+				sockfd.close()
+				l_sockfd.close()
+				os._exit(0)
 
 def killGgpoFbaNG():
 	if platform.system()=="Windows":
