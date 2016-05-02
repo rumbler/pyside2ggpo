@@ -10,15 +10,17 @@ __credits__ = [
     ('Tony Cannon (Ponder), Tom Cannon (ProtomCannon)',
      'http://ggpo.net'),
     ('Pau Oliva Fora (@pof)',
-     'http://poliva.github.io/ggpo/'),
+     'http://www.fightcade.com'),
+    ('Jordi Ros (Shine)',
+     'http://www.fightcade.com'),
 ]
 
-__copyright__ = 'Copyright (c) 2014'
+__copyright__ = 'Copyright (c) 2014-2016'
 __license__ = 'GPL'
 
 # define version information
 __requires__ = ['PyQt4']
-__version__ = 42
+__version__ = 43
 
 
 def versionString():
