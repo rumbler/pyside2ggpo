@@ -46,7 +46,7 @@ def writeLocalJsonDigest():
 class SyncWorker(QtCore.QObject):
     sigFinished = QtCore.pyqtSignal(int, int, int)
     sigStatusMessage = QtCore.pyqtSignal(str)
-    SAVESTATES_GITHUB_BASE_URL = 'https://raw.github.com/poliva/fightcadestates/master/'
+    SAVESTATES_GITHUB_BASE_URL = 'https://raw.github.com/poliva/fightcadestates/newfba/'
     JSON_INDEX_FILENAME = 'index.json'
     SAVESTATES_INDEX_URL = SAVESTATES_GITHUB_BASE_URL + JSON_INDEX_FILENAME
 
