@@ -707,20 +707,21 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.setupMenuSmoothing()
         self.setupMenuChallengeSound()
         self.uiCustomEmoticonsAct.triggered.connect(self.setCustomEmoticons)
-        if not IS_WINDOWS or IS_WINDOWS_XP:
-            self.uiDesktopCompositionMenu.menuAction().setVisible(False)
-        else:
-            self.uiCompositionEnableAct.triggered.connect(self.CompositionEnableAct)
-            self.uiCompositionDisableAct.triggered.connect(self.CompositionDisableAct)
-            self.uiCompositionDisableAct.setCheckable(True)
-            self.uiCompositionEnableAct.setCheckable(True)
-            if Settings.value(Settings.COMPOSITION_DISABLED):
-                self.uiCompositionEnableAct.setChecked(False)
-                self.uiCompositionDisableAct.setChecked(True)
-                #self.CompositionDisableAct()
-            else:
-                self.uiCompositionDisableAct.setChecked(False)
-                self.uiCompositionEnableAct.setChecked(True)
+        self.uiDesktopCompositionMenu.menuAction().setVisible(False)
+        #if not IS_WINDOWS or IS_WINDOWS_XP:
+        #    self.uiDesktopCompositionMenu.menuAction().setVisible(False)
+        #else:
+        #    self.uiCompositionEnableAct.triggered.connect(self.CompositionEnableAct)
+        #    self.uiCompositionDisableAct.triggered.connect(self.CompositionDisableAct)
+        #    self.uiCompositionDisableAct.setCheckable(True)
+        #    self.uiCompositionEnableAct.setCheckable(True)
+        #    if Settings.value(Settings.COMPOSITION_DISABLED):
+        #        self.uiCompositionEnableAct.setChecked(False)
+        #        self.uiCompositionDisableAct.setChecked(True)
+        #        #self.CompositionDisableAct()
+        #    else:
+        #        self.uiCompositionDisableAct.setChecked(False)
+        #        self.uiCompositionEnableAct.setChecked(True)
 
         #self.uiLocateGgpofbaAct.triggered.connect(self.locateGGPOFBA)
         self.uiLocateROMsAct.triggered.connect(self.locateROMsDir)

@@ -797,8 +797,8 @@ class Controller(QtCore.QObject):
 
         logdebug().info(" ".join(args))
 
-        if Settings.value(Settings.COMPOSITION_DISABLED):
-                self.desktopComposition(0)
+        #if Settings.value(Settings.COMPOSITION_DISABLED):
+        #        self.desktopComposition(0)
 
         try:
             # starting python from cmd.exe and redirect stderr and we got
