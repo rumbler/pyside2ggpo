@@ -335,7 +335,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 pass
             self.expectFirstChannelResponse = False
 
-            self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values())
+            self.channels = dict((c['title'], c['rom']) for c in self.controller.channels.values())
             sortedRooms = sorted(self.channels.keys())
 
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)

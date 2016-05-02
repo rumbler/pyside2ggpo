@@ -122,7 +122,7 @@ class Controller(QtCore.QObject):
         if self.fba:
             return True
         else:
-            self.sigStatusMessage.emit("ERROR: ggpofba-ng.exe not found in fightcade folder: you will not be able to play or spectate! Did you extract FightCade from the zip before running it?")
+            self.sigStatusMessage.emit("ERROR: fightcadefba-ng.exe not found in fightcade folder: you will not be able to play or spectate! Did you extract FightCade from the zip before running it?")
             return False
 
     def isRomAvailable(self, channel):
@@ -131,30 +131,22 @@ class Controller(QtCore.QObject):
             return True
         romdir=Settings.value(Settings.ROMS_DIR)
         if romdir:
-            rom = os.path.join(romdir, "{}.zip".format(channel))
-            if os.path.isfile(rom):
-                return True
+            for name in ['roms', 'sg1000', 'coleco', 'tg16', 'sgx', 'pce', 'megardiv', 'sms', 'gamegear']:
+                rom = os.path.join(romdir, "..", name, "{}.zip".format(channel))
+                if os.path.isfile(rom):
+                    return True
         rom = self.ggpoPathJoin("ROMs", "{}.zip".format(channel))
         if os.path.isfile(rom):
             return True
+        else:
+            self.sigStatusMessage.emit('Warning: {}.zip not found. Required to play or spectate.'.format(channel))
+            self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
         return False
 
     def checkRom(self):
         if self.channel == 'unsupported':
             return True
-        if self.channel and self.channel != "lobby":
-            romdir=Settings.value(Settings.ROMS_DIR)
-            if romdir:
-                rom = os.path.join(romdir, "{}.zip".format(self.rom))
-                if os.path.isfile(rom):
-                    return True
-            rom = self.ggpoPathJoin("ROMs", "{}.zip".format(self.rom))
-            if os.path.isfile(rom):
-                return True
-            else:
-                self.sigStatusMessage.emit('Warning: {}.zip not found. Required to play or spectate.'.format(self.rom))
-                self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
-        return False
+        return self.isRomAvailable(self.rom)
 
     def checkUnsupportedRom(self):
         if self.fba:
@@ -493,7 +485,7 @@ class Controller(QtCore.QObject):
                 'users': users,
                 'port': port,
             }
-            self.channels[room] = channel
+            self.channels[rom] = channel
         logdebug().info(repr(self.channels))
         self.sigChannelsLoaded.emit()
         if len(data) > 0:
@@ -656,7 +648,7 @@ class Controller(QtCore.QObject):
             except:
                 pass
 
-    def killEmulator(self):
+    def killOldEmulator(self):
         if IS_WINDOWS:
             try:
                 args = ['taskkill', '/f', '/im', 'ggpofba-ng.exe']
@@ -679,6 +671,37 @@ class Controller(QtCore.QObject):
             try:
                 devnull = open(os.devnull, 'w')
                 args = ['pkill', '-f', 'ggpofba-ng.exe.*quark:served']
+                Popen(args, stdout=devnull, stderr=devnull)
+                args = ['wineserver', '-k']
+                Popen(args, stdout=devnull, stderr=devnull)
+                devnull.close()
+            except:
+                pass
+
+
+    def killEmulator(self):
+        if IS_WINDOWS:
+            try:
+                args = ['taskkill', '/f', '/im', 'fightcadefba-ng.exe']
+                Popen(args, shell=True)
+                args = ['tskill', 'fightcadefba-ng', '/a']
+                Popen(args, shell=True)
+            except:
+                pass
+        if IS_OSX:
+            try:
+                devnull = open(os.devnull, 'w')
+                args = ['pkill', '-f', 'fightcadefba-ng.exe.*quark:served']
+                Popen(args, stdout=devnull, stderr=devnull)
+                args = ['../Resources/bin/wineserver', '-k']
+                Popen(args, stdout=devnull, stderr=devnull)
+                devnull.close()
+            except:
+                pass
+        if IS_LINUX:
+            try:
+                devnull = open(os.devnull, 'w')
+                args = ['pkill', '-f', 'fightcadefba-ng.exe.*quark:served']
                 Popen(args, stdout=devnull, stderr=devnull)
                 args = ['wineserver', '-k']
                 Popen(args, stdout=devnull, stderr=devnull)
@@ -734,13 +757,28 @@ class Controller(QtCore.QObject):
 
         # if ini file doesn't exist, try to restore FBA settings from backup
         if not os.path.isfile(fbaini) and os.path.isfile(fbainibkp):
-            self.sigStatusMessage.emit("Restoring emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
+            #self.sigStatusMessage.emit("Restoring emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
             copyfile(fbainibkp, fbaini)
             self.setupROMsDir()
 
         # if ini file doesn't exist and there was no backup, use the default FBA config
         if not os.path.isfile(fbaini) and not os.path.isfile(fbainibkp) and os.path.isfile(fbainidef):
             copyfile(fbainidef, fbaini)
+
+        # for the new emulator
+        fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
+        fbainidef = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.default.ini')
+        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'fightcadefba-ng.bkp.ini')
+
+        # if ini file doesn't exist, try to restore FBA settings from backup
+        if not os.path.isfile(fbaini) and os.path.isfile(fbainibkp):
+            self.sigStatusMessage.emit("Restoring emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
+            copyfile(fbainibkp, fbaini)
+            self.setupROMsDir()
+
+        if not os.path.isfile(fbaini) and not os.path.isfile(fbainibkp) and os.path.isfile(fbainidef):
+            copyfile(fbainidef, fbaini)
+
 
     def setupROMsDir(self):
 
@@ -762,7 +800,7 @@ class Controller(QtCore.QObject):
         # on windows, update fba's ini file with the new location
         if IS_WINDOWS:
             # make sure FBA is not running, otherwise we can't modify the config file
-            self.killEmulator()
+            self.killOldEmulator()
             fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
             if fbaini and os.path.isfile(fbaini):
                 for line in fileinput.input(fbaini, inplace=True, backup='.bak'):
@@ -770,28 +808,41 @@ class Controller(QtCore.QObject):
                     sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
                 fileinput.close()
 
+            # for the new emulator
+            fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
+            if fbaini and os.path.isfile(fbaini):
+                for line in fileinput.input(fbaini, inplace=True, backup='.bak'):
+                    new="szAppRomPaths[19] "+str(os.path.join(romdir.upper(),'')+"\\")
+                    sys.stdout.write(re.sub("szAppRomPaths\[19\].*", new, line))
+                fileinput.close()
+
+
     def runFBA(self, quark):
         if "served" in quark:
             self.killEmulator()
+            self.killOldEmulator()
             self.killPuncher()
             time.sleep(2)
         self.checkRom()
         self.fba = findFba()
         if not self.fba:
-            self.sigStatusMessage.emit("ERROR: make sure ggpofba-ng.exe is in the same folder as FightCade")
+            self.sigStatusMessage.emit("ERROR: make sure fightcadefba-ng.exe is in the same folder as FightCade")
             return
         args = []
         fba=self.fba
         if IS_WINDOWS:
-            fba=fba.replace('ggpofba-ng.exe', 'ggpofba.exe')
+            fba=fba.replace('fightcadefba-ng.exe', 'ggpofba.exe')
         else:
-            fba = fba.replace('ggpofba-ng.exe', 'ggpofba.sh')
+            fba = fba.replace('fightcadefba-ng.exe', 'ggpofba.sh')
         args = [fba, quark, '-w']
 
         fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
-        fbadat = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.roms.dat')
-        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpofba-ng.bkp.ini')
+        if not os.path.isfile(fbaini):
+            self.createFbaIni()
 
+        fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
+        fbadat = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.roms.dat')
+        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'fightcadefba-ng.bkp.ini')
         if not os.path.isfile(fbaini):
             self.createFbaIni()
 
