@@ -138,15 +138,16 @@ class Controller(QtCore.QObject):
         rom = self.ggpoPathJoin("ROMs", "{}.zip".format(channel))
         if os.path.isfile(rom):
             return True
-        else:
-            self.sigStatusMessage.emit('Warning: {}.zip not found. Required to play or spectate.'.format(channel))
-            self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
         return False
 
     def checkRom(self):
         if self.channel == 'unsupported':
             return True
-        return self.isRomAvailable(self.rom)
+        if not self.isRomAvailable(self.rom):
+            self.sigStatusMessage.emit('Warning: {}.zip not found. Required to play or spectate.'.format(channel))
+            self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
+            return False
+        return True
 
     def checkUnsupportedRom(self):
         if self.fba:
@@ -485,7 +486,7 @@ class Controller(QtCore.QObject):
                 'users': users,
                 'port': port,
             }
-            self.channels[rom] = channel
+            self.channels[room] = channel
         logdebug().info(repr(self.channels))
         self.sigChannelsLoaded.emit()
         if len(data) > 0:
