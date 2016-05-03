@@ -38,7 +38,7 @@ win: cleanbuild
 	rm -rf build dist
 	rm -rf /tmp/FightCade/
 	mkdir /tmp/FightCade/
-	cp -R assets config FightCade.exe ggpofba.exe ggpofba-ng.exe ggponet.dll kailleraclient.dll LICENSE VERSION cheats flyers previews recordings ROMs savestates screenshots titles /tmp/FightCade/
+	cp -R assets config FightCade.exe ggpofba.exe ggpofba-ng.exe ggponet.dll kailleraclient.dll LICENSE VERSION cheats flyers previews recordings ROMs savestates screenshots titles ui detector fightcadefba-ng.exe /tmp/FightCade/
 	rm -rf /tmp/FightCade/savestates/.git /tmp/FightCade/ggpo/scripts/Info.plist /tmp/FightCade/ggpo/scripts/applet
 	cd /tmp ; zip -r fightcade-win32-v0`cat FightCade/VERSION`.zip FightCade
 	rm -rf /tmp/FightCade FightCade.exe fightcade.spec ggpofba.exe ggpofba.spec
