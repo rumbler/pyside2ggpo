@@ -335,7 +335,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 pass
             self.expectFirstChannelResponse = False
 
-            self.channels = dict((c['title'], c['room'], c['rom']) for c in self.controller.channels.values())
+            self.channels = dict((c['title'], c['room']) for c in self.controller.channels.values())
             sortedRooms = sorted(self.channels.keys())
 
             lastChannel = Settings.value(Settings.SELECTED_CHANNEL)
@@ -349,7 +349,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                 chan = self.channels[i]
                 item.setText(0, str(self.controller.channels[chan]['users']))
                 item.setText(1, i)
-                if not self.controller.isRomAvailable(self.controller.channels[chan]['rom']) and chan!='lobby':
+                if not self.controller.isRomAvailable(chan) and chan!='lobby':
                     item.setTextColor(0, QtGui.QColor(60, 60, 60))
                     item.setTextColor(1, QtGui.QColor(60, 60, 60))
                 if "," + self.channels[i] + "," in self.favorites:
@@ -360,7 +360,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     idx=n
 
                 if self.hidemissing==True and self.showfavorites==False:
-                    if self.controller.isRomAvailable(self.controller.channels[chan]['rom']) or chan==self.controller.channel:
+                    if self.controller.isRomAvailable(chan) or chan==self.controller.channel:
                         l.append(item)
                         n+=1
                 elif self.hidemissing==False and self.showfavorites==True:
@@ -371,7 +371,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
                     l.append(item)
                     n+=1
                 elif self.hidemissing==True and self.showfavorites==True:
-                    if (self.controller.isRomAvailable(self.controller.channels[chan]['rom']) or chan==self.controller.channel) and "," + self.channels[i] + "," in self.favorites:
+                    if (self.controller.isRomAvailable(chan) or chan==self.controller.channel) and "," + self.channels[i] + "," in self.favorites:
                         l.append(item)
                         n+=1
 

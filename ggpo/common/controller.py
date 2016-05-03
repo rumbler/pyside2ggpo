@@ -131,8 +131,53 @@ class Controller(QtCore.QObject):
             return True
         romdir=Settings.value(Settings.ROMS_DIR)
         if romdir:
-            for name in ['roms', 'sg1000', 'coleco', 'tg16', 'sgx', 'pce', 'megardiv', 'sms', 'gamegear']:
-                rom = os.path.join(romdir, "..", name, "{}.zip".format(channel))
+            rom = os.path.join(romdir, "{}.zip".format(self.channels[channel]['rom']))
+            if os.path.isfile(rom):
+                return True
+
+            #cv_ coleco / gg_ gamegear / md_ megadriv / pce_ pce / sg1k_ sg1000 / sgx_ sgx / sms_ sms / tg_ tg16
+            if channel.startswith("md_"):
+                for name in ['megadriv', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            elif channel.startswith("cv_"):
+                for name in ['coleco', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            elif channel.startswith("gg_"):
+                for name in ['gamegear', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            elif channel.startswith("pce_"):
+                for name in ['pce', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            elif channel.startswith("sg1k_"):
+                for name in ['sg1000', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            elif channel.startswith("sgx_"):
+                for name in ['sgx', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            elif channel.startswith("sms_"):
+                for name in ['sms', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            elif channel.startswith("tg_"):
+                for name in ['tg16', 'roms']:
+                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
+            else:
+                rom = os.path.join(romdir, "..", "roms", "{}.zip".format(self.channels[channel]['rom']))
                 if os.path.isfile(rom):
                     return True
         rom = self.ggpoPathJoin("ROMs", "{}.zip".format(channel))
@@ -143,8 +188,8 @@ class Controller(QtCore.QObject):
     def checkRom(self):
         if self.channel == 'unsupported':
             return True
-        if not self.isRomAvailable(self.rom):
-            self.sigStatusMessage.emit('Warning: {}.zip not found. Required to play or spectate.'.format(channel))
+        if not self.isRomAvailable(self.channel):
+            self.sigStatusMessage.emit('Warning: {}.zip not found. Required to play or spectate.'.format(self.channel))
             self.sigStatusMessage.emit("Please configure Setting > Locate ROMs folder")
             return False
         return True
