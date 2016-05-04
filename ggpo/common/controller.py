@@ -848,39 +848,39 @@ class Controller(QtCore.QObject):
 
         gamegear = os.path.join(romdir, "gamegear")
         if not os.path.isdir(gamegear):
-            gamegear = os.path.join(romdir, "..", "gamegear")
+            gamegear = os.path.normpath(os.path.join(romdir, "..", "gamegear"))
 
         sms = os.path.join(romdir, "sms")
         if not os.path.isdir(sms):
-            sms = os.path.join(romdir, "..", "sms")
+            sms = os.path.normpath(os.path.join(romdir, "..", "sms"))
 
         sg1000 = os.path.join(romdir, "sg1000")
         if not os.path.isdir(sg1000):
-            sg1000 = os.path.join(romdir, "..", "sg1000")
+            sg1000 = os.path.normpath(os.path.join(romdir, "..", "sg1000"))
 
         coleco = os.path.join(romdir, "coleco")
         if not os.path.isdir(coleco):
-            coleco = os.path.join(romdir, "..", "coleco")
+            coleco = os.path.normpath(os.path.join(romdir, "..", "coleco"))
 
         tg16 = os.path.join(romdir, "tg16")
         if not os.path.isdir(tg16):
-            tg16 = os.path.join(romdir, "..", "tg16")
+            tg16 = os.path.normpath(os.path.join(romdir, "..", "tg16"))
 
         sgx = os.path.join(romdir, "sgx")
         if not os.path.isdir(sgx):
-            sgx = os.path.join(romdir, "..", "sgx")
+            sgx = os.path.normpath(os.path.join(romdir, "..", "sgx"))
 
         pce = os.path.join(romdir, "pce")
         if not os.path.isdir(pce):
-            pce = os.path.join(romdir, "..", "pce")
+            pce = os.path.normpath(os.path.join(romdir, "..", "pce"))
 
         megadriv = os.path.join(romdir, "megadriv")
         if not os.path.isdir(megadriv):
-            megadriv = os.path.join(romdir, "..", "megadriv")
+            megadriv = os.path.normpath(os.path.join(romdir, "..", "megadriv"))
 
         roms = os.path.join(romdir, "roms")
         if not os.path.isdir(roms):
-            roms = os.path.join(romdir, "..", "roms")
+            roms = os.path.normpath(os.path.join(romdir, "..", "roms"))
 
         # update fba's ini file with the new location
         # make sure FBA is not running, otherwise we can't modify the config file
