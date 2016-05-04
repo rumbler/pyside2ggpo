@@ -224,6 +224,7 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
             Settings.setValue(Settings.UNSUPPORTED_GAMESAVES_DIR, d)
 
     def locateROMsDir(self):
+        self.controller.sigStatusMessage.emit("Select ROMs folder and wait for ROM scan to finish...")
         d = QtGui.QFileDialog.getExistingDirectory(self, "Open Directory",
                                                    os.path.expanduser("~"),
                                                    QtGui.QFileDialog.ShowDirsOnly
@@ -231,13 +232,12 @@ class GGPOWindow(QtGui.QMainWindow, Ui_MainWindow):
         if d and os.path.isdir(d):
             Settings.setValue(Settings.ROMS_DIR, d)
 
-        # create FBA ini file and setup ROMs dir
-        self.controller.createFbaIni()
-        self.controller.setupROMsDir()
+            # create FBA ini file
+            self.controller.createFbaIni()
 
-        # refresh the channels list
-        self.expectFirstChannelResponse = True
-        self.controller.sigChannelsLoaded.emit()
+            # refresh the channels list
+            self.expectFirstChannelResponse = True
+            self.controller.sigChannelsLoaded.emit()
 
     def notifyStateChange(self, name, msg):
         msg = name + msg

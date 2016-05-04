@@ -11,7 +11,7 @@ import errno
 import fileinput
 from shutil import copyfile
 from random import randint
-from subprocess import Popen
+from subprocess import Popen, PIPE
 from PyQt4 import QtCore
 from ggpo.common.runtime import *
 from ggpo.common.geolookup import geolookup, isUnknownCountryCode
@@ -137,52 +137,50 @@ class Controller(QtCore.QObject):
 
             #cv_ coleco / gg_ gamegear / md_ megadriv / pce_ pce / sg1k_ sg1000 / sgx_ sgx / sms_ sms / tg_ tg16
             if channel.startswith("md_"):
-                for name in ['megadriv', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['megadriv', '../megadriv']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             elif channel.startswith("cv_"):
-                for name in ['coleco', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['coleco', '../coleco']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             elif channel.startswith("gg_"):
-                for name in ['gamegear', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['gamegear', '../gamegear']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             elif channel.startswith("pce_"):
-                for name in ['pce', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['pce', '../pce']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             elif channel.startswith("sg1k_"):
-                for name in ['sg1000', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['sg1000', '../sg1000']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             elif channel.startswith("sgx_"):
-                for name in ['sgx', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['sgx', '../sgx']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             elif channel.startswith("sms_"):
-                for name in ['sms', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['sms', '../sms']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             elif channel.startswith("tg_"):
-                for name in ['tg16', 'roms']:
-                    rom = os.path.join(romdir, "..", name, "{}.zip".format(self.channels[channel]['rom']))
+                for name in ['tg16', '../tg16']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
                     if os.path.isfile(rom):
                         return True
             else:
-                rom = os.path.join(romdir, "..", "roms", "{}.zip".format(self.channels[channel]['rom']))
-                if os.path.isfile(rom):
-                    return True
-        rom = self.ggpoPathJoin("ROMs", "{}.zip".format(channel))
-        if os.path.isfile(rom):
-            return True
+                for name in ['roms', '../roms']:
+                    rom = os.path.join(romdir, name, "{}.zip".format(self.channels[channel]['rom']))
+                    if os.path.isfile(rom):
+                        return True
         return False
 
     def checkRom(self):
@@ -805,7 +803,6 @@ class Controller(QtCore.QObject):
         if not os.path.isfile(fbaini) and os.path.isfile(fbainibkp):
             #self.sigStatusMessage.emit("Restoring emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
             copyfile(fbainibkp, fbaini)
-            self.setupROMsDir()
 
         # if ini file doesn't exist and there was no backup, use the default FBA config
         if not os.path.isfile(fbaini) and not os.path.isfile(fbainibkp) and os.path.isfile(fbainidef):
@@ -820,11 +817,28 @@ class Controller(QtCore.QObject):
         if not os.path.isfile(fbaini) and os.path.isfile(fbainibkp):
             self.sigStatusMessage.emit("Restoring emulator config. If game doesn't start do Settings -> Locate ROMs folder.")
             copyfile(fbainibkp, fbaini)
-            self.setupROMsDir()
 
         if not os.path.isfile(fbaini) and not os.path.isfile(fbainibkp) and os.path.isfile(fbainidef):
             copyfile(fbainidef, fbaini)
 
+        self.setupROMsDir()
+
+    def getPathForEmu(self, path):
+        if not os.path.exists(path):
+            return os.path.basename(path);
+        if IS_WINDOWS:
+            return path
+        if IS_OSX:
+            winebin='../Resources/bin/wine'
+        if IS_LINUX:
+            winebin="wine"
+        try:
+            args = [winebin, 'winepath.exe', '-0', '-w', path]
+            run = Popen(args, stdout=PIPE, stderr=PIPE)
+            winpath, error = run.communicate()
+        except:
+            return path
+        return winpath
 
     def setupROMsDir(self):
 
@@ -832,36 +846,107 @@ class Controller(QtCore.QObject):
         if not romdir:
             return
 
-        #on linux & MAC, symlink the ROMs folder to avoid configuring FBA
-        if not IS_WINDOWS:
-            fbaRomPath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), "ROMs")
-            # remove it if it's a link or an empty dir
-            if os.path.islink(fbaRomPath):
-                os.remove(fbaRomPath)
-            if os.path.isdir(fbaRomPath) and not os.listdir(fbaRomPath):
-                os.rmdir(fbaRomPath)
-            if not os.path.exists(fbaRomPath):
-                os.symlink(romdir, fbaRomPath)
+        gamegear = os.path.join(romdir, "gamegear")
+        if not os.path.isdir(gamegear):
+            gamegear = os.path.join(romdir, "..", "gamegear")
 
-        # on windows, update fba's ini file with the new location
-        if IS_WINDOWS:
-            # make sure FBA is not running, otherwise we can't modify the config file
-            self.killOldEmulator()
-            fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
-            if fbaini and os.path.isfile(fbaini):
-                for line in fileinput.input(fbaini, inplace=True, backup='.bak'):
-                    new="szAppRomPaths[7] "+str(os.path.join(romdir.upper(),'')+"\\")
-                    sys.stdout.write(re.sub("szAppRomPaths\[7\].*", new, line))
-                fileinput.close()
+        sms = os.path.join(romdir, "sms")
+        if not os.path.isdir(sms):
+            sms = os.path.join(romdir, "..", "sms")
 
-            # for the new emulator
-            fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
-            if fbaini and os.path.isfile(fbaini):
-                for line in fileinput.input(fbaini, inplace=True, backup='.bak'):
-                    new="szAppRomPaths[19] "+str(os.path.join(romdir.upper(),'')+"\\")
-                    sys.stdout.write(re.sub("szAppRomPaths\[19\].*", new, line))
-                fileinput.close()
+        sg1000 = os.path.join(romdir, "sg1000")
+        if not os.path.isdir(sg1000):
+            sg1000 = os.path.join(romdir, "..", "sg1000")
 
+        coleco = os.path.join(romdir, "coleco")
+        if not os.path.isdir(coleco):
+            coleco = os.path.join(romdir, "..", "coleco")
+
+        tg16 = os.path.join(romdir, "tg16")
+        if not os.path.isdir(tg16):
+            tg16 = os.path.join(romdir, "..", "tg16")
+
+        sgx = os.path.join(romdir, "sgx")
+        if not os.path.isdir(sgx):
+            sgx = os.path.join(romdir, "..", "sgx")
+
+        pce = os.path.join(romdir, "pce")
+        if not os.path.isdir(pce):
+            pce = os.path.join(romdir, "..", "pce")
+
+        megadriv = os.path.join(romdir, "megadriv")
+        if not os.path.isdir(megadriv):
+            megadriv = os.path.join(romdir, "..", "megadriv")
+
+        roms = os.path.join(romdir, "roms")
+        if not os.path.isdir(roms):
+            roms = os.path.join(romdir, "..", "roms")
+
+        # update fba's ini file with the new location
+        # make sure FBA is not running, otherwise we can't modify the config file
+        self.killOldEmulator()
+        fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
+        if fbaini and os.path.isfile(fbaini):
+            if IS_WINDOWS:
+                new6="szAppRomPaths[6] "+str(os.path.join(self.getPathForEmu(romdir).upper(),'')+"\\")
+                new7="szAppRomPaths[7] "+str(os.path.join(self.getPathForEmu(roms).upper(),'')+"\\")
+            else:
+                new6="szAppRomPaths[6] "+str(repr(self.getPathForEmu(romdir)))
+                new7="szAppRomPaths[7] "+str(repr(self.getPathForEmu(roms)))
+            for line in fileinput.input(fbaini, inplace=True, backup='.bak'):
+                line = re.sub("szAppRomPaths\[6\].*", str(new6), str(line))
+                line = re.sub("szAppRomPaths\[7\].*", str(new7), str(line))
+                if ("x00'" in line):
+                    line = line.replace("'","").replace("x00","")
+                if ("u'" in line):
+                    line = line.replace("u'","").replace("'","\\")
+                sys.stdout.write(line)
+            fileinput.close()
+
+        # for the new emulator
+        self.killEmulator()
+        fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
+        if fbaini and os.path.isfile(fbaini):
+            if IS_WINDOWS:
+                new10="szAppRomPaths[10] "+str(os.path.join(self.getPathForEmu(romdir).upper(),'')+"\\")
+                new11="szAppRomPaths[11] "+str(os.path.join(self.getPathForEmu(gamegear).upper(),'')+"\\")
+                new12="szAppRomPaths[12] "+str(os.path.join(self.getPathForEmu(sms).upper(),'')+"\\")
+                new13="szAppRomPaths[13] "+str(os.path.join(self.getPathForEmu(sg1000).upper(),'')+"\\")
+                new14="szAppRomPaths[14] "+str(os.path.join(self.getPathForEmu(coleco).upper(),'')+"\\")
+                new15="szAppRomPaths[15] "+str(os.path.join(self.getPathForEmu(tg16).upper(),'')+"\\")
+                new16="szAppRomPaths[16] "+str(os.path.join(self.getPathForEmu(sgx).upper(),'')+"\\")
+                new17="szAppRomPaths[17] "+str(os.path.join(self.getPathForEmu(pce).upper(),'')+"\\")
+                new18="szAppRomPaths[18] "+str(os.path.join(self.getPathForEmu(megadriv).upper(),'')+"\\")
+                new19="szAppRomPaths[19] "+str(os.path.join(self.getPathForEmu(roms).upper(),'')+"\\")
+            else:
+                new10="szAppRomPaths[10] "+str(repr(self.getPathForEmu(romdir)))
+                new11="szAppRomPaths[11] "+str(repr(self.getPathForEmu(gamegear)))
+                new12="szAppRomPaths[12] "+str(repr(self.getPathForEmu(sms)))
+                new13="szAppRomPaths[13] "+str(repr(self.getPathForEmu(sg1000)))
+                new14="szAppRomPaths[14] "+str(repr(self.getPathForEmu(coleco)))
+                new15="szAppRomPaths[15] "+str(repr(self.getPathForEmu(tg16)))
+                new16="szAppRomPaths[16] "+str(repr(self.getPathForEmu(sgx)))
+                new17="szAppRomPaths[17] "+str(repr(self.getPathForEmu(pce)))
+                new18="szAppRomPaths[18] "+str(repr(self.getPathForEmu(megadriv)))
+                new19="szAppRomPaths[19] "+str(repr(self.getPathForEmu(roms)))
+            for line in fileinput.input(fbaini, inplace=True, backup='.bak'):
+                line = re.sub("szAppRomPaths\[10\].*", str(new10), str(line))
+                line = re.sub("szAppRomPaths\[11\].*", str(new11), str(line))
+                line = re.sub("szAppRomPaths\[12\].*", str(new12), str(line))
+                line = re.sub("szAppRomPaths\[13\].*", str(new13), str(line))
+                line = re.sub("szAppRomPaths\[14\].*", str(new14), str(line))
+                line = re.sub("szAppRomPaths\[15\].*", str(new15), str(line))
+                line = re.sub("szAppRomPaths\[16\].*", str(new16), str(line))
+                line = re.sub("szAppRomPaths\[17\].*", str(new17), str(line))
+                line = re.sub("szAppRomPaths\[18\].*", str(new18), str(line))
+                line = re.sub("szAppRomPaths\[19\].*", str(new19), str(line))
+                if ("x00'" in line):
+                    line = line.replace("'","").replace("x00","")
+                if ("u'" in line):
+                    line = line.replace("u'","").replace("'","\\")
+                sys.stdout.write(line)
+            fileinput.close()
+        self.sigStatusMessage.emit("ROMs folder scan completed.")
 
     def runFBA(self, quark):
         if "served" in quark:
@@ -882,14 +967,18 @@ class Controller(QtCore.QObject):
             fba = fba.replace('fightcadefba-ng.exe', 'ggpofba.sh')
         args = [fba, quark, '-w']
 
+        createini=False
         fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
         if not os.path.isfile(fbaini):
-            self.createFbaIni()
+            createini=True
 
         fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
         fbadat = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.roms.dat')
         fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'fightcadefba-ng.bkp.ini')
         if not os.path.isfile(fbaini):
+            createini=True
+
+        if createini:
             self.createFbaIni()
 
         logdebug().info(" ".join(args))
