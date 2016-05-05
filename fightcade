@@ -7,8 +7,11 @@ OS=$(uname -s)
 echo "$OS" |grep "^Darwin$" >/dev/null
 if [ $? -eq 0 ]; then
 	# make sure blitter is set to Experimental
-	sed -i '' -e 's/nVidSelect.*/nVidSelect 3/' ~/ggpofba-ng.bkp.ini 2>/dev/null
+	sed -i '' -e 's/nVidSelect.*/nVidSelect 3/' ~/.config/fightcade/ggpofba-ng.bkp.ini 2>/dev/null
 fi
+
+# wine doesn't support xaudio2, make sure we're using directsound audio plugin
+sed -i '' -e 's/nAudSelect.*/nAudSelect 0/' config/fightcadefba-ng.ini 2>/dev/null
 
 . ggpo/scripts/shell-functions.sh
 find_python
