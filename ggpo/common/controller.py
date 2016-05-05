@@ -797,7 +797,7 @@ class Controller(QtCore.QObject):
 
         fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.ini')
         fbainidef = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'ggpofba-ng.default.ini')
-        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpofba-ng.bkp.ini')
+        fbainibkp = os.path.join(CONFIG_DIR, 'ggpofba-ng.bkp.ini')
 
         # if ini file doesn't exist, try to restore FBA settings from backup
         if not os.path.isfile(fbaini) and os.path.isfile(fbainibkp):
@@ -811,7 +811,7 @@ class Controller(QtCore.QObject):
         # for the new emulator
         fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
         fbainidef = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.default.ini')
-        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'fightcadefba-ng.bkp.ini')
+        fbainibkp = os.path.join(CONFIG_DIR, 'fightcadefba-ng.bkp.ini')
 
         # if ini file doesn't exist, try to restore FBA settings from backup
         if not os.path.isfile(fbaini) and os.path.isfile(fbainibkp):
@@ -974,7 +974,7 @@ class Controller(QtCore.QObject):
 
         fbaini = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.ini')
         fbadat = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'config', 'fightcadefba-ng.roms.dat')
-        fbainibkp = os.path.join(os.path.abspath(os.path.expanduser("~")), 'fightcadefba-ng.bkp.ini')
+        fbainibkp = os.path.join(CONFIG_DIR, 'fightcadefba-ng.bkp.ini')
         if not os.path.isfile(fbaini):
             createini=True
 

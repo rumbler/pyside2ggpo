@@ -3,6 +3,7 @@ import pickle
 import os.path
 import sys
 from PyQt4.QtCore import QSettings
+from ggpo.common.runtime import *
 
 
 # noinspection PyClassHasNoInit
@@ -50,7 +51,7 @@ class Settings:
     CHANNELS_FAVORITES = 'channelsFavorites'
     FILTER_FAVORITES = 'filterFavorites'
 
-    _settings = QSettings(os.path.join(os.path.abspath(os.path.expanduser("~")), 'ggpo-ng.ini'), QSettings.IniFormat)
+    _settings = QSettings(os.path.join(CONFIG_DIR, 'fightcade.ini'), QSettings.IniFormat)
 
     @staticmethod
     def setBoolean(key, val):
