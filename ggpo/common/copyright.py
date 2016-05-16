@@ -29,7 +29,7 @@ def versionNum():
 
 
 def about():
-    extra = '\n\nThis is a forked version of pyqtggpo modified for FightCade by Pau Oliva (@pof).\nThe source code of this fork is available at https://gitub.com/poliva/pyqtggpo\n\n\n'
+    extra = '\n\nThis is a forked version of pyqtggpo modified for FightCade by Pau Oliva (@pof).\nThe source code of this fork is available at https://github.com/poliva/pyqtggpo\n\n\n'
     for author, url in __credits__:
         extra += author + '\n' + url + "\n"
     return __copyright__ + ' ' + __author__ + "\n" + __url__ + "\n" + \
