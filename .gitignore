@@ -2,6 +2,16 @@
 
 *.py[cod]
 
+# dat files
+*.dat
+
+# file logs
+ggpofba.log*
+
+# directories 
+ROMs
+config/games
+
 # C extensions
 *.so
 
@@ -36,3 +46,4 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+.vscode
